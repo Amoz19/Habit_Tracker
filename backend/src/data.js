@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require("uuid");
+
 function generateCalendar() {
   const currentYear = new Date().getFullYear();
   const months = [
@@ -37,8 +39,10 @@ function generateMonthDays(year, month) {
 
   for (let day = 1; day <= daysInMonth; day++) {
     const dayObj = {
+      objId: uuidv4(),
       day: day,
-      isComplete: false, // Adding the isComplete property
+      isComplete: false,
+      // Adding the isComplete property
     };
     daysArray.push(dayObj);
   }

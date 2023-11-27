@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import AddNewHabit from "./AddNewHabit";
 import {
@@ -6,13 +6,13 @@ import {
   useHandleFetchData,
   usehandleAddNewData,
 } from "../hook/useCalendar";
+import { useNavigate } from "react-router-dom";
 
 const CalendarList = () => {
+  const navigator = useNavigate();
   const { calendarData } = useCalendarData();
   const { handleAddNewData } = usehandleAddNewData();
   const { handleFetchData } = useHandleFetchData();
-
-  console.log(calendarData);
 
   useEffect(() => {
     axios
@@ -29,6 +29,10 @@ const CalendarList = () => {
     handleAddNewData(habitName, getFullYear);
   };
 
+  const handleClick = (id) => {
+    navigator(`/${id}`);
+  };
+
   return (
     <div className="px-32 flex flex-1 flex-wrap">
       <>
@@ -36,6 +40,7 @@ const CalendarList = () => {
           <div
             key={data.habitName}
             className="bg-blue-300 w-32 h-32 flex justify-center items-center mx-6 rounded text-slate-800"
+            onClick={() => handleClick(data._id)}
           >
             <h3>{data.habitName}</h3>
           </div>

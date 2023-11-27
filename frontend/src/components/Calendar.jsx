@@ -1,6 +1,17 @@
 import { useParams } from "react-router-dom";
+import { useCalendarData } from "../hook/useCalendar";
+import axios from "axios";
 const Calendar = () => {
   const { id } = useParams();
+  const { calendarData } = useCalendarData();
+
+  const handleUpdate = (year, month, day) => {
+    axios.patch(import.meta.env.VITE_API_URL, { year, month, day });
+    // console.log(year, month, day);
+  };
+
+  console.log(JSON.stringify(calendarData));
+
   // const generateFullYear = JSON.stringify(generateCalendar());
 
   // console.log(generateFullYear);
@@ -45,6 +56,10 @@ const Calendar = () => {
   //       return prevCopy;
   //     });
   //   };
+  const matchedData = calendarData.filter((data) => data._id === id);
+  // console.log(matchedData.getFullYear, matchedData);
+  const [getFullYear] = matchedData;
+  console.log(matchedData[0]._id);
 
   return (
     // <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5 place-items-center">
@@ -75,7 +90,43 @@ const Calendar = () => {
     //     </table>
     //   ))}
     // </div>
-    <h1>{id}</h1>
+    <>
+      <h1>{id}</h1>
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5 place-items-center">
+        {getFullYear.getFullYear.map((data) => (
+          <table key={data.month} className="bg-slate-100 w-fit p-6">
+            <thead className="text-xl ">
+              <tr className="flex justify-between py-6 px-3">
+                <td>{data.year}</td>
+                <td>{data.month}</td>
+              </tr>
+            </thead>
+            {/* {console.log(data._id)} */}
+            <tbody className="grid grid-cols-5 place-items-center gap-y-3">
+              {data.days.map((day) => (
+                <tr key={day.day} className="px-3">
+                  <td
+                    // onClick={() =>
+                    //   handleDayClick(data.year, data.month, day.day)
+                    // }
+                    onClick={() =>
+                      handleUpdate(getFullYear._id, data._id, day._id)
+                    }
+                    className={`${
+                      day.isComplete
+                        ? "bg-green-400  rounded-[100%]"
+                        : "bg-none"
+                    } w-8 text-center`}
+                  >
+                    {day.day}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ))}
+      </div>
+    </>
   );
 };
 

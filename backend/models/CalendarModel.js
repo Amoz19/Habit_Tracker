@@ -17,6 +17,10 @@ const CalendarModel = new mongoose.Schema({
       },
       days: [
         {
+          objId: {
+            type: String,
+            required: true,
+          },
           day: {
             type: Number,
             required: true,
