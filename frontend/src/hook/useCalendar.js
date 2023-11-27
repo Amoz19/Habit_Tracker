@@ -23,3 +23,8 @@ export const useHandleFetchData = () => {
   const { handleFetchData } = useData();
   return { handleFetchData };
 };
+
+export const useHandleDone = () => {
+  const { handleDone } = useData();
+  return { handleDone };
+};

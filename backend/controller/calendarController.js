@@ -28,28 +28,28 @@ const getFullYearById = async (req, res) => {
 
 const updateComplete = async (req, res) => {
   const { year, month, day } = req.body;
-  console.log(year, month, day);
-  const updatedData = await CalendarModel.updateOne(
+
+  await CalendarModel.updateOne(
     {
-      _id: "65643c670b0bfd17c27d3496",
+      _id: year,
     },
     {
       $set: {
-        "getFullYear.$[o].days.$[i].isComplete": true,
+        "getFullYear.$[month].days.$[day].isComplete": true,
       },
     },
     {
       arrayFilters: [
         {
-          "o._id": "65643c670b0bfd17c27d3497",
+          "month._id": month,
         },
         {
-          "i._id": "65643c670b0bfd17c27d3498",
+          "day._id": day,
         },
       ],
     }
   );
-  res.status(200).json("Updateed");
+  res.status(200).json({ message: "updated" });
 };
 
 module.exports = { addFullYear, getFullYear, getFullYearById, updateComplete };
