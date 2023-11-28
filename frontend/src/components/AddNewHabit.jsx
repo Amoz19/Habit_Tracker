@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import generateCalendar from "../services/data";
+import { addHabitData } from "../hook/useHabitData";
 
 const AddNewHabit = ({ handleSetData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [habitName, setHabitName] = useState("");
+  const { isPending, mutate: addNewHabit } = addHabitData();
 
-  const getCalendar = generateCalendar();
+  // const getCalendar = generateCalendar();
 
   function handleOpen() {
     setIsOpen(true);
@@ -19,14 +21,16 @@ const AddNewHabit = ({ handleSetData }) => {
   async function handleClick() {
     setIsOpen(false);
     setHabitName("");
-    handleSetData(habitName, getCalendar);
-    try {
-      await axios.post(import.meta.env.VITE_API_URL, {
-        habitName: habitName,
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
+    addNewHabit({ habitName });
+
+    // handleSetData(habitName, getCalendar);
+    // try {
+    //   await axios.post(import.meta.env.VITE_API_URL, {
+    //     habitName: habitName,
+    //   });
+    // } catch (error) {
+    //   console.log(error.message);
+    // }
   }
 
   return (
@@ -54,6 +58,7 @@ const AddNewHabit = ({ handleSetData }) => {
           add
         </button>
       </div>
+      <p>{isPending && <p>Please Wait</p>}</p>
     </div>
   );
 };
