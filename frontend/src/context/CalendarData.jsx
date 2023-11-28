@@ -14,9 +14,9 @@ export default function CalendarDataContextProvider({ children }) {
     setCalendarData(data);
   };
 
-  const handleAddNewData = (habitName, getFullYear) => {
+  const handleAddNewData = (id, habitName, getFullYear) => {
     setCalendarData((prev) => {
-      return [...prev, { habitName: habitName, getFullYear: getFullYear }];
+      return [...prev, { _id: id, habitName, getFullYear }];
     });
   };
 

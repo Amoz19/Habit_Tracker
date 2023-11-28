@@ -6,7 +6,7 @@ const Calendar = () => {
   const { calendarData } = useCalendarData();
   const { handleDone } = useHandleDone();
 
-  console.log(calendarData);
+  // console.log(calendarData);
 
   const handleUpdate = (year, month, day) => {
     axios.patch(import.meta.env.VITE_API_URL, { year, month, day });
@@ -54,7 +54,7 @@ const Calendar = () => {
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5 place-items-center">
         {getFullYear.getFullYear.map((data) => (
-          <table key={data.month} className="bg-slate-100 w-fit p-6">
+          <table key={data._id} className="bg-slate-100 w-fit p-6">
             <thead className="text-xl ">
               <tr className="flex justify-between py-6 px-3">
                 <td>{data.year}</td>

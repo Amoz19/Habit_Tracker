@@ -13,6 +13,7 @@ const CalendarList = () => {
   const { calendarData } = useCalendarData();
   const { handleAddNewData } = usehandleAddNewData();
   const { handleFetchData } = useHandleFetchData();
+  console.log(calendarData);
 
   useEffect(() => {
     axios
@@ -38,7 +39,7 @@ const CalendarList = () => {
       <>
         {calendarData.map((data) => (
           <div
-            key={data.habitName}
+            key={data._id}
             className="bg-blue-300 w-32 h-32 flex justify-center items-center mx-6 rounded text-slate-800"
             onClick={() => handleClick(data._id)}
           >

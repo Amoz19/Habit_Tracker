@@ -29,7 +29,7 @@ const getFullYearById = async (req, res) => {
 const updateComplete = async (req, res) => {
   const { year, month, day } = req.body;
 
-  await CalendarModel.updateOne(
+  const updateData = await CalendarModel.updateOne(
     {
       _id: year,
     },
@@ -49,7 +49,7 @@ const updateComplete = async (req, res) => {
       ],
     }
   );
-  res.status(200).json({ message: "updated" });
+  res.status(200).json({ _id: updateData._id });
 };
 
 module.exports = { addFullYear, getFullYear, getFullYearById, updateComplete };

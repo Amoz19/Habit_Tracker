@@ -19,11 +19,12 @@ const AddNewHabit = ({ handleSetData }) => {
   async function handleClick() {
     setIsOpen(false);
     setHabitName("");
-    handleSetData(habitName, getCalendar);
+
     try {
-      await axios.post(import.meta.env.VITE_API_URL, {
+      const response = await axios.post(import.meta.env.VITE_API_URL, {
         habitName: habitName,
       });
+      handleSetData(response._id, habitName, getCalendar);
     } catch (error) {
       console.log(error.message);
     }
