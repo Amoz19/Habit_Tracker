@@ -2,13 +2,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import generateCalendar from "../services/data";
 import { addHabitData } from "../hook/useHabitData";
+import { v4 as uuidv4 } from "uuid";
+// import uuid
 
 const AddNewHabit = ({ handleSetData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [habitName, setHabitName] = useState("");
-  const { isPending, mutate: addNewHabit } = addHabitData();
+  const { isLoading, mutate: addNewHabit } = addHabitData();
 
-  // const getCalendar = generateCalendar();
+  // console.log("Mutation", isLoading);
+  const getFullYear = generateCalendar();
+  // console.log(getCalendar);
 
   function handleOpen() {
     setIsOpen(true);
@@ -21,7 +25,7 @@ const AddNewHabit = ({ handleSetData }) => {
   async function handleClick() {
     setIsOpen(false);
     setHabitName("");
-    addNewHabit({ habitName });
+    addNewHabit({ uniqueId: uuidv4(), habitName, getFullYear: getFullYear });
 
     // handleSetData(habitName, getCalendar);
     // try {
@@ -58,7 +62,7 @@ const AddNewHabit = ({ handleSetData }) => {
           add
         </button>
       </div>
-      <p>{isPending && <p>Please Wait</p>}</p>
+      <p>{isLoading && <span>Please Wait</span>}</p>
     </div>
   );
 };

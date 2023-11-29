@@ -13,7 +13,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 const CalendarList = () => {
   const { isError, isLoading, data } = useHabitData();
-  // const navigator = useNavigate();
+  // console.log(isLoading, data);
+  const navigator = useNavigate();
   // const { calendarData } = useCalendarData();
   // const { handleAddNewData } = usehandleAddNewData();
   // const { handleFetchData } = useHandleFetchData();
@@ -33,9 +34,9 @@ const CalendarList = () => {
   //   handleAddNewData(habitName, getFullYear);
   // };
 
-  // const handleClick = (id) => {
-  //   navigator(`/${id}`);
-  // };
+  const handleClick = (id) => {
+    navigator(`/${id}`);
+  };
 
   if (isLoading) {
     return <p>Loading....</p>;
@@ -46,23 +47,28 @@ const CalendarList = () => {
   }
 
   return (
-    <div className="px-32 flex flex-1 flex-wrap">
-      <>
-        {isLoading && <h1>Loading</h1>}
-        {data.map((data) => (
-          <div
-            key={data._id}
-            className="bg-blue-300 w-32 h-32 flex justify-center items-center mx-6 rounded text-slate-800"
-            // onClick={() => handleClick(data._id)}
-          >
-            <h3>{data.habitName}</h3>
-          </div>
-        ))}
-        <AddNewHabit />
-        <ToastContainer position="top-center" theme="dark" />
-        {/* <AddNewHabit handleSetData={handleSetData} /> */}
-      </>
-    </div>
+    <>
+      {data.length > 0 ? (
+        <div className="px-32 flex flex-1 flex-wrap">
+          {isLoading && <h1>Loading</h1>}
+          {data.map((data) => (
+            <div
+              key={data.uniqueId}
+              className="bg-blue-300 w-32 h-32 flex justify-center items-center mx-6 rounded text-slate-800"
+              onClick={() => handleClick(data._id)}
+            >
+              <h3>{data.habitName}</h3>
+            </div>
+          ))}
+
+          {/* <ToastContainer position="top-center" theme="dark" /> */}
+          {/* <AddNewHabit handleSetData={handleSetData} /> */}
+        </div>
+      ) : (
+        <h1 className="flex flex-1 justify-center items-center">Add new</h1>
+      )}
+      <AddNewHabit />
+    </>
   );
 };
 
