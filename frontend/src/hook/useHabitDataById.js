@@ -8,9 +8,9 @@ const getHabitById = async (id) => {
   return data;
 };
 
-const updateHabit = async (specificData) => {
-  console.log(specificData);
-  return await axios.patch(import.meta.env.VITE_API_URL, specificData);
+const updateHabit = async (prams) => {
+  // console.log(prams);
+  return await axios.patch(import.meta.env.VITE_API_URL, { ...prams });
 };
 
 export const useHabitDataById = (id) => {
@@ -20,39 +20,39 @@ export const useHabitDataById = (id) => {
 export const useUpdateHabit = () => {
   const queryClient = useQueryClient();
   return useMutation(updateHabit, {
-    onMutate: async (specificData) => {
-      await queryClient.cancelQueries("habitsId");
-      const previosHabitsData = queryClient.getQueriesData([
-        "habitsId",
-        specificData.id,
-      ]);
-      queryClient.setQueryData(["habitsId", specificData.id], (oldData) => {
-        return {
-          ...oldData,
-          ...specificData,
-        };
-      });
-
-      // Return the previous habits data to be used for rollback in case of an error
-      return { previosHabitsData };
+    onSuccess: () => {
+      queryClient.invalidateQueries(["habitsId"]);
     },
-    onError: async (error, specificData, context) => {
-      // If there is an error, rollback to the previous habits data
-      if (context?.previousHabitsData) {
-        queryClient.setQueryData(
-          ["habitsId", specificData.id],
-          context.previosHabitsData
-        );
-      }
-    },
-    onSettled: () => {
-      // Invalidate the "habitsId" query to refetch the updated data
-      queryClient.invalidateQueries("habitsId");
-    },
-
-    //   queryClient.setQueriesData("habits", (oldQueryData) => {
-    //     return [...oldQueryData, { ...newHabit }];
-    //   });
-    // },
   });
+
+  // const queryClient = useQueryClient();
+  // return useMutation(updateHabit, {
+  //   onMutate: async ({ id, monthIndex, dayIndex }) => {
+  //     await queryClient.cancelQueries(["habitsId", id]);
+  //     const previousHabitsData = queryClient.getQueryData(["habitsId", id]);
+  //     // console.log(previousHabitsData);
+
+  //     // Return the data to be used in the onError callback
+  //     return { previousHabitsData, id, monthIndex, dayIndex };
+  //   },
+  //   onError: async (error, context) => {
+  //     const { previousHabitsData, id } = context;
+  //     console.log(context);
+
+  //     if (previousHabitsData) {
+  //       queryClient.setQueryData(["habitsId", id], previousHabitsData);
+  //     }
+
+  //     // return { id };
+
+  //     // Handle the error or log it as needed
+  //     // console.error("Mutation failed:", error);
+  //   },
+  //   onSettled: (_error, __variables, __prams) => {
+  //     // console.log(variables);
+  //     // if (variables && variables.id) {
+  //     queryClient.invalidateQueries(["habitsId"]);
+  //     // }
+  //   },
+  // });
 };

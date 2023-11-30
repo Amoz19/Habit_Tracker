@@ -1,15 +1,11 @@
-const { default: mongoose } = require("mongoose");
 const CalendarModel = require("../models/CalendarModel");
-const generateCalendar = require("../src/data");
-// const { v4: uuidv4 } = require("uuid");
-// const mongoose = require("mongoose");
+
+const { ObjectId } = require("mongodb");
 
 const addFullYear = async (req, res) => {
   const { uniqueId, habitName, getFullYear } = req.body;
-  // const groupId = uuidv4();
-  // const getFullYear = generateCalendar();
+
   const postFullYear = {
-    // groupId: groupId,
     uniqueId,
     habitName,
     getFullYear,
@@ -30,11 +26,10 @@ const getFullYearById = async (req, res) => {
 };
 
 const updateComplete = async (req, res) => {
-  // const mongoose = new mongoose();
-  const { id, month, day } = req.body;
-  // console.log(typeof(month)));
+  const { id, monthIndex, dayIndex } = req.body;
+  console.log(id, monthIndex, dayIndex);
 
-  // const monthId = mongoose.Types.ObjectId(month); // Convert month to ObjectId
+  // Convert month to ObjectId
 
   await CalendarModel.updateOne(
     {
@@ -48,10 +43,10 @@ const updateComplete = async (req, res) => {
     {
       arrayFilters: [
         {
-          "month._id": month,
+          "month._id": monthIndex,
         },
         {
-          "day._id": day,
+          "day._id": dayIndex,
         },
       ],
     }

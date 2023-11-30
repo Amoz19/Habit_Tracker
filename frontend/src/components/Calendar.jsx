@@ -5,13 +5,13 @@ import { useHabitDataById, useUpdateHabit } from "../hook/useHabitDataById";
 import axios from "axios";
 const Calendar = () => {
   const { id } = useParams();
-  const { isLoading, data } = useHabitDataById(id);
+  const { isLoading, data: calendaData } = useHabitDataById(id);
   const { mutate: upateDay } = useUpdateHabit();
   if (isLoading) {
     return <p>loading......</p>;
   }
 
-  console.log(data);
+  // console.log(data);
   // const { calendarData } = useCalendarData();
   // const { handleDone } = useHandleDone();
 
@@ -30,10 +30,11 @@ const Calendar = () => {
 
   // const matchedData = calendarData.filter((data) => data._id === id);
   // const [getFullYear] = matchedData;
+  // console.log(data[0]._id);
 
-  const handleDone = (id, month, day) => {
-    console.log(id, month, day);
-    upateDay({ id, month, day });
+  const handleDone = (id, monthIndex, dayIndex) => {
+    // console.log(id, monthIndex, dayIndex);
+    upateDay({ id, monthIndex, dayIndex });
   };
 
   return (
@@ -67,8 +68,8 @@ const Calendar = () => {
     //   ))}
     // </div>
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5 place-items-center">
-        {data[0].getFullYear.map((data) => (
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5 place-items-center overflow: auto">
+        {calendaData[0].getFullYear.map((data) => (
           <table key={data._id} className="bg-slate-100 w-fit p-6">
             <thead className="text-xl ">
               <tr className="flex justify-between py-6 px-3">
@@ -86,13 +87,13 @@ const Calendar = () => {
                     // }
                     onClick={() => {
                       // console.log("clicked");
-                      handleDone(
-                        data._id,
-                        // data.year,
-                        data.month,
-                        day.day
-                      );
-                      handleUpdate(getFullYear._id, data._id, day._id);
+                      // handleDone(
+                      //   data._id,
+                      //   // data.year,
+                      //   data.month,
+                      //   day.day
+                      // );
+                      handleDone(calendaData[0]._id, data._id, day._id);
                     }}
                     className={`${
                       day.isComplete
