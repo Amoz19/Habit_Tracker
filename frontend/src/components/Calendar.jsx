@@ -1,17 +1,26 @@
 import { useParams } from "react-router-dom";
-import { useCalendarData, useHandleDone } from "../hook/useCalendar";
+import { useHabitDataById, useUpdateHabit } from "../hook/useHabitDataById";
+
+// import { useCalendarData, useHandleDone } from "../hook/useCalendar";
 import axios from "axios";
 const Calendar = () => {
   const { id } = useParams();
-  const { calendarData } = useCalendarData();
-  const { handleDone } = useHandleDone();
+  const { isLoading, data: calendaData } = useHabitDataById(id);
+  const { mutate: upateDay } = useUpdateHabit();
+  if (isLoading) {
+    return <p>loading......</p>;
+  }
+
+  // console.log(data);
+  // const { calendarData } = useCalendarData();
+  // const { handleDone } = useHandleDone();
 
   // console.log(calendarData);
 
-  const handleUpdate = (year, month, day) => {
-    axios.patch(import.meta.env.VITE_API_URL, { year, month, day });
-    // console.log(year, month, day);
-  };
+  // const handleUpdate = (year, month, day) => {
+  //   axios.patch(import.meta.env.VITE_API_URL, { year, month, day });
+  //   // console.log(year, month, day);
+  // };
 
   // console.log(JSON.stringify(calendarData));
 
@@ -19,10 +28,17 @@ const Calendar = () => {
 
   // };
 
-  const matchedData = calendarData.filter((data) => data._id === id);
-  const [getFullYear] = matchedData;
+  // const matchedData = calendarData.filter((data) => data._id === id);
+  // const [getFullYear] = matchedData;
+  // console.log(data[0]._id);
+
+  const handleDone = (id, monthIndex, dayIndex) => {
+    // console.log(id, monthIndex, dayIndex);
+    upateDay({ id, monthIndex, dayIndex });
+  };
 
   return (
+    // <></>
     // <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5 place-items-center">
     //   {calendarData.map((data) => (
     //     <table key={data.month} className="bg-slate-100 w-fit p-6">
@@ -71,13 +87,13 @@ const Calendar = () => {
                     // }
                     onClick={() => {
                       // console.log("clicked");
-                      handleDone(
-                        getFullYear._id,
-                        data.year,
-                        data.month,
-                        day.day
-                      );
-                      handleUpdate(getFullYear._id, data._id, day._id);
+                      // handleDone(
+                      //   data._id,
+                      //   // data.year,
+                      //   data.month,
+                      //   day.day
+                      // );
+                      handleDone(calendaData[0]._id, data._id, day._id);
                     }}
                     className={`${
                       day.isComplete

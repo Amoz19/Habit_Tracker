@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import generateCalendar from "../services/data";
+import { addHabitData } from "../hook/useHabitData";
+import { v4 as uuidv4 } from "uuid";
+// import uuid
 
 const AddNewHabit = ({ handleSetData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [habitName, setHabitName] = useState("");
+  const { isLoading, mutate: addNewHabit } = addHabitData();
 
-  const getCalendar = generateCalendar();
+  // console.log("Mutation", isLoading);
+  const getFullYear = generateCalendar();
+  // console.log(getCalendar);
 
   function handleOpen() {
     setIsOpen(true);
@@ -19,6 +25,7 @@ const AddNewHabit = ({ handleSetData }) => {
   async function handleClick() {
     setIsOpen(false);
     setHabitName("");
+<<<<<<< HEAD
 
     try {
       const response = await axios.post(import.meta.env.VITE_API_URL, {
@@ -28,6 +35,18 @@ const AddNewHabit = ({ handleSetData }) => {
     } catch (error) {
       console.log(error.message);
     }
+=======
+    addNewHabit({ uniqueId: uuidv4(), habitName, getFullYear: getFullYear });
+
+    // handleSetData(habitName, getCalendar);
+    // try {
+    //   await axios.post(import.meta.env.VITE_API_URL, {
+    //     habitName: habitName,
+    //   });
+    // } catch (error) {
+    //   console.log(error.message);
+    // }
+>>>>>>> implementFetchingWithReactQuery
   }
 
   return (
@@ -55,6 +74,7 @@ const AddNewHabit = ({ handleSetData }) => {
           add
         </button>
       </div>
+      <p>{isLoading && <span>Please Wait</span>}</p>
     </div>
   );
 };

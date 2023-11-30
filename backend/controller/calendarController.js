@@ -1,15 +1,14 @@
 const CalendarModel = require("../models/CalendarModel");
-const generateCalendar = require("../src/data");
-// const { v4: uuidv4 } = require("uuid");
+
+const { ObjectId } = require("mongodb");
 
 const addFullYear = async (req, res) => {
-  const { habitName } = req.body;
-  // const groupId = uuidv4();
-  const getFullYear = generateCalendar();
+  const { uniqueId, habitName, getFullYear } = req.body;
+
   const postFullYear = {
-    // groupId: groupId,
-    habitName: habitName,
-    getFullYear: getFullYear,
+    uniqueId,
+    habitName,
+    getFullYear,
   };
 
   const savedCalendar = await CalendarModel.create(postFullYear);
@@ -22,16 +21,19 @@ const getFullYear = async (req, res) => {
 };
 
 const getFullYearById = async (req, res) => {
-  const fullYear = await CalendarModel.find({ groupId: req.params.groupId });
+  const fullYear = await CalendarModel.find({ _id: req.params.groupId });
   res.status(200).json(fullYear);
 };
 
 const updateComplete = async (req, res) => {
-  const { year, month, day } = req.body;
+  const { id, monthIndex, dayIndex } = req.body;
+  console.log(id, monthIndex, dayIndex);
+
+  // Convert month to ObjectId
 
   const updateData = await CalendarModel.updateOne(
     {
-      _id: year,
+      _id: id,
     },
     {
       $set: {
@@ -41,10 +43,10 @@ const updateComplete = async (req, res) => {
     {
       arrayFilters: [
         {
-          "month._id": month,
+          "month._id": monthIndex,
         },
         {
-          "day._id": day,
+          "day._id": dayIndex,
         },
       ],
     }

@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const CalendarModel = new mongoose.Schema({
+  uniqueId: {
+    type: String,
+    required: true,
+  },
   habitName: {
     type: String,
     required: true,
@@ -17,10 +21,6 @@ const CalendarModel = new mongoose.Schema({
       },
       days: [
         {
-          objId: {
-            type: String,
-            required: true,
-          },
           day: {
             type: Number,
             required: true,
