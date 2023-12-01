@@ -27,11 +27,11 @@ const Calendar = () => {
   ];
 
   return (
-    <>
+    <div className="px-32">
       <BreadCrumb breadCrumb={breadCrumb} />
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5 place-items-center overflow: auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5">
         {calendaData[0].getFullYear.map((data) => (
-          <table key={data._id} className="bg-slate-100 w-fit p-6">
+          <table key={data._id} className="bg-blue-100 w-fit p-6">
             <thead className="text-xl ">
               <tr className="flex justify-between py-6 px-3">
                 <td>{data.year}</td>
@@ -40,7 +40,7 @@ const Calendar = () => {
             </thead>
             <tbody className="grid grid-cols-5 place-items-center gap-y-3">
               {data.days.map((day) => (
-                <tr key={day.day} className="px-3">
+                <tr key={day.day} className="px-3 text-slate-900">
                   <td
                     onClick={() => {
                       handleDone(calendaData[0]._id, data._id, day._id);
@@ -59,7 +59,7 @@ const Calendar = () => {
           </table>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

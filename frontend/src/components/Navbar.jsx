@@ -1,9 +1,9 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <div className="bg-slate-100 px-32 py-6 sticky top-0  mb-4">
-      <h1>Habit Tracker</h1>
+      <Link to="/">Habit Tracker</Link>
     </div>
   );
 };

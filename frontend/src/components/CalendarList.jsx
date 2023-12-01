@@ -10,9 +10,11 @@ import { useNavigate } from "react-router-dom";
 import { useHabitData } from "../hook/useHabitData";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { addHabitData } from "../hook/useHabitData";
 
 const CalendarList = () => {
   const { isError, isLoading, data } = useHabitData();
+  const { isLoading: mutatationLoading } = addHabitData();
 
   const navigator = useNavigate();
 
@@ -36,12 +38,13 @@ const CalendarList = () => {
           {data.map((data) => (
             <div
               key={data.uniqueId}
-              className="bg-blue-300 w-32 h-32 flex justify-center items-center mx-6 rounded text-slate-800"
+              className="bg-blue-300 w-32 h-32 flex justify-center items-center mr-6 rounded text-slate-800"
               onClick={() => handleClick(data._id)}
             >
               <h3>{data.habitName}</h3>
             </div>
           ))}
+          {mutatationLoading ? <p>Loading....</p> : null}
 
           {/* <ToastContainer position="top-center" theme="dark" /> */}
           {/* <AddNewHabit handleSetData={handleSetData} /> */}
