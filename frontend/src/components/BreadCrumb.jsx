@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import { IcBaselineGreaterThan } from "../../util/icon";
 
 const BreadCrumb = ({ breadCrumb }) => {
-  //   console.log(breadCrumb[0].name);
   return (
-    <div className="flex justify-center lg:justify-start my-8">
+    <div className="flex my-8">
       {breadCrumb.map((data, i) => (
         <div className="flex items-center" key={data.name}>
           <Link

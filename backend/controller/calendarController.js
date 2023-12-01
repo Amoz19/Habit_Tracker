@@ -1,9 +1,10 @@
 const CalendarModel = require("../models/CalendarModel");
 
-const { ObjectId } = require("mongodb");
+// const { ObjectId } = require("mongodb");
 
 const addFullYear = async (req, res) => {
   const { uniqueId, habitName, getFullYear } = req.body;
+  console.log(uniqueId, habitName, getFullYear);
 
   const postFullYear = {
     uniqueId,

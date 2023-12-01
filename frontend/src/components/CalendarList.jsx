@@ -33,18 +33,21 @@ const CalendarList = () => {
   return (
     <>
       {data.length > 0 ? (
-        <div className="px-32 flex flex-1 flex-wrap">
+        <div className="px-8 md:px-32 bg-zinc-900 flex flex-1">
           {isLoading && <h1>Loading</h1>}
-          {data.map((data) => (
-            <div
-              key={data.uniqueId}
-              className="bg-blue-300 w-32 h-32 flex justify-center items-center mr-6 rounded text-slate-800"
-              onClick={() => handleClick(data._id)}
-            >
-              <h3>{data.habitName}</h3>
+          <div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 justify-start h-auto">
+              {data.map((data) => (
+                <div
+                  key={data.uniqueId}
+                  className="bg-slate-900 w-32 flex justify-center items-center h-32 mr-6 my-3 rounded text-white/80"
+                  onClick={() => handleClick(data._id)}
+                >
+                  <h3>{data.habitName}</h3>
+                </div>
+              ))}
             </div>
-          ))}
-          {mutatationLoading ? <p>Loading....</p> : null}
+          </div>
 
           {/* <ToastContainer position="top-center" theme="dark" /> */}
           {/* <AddNewHabit handleSetData={handleSetData} /> */}

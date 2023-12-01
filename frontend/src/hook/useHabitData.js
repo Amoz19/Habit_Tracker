@@ -9,9 +9,13 @@ const getHabits = async () => {
   return data;
 };
 
-const addNewHabit = async ({ id, month, day }) => {
+const addNewHabit = async ({ uniqueId, habitName, getFullYear }) => {
   try {
-    return await axios.post(import.meta.env.VITE_API_URL, { id, month, day });
+    return await axios.post(import.meta.env.VITE_API_URL, {
+      uniqueId,
+      habitName,
+      getFullYear,
+    });
   } catch (error) {
     console.log(error.message);
   }

@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
+import logo from "../assets/animation.gif";
 
 const Navbar = () => {
   return (
-    <div className="bg-slate-100 px-32 py-6 sticky top-0  mb-4">
-      <Link to="/">Habit Tracker</Link>
+    <div className="bg-slate-900/90 px-8 md:px-32 py-6 sticky top-0 text-white">
+      <img src={logo} alt="logo" className="w-24" />
     </div>
   );
 };

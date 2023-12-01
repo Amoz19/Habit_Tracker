@@ -27,13 +27,13 @@ const Calendar = () => {
   ];
 
   return (
-    <div className="px-32">
+    <div className="px-4 md:px-16 lg:px-32 pb-6">
       <BreadCrumb breadCrumb={breadCrumb} />
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5">
         {calendaData[0].getFullYear.map((data) => (
-          <table key={data._id} className="bg-blue-100 w-fit p-6">
+          <table key={data._id} className="bg-blue-100 p-6 rounded">
             <thead className="text-xl ">
-              <tr className="flex justify-between py-6 px-3">
+              <tr className="flex justify-between py-6 px-3 text-slate-700">
                 <td>{data.year}</td>
                 <td>{data.month}</td>
               </tr>

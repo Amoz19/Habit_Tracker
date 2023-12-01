@@ -5,7 +5,7 @@ import { addHabitData } from "../hook/useHabitData";
 import { v4 as uuidv4 } from "uuid";
 // import uuid
 
-const AddNewHabit = ({ handleSetData }) => {
+const AddNewHabit = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [habitName, setHabitName] = useState("");
   const { isLoading, mutate: addNewHabit } = addHabitData();
@@ -24,7 +24,11 @@ const AddNewHabit = ({ handleSetData }) => {
     setIsOpen(false);
     setHabitName("");
 
-    addNewHabit({ uniqueId: uuidv4(), habitName, getFullYear: getFullYear });
+    addNewHabit({
+      uniqueId: uuidv4(),
+      habitName,
+      getFullYear,
+    });
   }
 
   return (
@@ -33,7 +37,7 @@ const AddNewHabit = ({ handleSetData }) => {
         onClick={handleOpen}
         className={`${
           isOpen ? "hidden" : "flex"
-        } bg-green-400 px-6 py-2 rounded-full`}
+        } bg-white px-6 py-2 rounded-full`}
       >
         +
       </p>

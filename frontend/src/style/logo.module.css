@@ -1,0 +1,72 @@
+/* .iPhone_13_mini__1 {
+	animation: 2s linear 0s 1 normal forwards running iPhone_13_mini__1;
+	transform-box: fill-box;
+	transform-origin: 50% 50%
+}
+@keyframes iPhone_13_mini__1 {
+	0% {
+		background-color: rgba(255,255,255,1);;
+	}
+} */
+
+/* .iPhone_13_mini__1 {
+	animation: 2s linear 0s 1 normal forwards running iPhone_13_mini__1;
+	transform-box: fill-box;
+	transform-origin: 50% 50%
+}
+@keyframes iPhone_13_mini__1 {
+	0% {
+		background-color: rgba(255,255,255,1);;
+	}
+} */
+.block1 {
+  animation: 2s linear 0s 1 normal forwards running Rectangle_1;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+@keyframes block1 {
+  0% {
+    background-color: rgba(252, 252, 255, 1);
+  }
+  35% {
+    background-color: rgba(11, 10, 64, 1);
+  }
+  70% {
+    background-color: rgba(255, 255, 255, 1);
+  }
+}
+.block2 {
+  animation: 2s linear 0s 1 normal forwards running Rectangle_2;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+@keyframes block2 {
+  0% {
+    background-color: rgba(255, 255, 255, 1);
+  }
+  35% {
+    background-color: rgba(255, 255, 255, 1);
+  }
+  70% {
+    background-color: rgba(11, 16, 59, 1);
+  }
+  100% {
+    background-color: rgba(255, 255, 255, 1);
+  }
+}
+.block2 {
+  animation: 2s linear 0s 1 normal forwards running Rectangle_3;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+@keyframes block2 {
+  0% {
+    background-color: rgba(252, 252, 255, 1);
+  }
+  70% {
+    background-color: rgba(252, 252, 255, 1);
+  }
+  100% {
+    background-color: rgba(12, 16, 60, 1);
+  }
+}
