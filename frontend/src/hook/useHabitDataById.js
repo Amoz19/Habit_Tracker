@@ -23,12 +23,12 @@ export const useUpdateHabit = () => {
     },
   });
 };
-import { useDataFetch } from "./dataFetch";
+// import { useDataFetch } from "./dataFetch";
 
-export function useHabitDataById(id) {
-  return useDataFetch(getHabitById, id);
-}
+// export function useHabitDataById(id) {
+//   return useDataFetch(getHabitById, id);
+// }
 
-export function useOtherDataById(id) {
-  return useDataFetch(getOtherDataById, id);
-}
+// export function useOtherDataById(id) {
+//   return useDataFetch(getOtherDataById, id);
+// }
