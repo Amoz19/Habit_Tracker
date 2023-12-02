@@ -15,8 +15,6 @@ import withApiFunctions from "../hoc/withApiFunctions";
 import useCustomQuery from "../hook/useCustomQuery";
 
 const CalendarList = ({ apiFunctions }) => {
-  // console.log(apiFunctions.getAll.func());
-  // const { isError, isLoading, data } = useHabitData();
   const { isError, isLoading, data } = useCustomQuery(
     apiFunctions.getAll.key,
     () => apiFunctions.getAll.func()

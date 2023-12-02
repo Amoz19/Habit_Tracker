@@ -1,9 +1,9 @@
 // import axios from "axios";
-import { useQueries } from "react-query";
+import { useQuery } from "react-query";
 
 const useCustomQuery = (key, queryFunction, queryDefault = {}) => {
   const queryKey = [key];
-  return useQueries(queryKey, () => queryFunction(), { ...queryDefault });
+  return useQuery(queryKey, () => queryFunction(), { ...queryDefault });
 };
 
 export default useCustomQuery;
