@@ -7,9 +7,6 @@ const Calendar = () => {
   const { isLoading, data: calendaData } = useHabitDataById(id);
   // console.log(calendaData);
   const { mutate: upateDay } = useUpdateHabit();
-  if (isLoading) {
-    return <p>loading......</p>;
-  }
 
   const handleDone = (id, monthIndex, dayIndex) => {
     upateDay({ id, monthIndex, dayIndex });
@@ -25,6 +22,10 @@ const Calendar = () => {
       path: `/${id}`,
     },
   ];
+
+  if (isLoading) {
+    return <p>loading......</p>;
+  }
 
   return (
     <div className="px-4 md:px-16 lg:px-32 pb-6">

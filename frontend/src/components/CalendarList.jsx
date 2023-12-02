@@ -8,8 +8,8 @@ import {
 } from "../hook/useCalendar";
 import { useNavigate } from "react-router-dom";
 import { useHabitData } from "../hook/useHabitData";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import { addHabitData } from "../hook/useHabitData";
 
 const CalendarList = () => {

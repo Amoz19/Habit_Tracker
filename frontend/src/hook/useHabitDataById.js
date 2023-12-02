@@ -21,7 +21,7 @@ export const useUpdateHabit = () => {
   const queryClient = useQueryClient();
   return useMutation(updateHabit, {
     onSuccess: () => {
-      queryClient.invalidateQueries(["habitsId"]);
+      queryClient.invalidateQueries("habitsId");
     },
   });
 
