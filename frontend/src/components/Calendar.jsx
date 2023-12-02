@@ -5,13 +5,14 @@ import withApiFunctions from "../hoc/withApiFunctions";
 import useCustomQuery from "../hook/useCustomQuery";
 
 const Calendar = ({ apiFunctions }) => {
-  // console.log(apiFunctions);
+  console.log(apiFunctions);
   const { id } = useParams();
-  const { isLoading, data: calendaData } = useCustomQuery(
+  // console.log(id);
+  const { isLoading, data } = useCustomQuery(
     () => apiFunctions.getById(id),
     apiFunctions.getById.key
   );
-  // console.log(calendaData);
+  // console.log(`${import.meta.env.VITE_API_URL}/${id}`);
   const { mutate: upateDay } = useUpdateHabit();
 
   const handleDone = (id, monthIndex, dayIndex) => {
@@ -24,7 +25,7 @@ const Calendar = ({ apiFunctions }) => {
       path: "/",
     },
     {
-      name: calendaData[0].habitName,
+      name: data[0].habitName,
       path: `/${id}`,
     },
   ];
@@ -37,7 +38,7 @@ const Calendar = ({ apiFunctions }) => {
     <div className="px-4 md:px-16 lg:px-32 pb-6">
       <BreadCrumb breadCrumb={breadCrumb} />
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5">
-        {calendaData[0].getFullYear.map((data) => (
+        {data[0].getFullYear.map((data) => (
           <table key={data._id} className="bg-blue-100 p-6 rounded">
             <thead className="text-xl ">
               <tr className="flex justify-between py-6 px-3 text-slate-700">

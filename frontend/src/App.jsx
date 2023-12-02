@@ -3,6 +3,7 @@ import CalendarList from "./components/CalendarList";
 import { NotFound } from "./components/NotFound";
 import Layout from "./pages/Layout";
 import Calendar from "./components/Calendar";
+import EnhancedCalender from "./components/Calendar";
 // import Test from "./components/Test";
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<CalendarList />} />
           {/* <Route path="/ani" element={<Test />} /> */}
-          <Route path="/:id" element={<Calendar />} />
+          <Route path="/:id" element={<EnhancedCalender />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
