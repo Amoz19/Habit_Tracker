@@ -2,7 +2,6 @@ import axios from "axios";
 
 const getAllHabits = async () => {
   const { data } = await axios.get(import.meta.env.VITE_API_URL);
-  console.log(data);
   return data;
 };
 
