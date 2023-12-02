@@ -1,18 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useHabitDataById, useUpdateHabit } from "../hook/useHabitDataById";
 import BreadCrumb from "./BreadCrumb";
-import withApiFunctions from "../hoc/withApiFunctions";
-import useCustomQuery from "../hook/useCustomQuery";
 
-const Calendar = ({ apiFunctions }) => {
-  console.log(apiFunctions);
+const Calendar = () => {
   const { id } = useParams();
-  // console.log(id);
-  const { isLoading, data } = useCustomQuery(
-    () => apiFunctions.getById(id),
-    apiFunctions.getById.key
-  );
-  // console.log(`${import.meta.env.VITE_API_URL}/${id}`);
+  const { isLoading, data: calendaData } = useHabitDataById(id);
+  // console.log(calendaData);
   const { mutate: upateDay } = useUpdateHabit();
 
   const handleDone = (id, monthIndex, dayIndex) => {
@@ -71,6 +64,4 @@ const Calendar = ({ apiFunctions }) => {
   );
 };
 
-const EnhancedCalender = withApiFunctions(Calendar);
-
-export default EnhancedCalender;
+export default Calendar;

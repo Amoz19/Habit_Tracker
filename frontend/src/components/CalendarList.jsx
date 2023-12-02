@@ -1,26 +1,13 @@
-import { useEffect } from "react";
-import axios from "axios";
 import AddNewHabit from "./AddNewHabit";
-import {
-  useCalendarData,
-  useHandleFetchData,
-  usehandleAddNewData,
-} from "../hook/useCalendar";
 import { useNavigate } from "react-router-dom";
 import { useHabitData } from "../hook/useHabitData";
-// import { ToastContainer } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { addHabitData } from "../hook/useHabitData";
-import withApiFunctions from "../hoc/withApiFunctions";
-import useCustomQuery from "../hook/useCustomQuery";
 
-const CalendarList = ({ apiFunctions }) => {
-  const { isError, isLoading, data } = useCustomQuery(
-    apiFunctions.getAll.key,
-    () => apiFunctions.getAll.func()
-  );
-
-  // const { isLoading: mutatationLoading } = addHabitData();
+const CalendarList = () => {
+  const { isError, isLoading, data } = useHabitData();
+  const { isLoading: mutatationLoading } = addHabitData();
 
   const navigator = useNavigate();
 
@@ -54,9 +41,6 @@ const CalendarList = ({ apiFunctions }) => {
               ))}
             </div>
           </div>
-
-          {/* <ToastContainer position="top-center" theme="dark" /> */}
-          {/* <AddNewHabit handleSetData={handleSetData} /> */}
         </div>
       ) : (
         <h1 className="flex flex-1 justify-center items-center">Add new</h1>
@@ -66,6 +50,4 @@ const CalendarList = ({ apiFunctions }) => {
   );
 };
 
-const EnhancedCalenderList = withApiFunctions(CalendarList);
-
-export default EnhancedCalenderList;
+export default CalendarList;

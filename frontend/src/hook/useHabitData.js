@@ -32,12 +32,6 @@ export const addHabitData = () => {
       await queryClient.cancelQueries("habits");
       const previosHabitsData = queryClient.getQueriesData("habits");
       queryClient.setQueriesData("habits", (oldQueryData) => {
-        // console.log(oldQueryData);
-        // return {
-        //   ...oldQueryData,
-        //   data: [...oldQueryData, { ...newHabit }],
-        // };
-        // console.log(newHabit);
         return [...oldQueryData, { ...newHabit }];
       });
       return previosHabitsData;
