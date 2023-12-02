@@ -11,10 +11,17 @@ import { useHabitData } from "../hook/useHabitData";
 // import { ToastContainer } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 import { addHabitData } from "../hook/useHabitData";
+import withApiFunctions from "../hoc/withApiFunctions";
+import useCustomQuery from "../hook/useCustomQuery";
 
-const CalendarList = () => {
-  const { isError, isLoading, data } = useHabitData();
-  const { isLoading: mutatationLoading } = addHabitData();
+const CalendarList = ({ apiFunctions }) => {
+  // console.log(apiFunctions.getAll.func());
+  // const { isError, isLoading, data } = useHabitData();
+  const { isError, isLoading, data } = useCustomQuery(
+    apiFunctions.getAll.key,
+    () => apiFunctions.getAll.func()
+  );
+  // const { isLoading: mutatationLoading } = addHabitData();
 
   const navigator = useNavigate();
 
@@ -60,4 +67,6 @@ const CalendarList = () => {
   );
 };
 
-export default CalendarList;
+const EnhancedCalenderList = withApiFunctions(CalendarList);
+
+export default EnhancedCalenderList;
