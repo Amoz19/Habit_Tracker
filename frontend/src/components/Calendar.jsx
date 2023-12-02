@@ -1,11 +1,16 @@
 import { useParams } from "react-router-dom";
 import { useHabitDataById, useUpdateHabit } from "../hook/useHabitDataById";
 import BreadCrumb from "./BreadCrumb";
+import { useCustomQuery } from "../hook/useCustomQuery";
+import withApiFunctions from "../hoc/withApiFunctions";
+import { habitApiFunctions } from "../services/apis/habits";
 
-const Calendar = () => {
+const Calendar = ({ habitApiFunctions }) => {
   const { id } = useParams();
-  const { isLoading, data: calendaData } = useHabitDataById(id);
-  // console.log(calendaData);
+  const { isLoading, data: calendaData } = useCustomQuery(
+    () => habitApiFunctions.get.func(id),
+    habitApiFunctions.get.key
+  );
   const { mutate: upateDay } = useUpdateHabit();
   if (isLoading) {
     return <p>loading......</p>;
@@ -63,4 +68,6 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
+const EnhancedComponent = withApiFunctions(Calendar, habitApiFunctions);
+
+export default EnhancedComponent;
