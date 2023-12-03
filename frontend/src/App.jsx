@@ -1,13 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import { NotFound } from "./components/NotFound";
 import Layout from "./pages/Layout";
-
 import EnhancedCalendarList from "./components/CalendarList";
 import EnhancedCalendar from "./components/Calendar";
-import Loading from "./components/Loading";
-
-// import Test from "./components/Test";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -16,6 +11,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<EnhancedCalendarList />} />
           <Route path="/:id" element={<EnhancedCalendar />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>

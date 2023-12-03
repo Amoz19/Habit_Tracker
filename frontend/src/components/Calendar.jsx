@@ -4,17 +4,25 @@ import BreadCrumb from "./BreadCrumb";
 import useCustomQuery from "../hook/useCustomQuery";
 import withApiFunctions from "../hoc/withApiFunctions";
 import Loading from "./Loading";
+import NotFound from "./NotFound";
 
 const Calendar = ({ habitApiFunctions }) => {
   const { id } = useParams();
-  const { isLoading, data: calendaData } = useCustomQuery(
-    habitApiFunctions.get.key(id),
-    () => habitApiFunctions.get.func(id)
+  const {
+    isLoading,
+    data: calendaData,
+    error,
+  } = useCustomQuery(habitApiFunctions.get.key(id), () =>
+    habitApiFunctions.get.func(id)
   );
   const { mutate: upateDay } = useUpdateHabit(id);
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (error) {
+    return <NotFound />;
   }
 
   const handleDone = (id, monthIndex, dayIndex) => {
