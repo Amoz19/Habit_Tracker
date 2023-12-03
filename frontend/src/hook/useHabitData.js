@@ -4,10 +4,10 @@ import axios from "axios";
 
 // import "react-toastify/dist/ReactToastify.css";
 
-const getHabits = async () => {
-  const { data } = await axios.get(import.meta.env.VITE_API_URL);
-  return data;
-};
+// const getHabits = async () => {
+//   const { data } = await axios.get(import.meta.env.VITE_API_URL);
+//   return data;
+// };
 
 const addNewHabit = async ({ uniqueId, habitName, getFullYear }) => {
   try {
@@ -21,9 +21,9 @@ const addNewHabit = async ({ uniqueId, habitName, getFullYear }) => {
   }
 };
 
-export const useHabitData = () => {
-  return useQuery(["habits"], getHabits);
-};
+// export const useHabitData = () => {
+//   return useQuery(["habits"], getHabits);
+// };
 
 export const addHabitData = () => {
   const queryClient = useQueryClient();

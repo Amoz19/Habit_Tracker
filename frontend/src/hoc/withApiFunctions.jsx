@@ -1,6 +1,10 @@
-import { apiFunctions } from "../services/apis/habits";
+import { habitApiFunctions } from "../services/apis/habits";
 const withApiFunctions = (WrappedComponent) => (props) => {
-  return <WrappedComponent {...props} apiFunctions={apiFunctions} />;
+  // const WithApiFunctions = (props) => {
+  return <WrappedComponent {...props} habitApiFunctions={habitApiFunctions} />;
+  // };
+
+  // return WithApiFunctions;
 };
 
 export default withApiFunctions;

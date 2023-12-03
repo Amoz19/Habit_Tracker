@@ -1,13 +1,16 @@
 import AddNewHabit from "./AddNewHabit";
 import { useNavigate } from "react-router-dom";
-import { useHabitData } from "../hook/useHabitData";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { addHabitData } from "../hook/useHabitData";
 
-const CalendarList = () => {
-  const { isError, isLoading, data } = useHabitData();
-  const { isLoading: mutatationLoading } = addHabitData();
+import useCustomQuery from "../hook/useCustomQuery";
+import withApiFunctions from "../hoc/withApiFunctions";
+import Loading from "./Loading";
+// import { habitApiFunctions } from "../services/apis/habits";
+
+const CalendarList = ({ habitApiFunctions }) => {
+  const { isError, isLoading, data } = useCustomQuery(
+    habitApiFunctions.getAll.key,
+    () => habitApiFunctions.getAll.func()
+  );
 
   const navigator = useNavigate();
 
@@ -16,7 +19,7 @@ const CalendarList = () => {
   };
 
   if (isLoading) {
-    return <p>Loading....</p>;
+    return <Loading />;
   }
 
   if (isError) {
@@ -29,7 +32,7 @@ const CalendarList = () => {
         <div className="px-8 md:px-32 bg-zinc-900 flex flex-1">
           {isLoading && <h1>Loading</h1>}
           <div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 justify-start h-auto">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-8 justify-start h-auto">
               {data.map((data) => (
                 <div
                   key={data.uniqueId}
@@ -50,4 +53,6 @@ const CalendarList = () => {
   );
 };
 
-export default CalendarList;
+const EnhancedCalendarList = withApiFunctions(CalendarList);
+
+export default EnhancedCalendarList;

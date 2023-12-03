@@ -1,25 +1,25 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 
-const getHabitById = async (id) => {
-  const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/${id}`);
-  return data;
-};
+// const getHabitById = async (id) => {
+//   const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/${id}`);
+//   return data;
+// };
 
 const updateHabit = async (prams) => {
   // console.log(prams);
   return await axios.patch(import.meta.env.VITE_API_URL, { ...prams });
 };
 
-export const useHabitDataById = (id) => {
-  return useQuery(["habitsId"], () => getHabitById(id));
-};
+// export const useHabitDataById = (id) => {
+//   return useQuery(["habitsId"], () => getHabitById(id));
+// };
 
-export const useUpdateHabit = () => {
+export const useUpdateHabit = (id) => {
   const queryClient = useQueryClient();
   return useMutation(updateHabit, {
     onSuccess: () => {
-      queryClient.invalidateQueries("habitsId");
+      queryClient.invalidateQueries([["habits", id]]);
     },
   });
 };

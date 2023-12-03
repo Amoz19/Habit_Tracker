@@ -10,7 +10,7 @@ const getHabitById = async (id) => {
   return data;
 };
 
-export const apiFunctions = {
-  getAll: { key: "habits", func: getAllHabits },
-  getById: { key: "habit", func: getHabitById },
+export const habitApiFunctions = {
+  getAll: { func: getAllHabits, key: "habits" },
+  get: { func: getHabitById, key: (id) => ["habits", id] },
 };
