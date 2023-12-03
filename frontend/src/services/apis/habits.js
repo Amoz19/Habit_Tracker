@@ -12,5 +12,5 @@ export const getHabitById = async (id) => {
 
 export const habitApiFunctions = {
   getAll: { func: getHabits, key: "habits" },
-  get: { func: getHabitById, key: "habit" },
+  get: { func: getHabitById, key: (id) => ["habits", id] },
 };

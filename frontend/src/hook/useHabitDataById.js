@@ -11,15 +11,15 @@ const updateHabit = async (prams) => {
   return await axios.patch(import.meta.env.VITE_API_URL, { ...prams });
 };
 
-export const useHabitDataById = (id) => {
-  return useQuery(["habitsId"], () => getHabitById(id));
-};
+// export const useHabitDataById = (id) => {
+//   return useQuery(["habitsId"], () => getHabitById(id));
+// };
 
-export const useUpdateHabit = () => {
+export const useUpdateHabit = (id) => {
   const queryClient = useQueryClient();
   return useMutation(updateHabit, {
     onSuccess: () => {
-      queryClient.invalidateQueries(["habitsId"]);
+      queryClient.invalidateQueries([["habits", id]]);
     },
   });
 };

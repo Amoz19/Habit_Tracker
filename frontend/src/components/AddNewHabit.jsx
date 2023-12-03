@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 import generateCalendar from "../services/data";
 import { addHabitData } from "../hook/useHabitData";
 import { v4 as uuidv4 } from "uuid";
-// import uuid
 
 const AddNewHabit = () => {
   const [isOpen, setIsOpen] = useState(false);
