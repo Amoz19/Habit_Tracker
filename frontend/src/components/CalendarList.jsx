@@ -2,8 +2,8 @@ import AddNewHabit from "./AddNewHabit";
 import { useNavigate } from "react-router-dom";
 
 import { useCustomQuery } from "../hook/useCustomQuery";
+
 import withApiFunctions from "../hoc/withApiFunctions";
-import { habitApiFunctions } from "../services/apis/habits";
 
 const CalendarList = ({ habitApiFunctions }) => {
   const { isError, isLoading, data } = useCustomQuery(
