@@ -1,28 +1,47 @@
 const express = require("express");
-const morgan = require("morgan");
-const helmet = require("helmet");
 const cors = require("cors");
-const router = require("../routes/calendarRoute");
+const calendarRoute = require("../routes/calendarRoute");
+const userRoute = require("../routes/userRoute");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const MongoDbStore = require("connect-mongodb-session")(session);
 
 require("dotenv").config();
 
 const dbConnect = process.env.DB_URL;
-
-const middlewares = require("./middlewares");
+const maxAge = process.env.MAX_AGE;
+const secret = process.env.SECRET_KEY;
 
 const app = express();
-
-app.use(morgan("dev"));
-app.use(helmet());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
 
-app.use("/api/v1", router);
+const mongoDbStore = new MongoDbStore({
+  uri: dbConnect,
+  collection: "userSessions",
+});
 
-app.use(middlewares.notFound);
-app.use(middlewares.errorHandler);
+app.use(
+  session({
+    secret: secret,
+    saveUninitialized: false,
+    resave: false,
+    store: mongoDbStore,
+    cookie: {
+      maxAge: maxAge,
+      sameSite: false,
+      secure: false,
+    },
+  })
+);
+
+app.use("/api/v1", calendarRoute);
+app.use("api/user", userRoute);
 
 mongoose
   .connect(dbConnect)
