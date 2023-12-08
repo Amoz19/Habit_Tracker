@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import useCustomQuery from "../hook/useCustomQuery";
 import withApiFunctions from "../hoc/withApiFunctions";
 import Loading from "./Loading";
-// import { habitApiFunctions } from "../services/apis/habits";
+// import { apiFunctionss } from "../services/apis/habits";
 
-const CalendarList = ({ habitApiFunctions }) => {
+const CalendarList = ({ apiFunctionss }) => {
   const { isError, isLoading, data } = useCustomQuery(
-    habitApiFunctions.getAll.key,
-    () => habitApiFunctions.getAll.func()
+    apiFunctionss.getAll.key,
+    () => apiFunctionss.getAll.func()
   );
 
   const navigator = useNavigate();

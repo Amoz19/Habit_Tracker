@@ -6,14 +6,14 @@ import withApiFunctions from "../hoc/withApiFunctions";
 import Loading from "./Loading";
 import NotFound from "./NotFound";
 
-const Calendar = ({ habitApiFunctions }) => {
+const Calendar = ({ apiFunctionss }) => {
   const { id } = useParams();
   const {
     isLoading,
     data: calendaData,
     error,
-  } = useCustomQuery(habitApiFunctions.get.key(id), () =>
-    habitApiFunctions.get.func(id)
+  } = useCustomQuery(apiFunctionss.get.key(id), () =>
+    apiFunctionss.get.func(id)
   );
   const { mutate: upateDay } = useUpdateHabit(id);
 
