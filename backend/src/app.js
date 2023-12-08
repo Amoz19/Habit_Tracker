@@ -9,7 +9,6 @@ const MongoDbStore = require("connect-mongodb-session")(session);
 require("dotenv").config();
 
 const dbConnect = process.env.DB_URL;
-const maxAge = process.env.MAX_AGE;
 const secret = process.env.SECRET_KEY;
 
 const app = express();
@@ -28,12 +27,13 @@ const mongoDbStore = new MongoDbStore({
 
 app.use(
   session({
+    name: "session-id",
     secret: secret,
     saveUninitialized: false,
     resave: false,
     store: mongoDbStore,
     cookie: {
-      maxAge: maxAge,
+      maxAge: 1000 * 60 * 60 * 3,
       sameSite: false,
       secure: false,
     },
@@ -41,7 +41,7 @@ app.use(
 );
 
 app.use("/api/v1", calendarRoute);
-app.use("api/user", userRoute);
+app.use("/api/user", userRoute);
 
 mongoose
   .connect(dbConnect)

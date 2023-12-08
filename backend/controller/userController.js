@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const createNewUser = async (req, res) => {
   const { username, password } = req.body;
-  const saltRounds = process.env.SALT_ROUND;
+  const saltRounds = 10;
 
   if (!username && !password) {
     return res.status(400).send("Please fill all the fields");
@@ -15,15 +15,17 @@ const createNewUser = async (req, res) => {
   }
 
   try {
-    const isUserExist = await Usermodel.findOne({ username });
+    const isAreadyRegisterd = await Usermodel.findOne({ username });
 
-    if (isUserExist) {
+    if (isAreadyRegisterd) {
       return res.status(400).send("User already registered");
     }
 
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
     await Usermodel.create({
-      email,
-      password: bcrypt.hashSync(password, saltRounds),
+      username,
+      password: hashedPassword,
     });
     res.send("Register Successfully");
   } catch (error) {
@@ -40,21 +42,46 @@ const userLogin = async (req, res) => {
 
   try {
     const userCredential = await Usermodel.findOne({ username });
+    console.log(userCredential);
     if (!userCredential) {
-      res.status(400).send("User does not exist");
+      res.status(400).send("Wrong Credential");
     }
 
-    const isCorrectPassword = bcrypt.compareSync(password, saltRounds);
+    const isCorrectPassword = await bcrypt.compare(
+      password,
+      userCredential.password
+    );
+
+    console.log(isCorrectPassword);
 
     if (!isCorrectPassword) {
-      return res.status.send("Wrong password");
+      return res.status(400).send("Wrong password");
     }
 
     const sessUser = {
       id: userCredential._id,
       username: userCredential.username,
     };
-  } catch (error) {}
+
+    req.session.user = sessUser;
+    res.json({ msg: "Logged In Successfully", user: sessUser });
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
-module.exports = { createNewUser };
+const logout = async (req, res) => {
+  req.session.destroy((error) => {
+    if (error) throw error;
+    res.clearCookie("session-id");
+    res.send("Successfully Logout");
+  });
+};
+
+const checkAuth = async (req, res) => {
+  const sessuser = req.session.sessUser;
+  if (!sessuser) res.status(401).send("Did not login yet");
+  res.json({ user: sessuser });
+};
+
+module.exports = { createNewUser, userLogin, logout, checkAuth };
