@@ -6,10 +6,10 @@ import withApiFunctions from "../hoc/withApiFunctions";
 import Loading from "./Loading";
 // import { apiFunctionss } from "../services/apis/habits";
 
-const CalendarList = ({ apiFunctionss }) => {
+const CalendarList = ({ apiFunctions }) => {
   const { isError, isLoading, data } = useCustomQuery(
-    apiFunctionss.getAll.key,
-    () => apiFunctionss.getAll.func()
+    apiFunctions.getAll.key,
+    () => apiFunctions.getAll.func()
   );
 
   const navigator = useNavigate();

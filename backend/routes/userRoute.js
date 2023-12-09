@@ -8,7 +8,7 @@ const {
 
 const router = express.Router();
 
-router.post("/singup", createNewUser);
+router.post("/signup", createNewUser);
 router.post("/login", userLogin);
 router.delete("/logout", logout);
 router.get("/authChecker", checkAuth);

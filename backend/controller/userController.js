@@ -52,8 +52,6 @@ const userLogin = async (req, res) => {
       userCredential.password
     );
 
-    console.log(isCorrectPassword);
-
     if (!isCorrectPassword) {
       return res.status(400).send("Wrong password");
     }
