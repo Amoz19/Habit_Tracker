@@ -11,7 +11,7 @@ const authFunction = async (formData, query) => {
     );
     return data;
   } catch (err) {
-    throw new Error("Invalid Credential", err);
+    throw new Error(err.response.data);
     // console.log("THis is from hook", err);
   }
 };

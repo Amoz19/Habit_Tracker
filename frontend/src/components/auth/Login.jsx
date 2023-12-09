@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Navigate } from "react-router-dom";
 import { useAuthFunction } from "../../hook/useAuthForm.js";
-import Loading from "../Loading.jsx";
 
 const Login = ({ handleOpen }) => {
   const {
@@ -17,10 +16,6 @@ const Login = ({ handleOpen }) => {
     return <Navigate to="/home" />;
   }
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   const onHandleSubmit = (data, e) => {
     e.preventDefault();
 
@@ -28,16 +23,16 @@ const Login = ({ handleOpen }) => {
   };
 
   return (
-    <div className="bg-zinc-400 flex flex-col justify-center items-center flex-1">
+    <div className="bg-zinc-900 flex flex-col justify-center items-center flex-1">
       <form
         onSubmit={handleSubmit(onHandleSubmit)}
-        className="bg-slate-100 w-fit p-6"
+        className="bg-slate-100 w-fit p-6 rounded"
       >
         <div>
           <input
             type="text"
             {...register("username", { required: true })}
-            className="bg-blue-100 border border-black"
+            className="bg-blue-100 py-1 px-3 focus:outline outline-blue-100 rounded"
             placeholder="Enter username"
           />
           {errors.username && (
@@ -48,7 +43,7 @@ const Login = ({ handleOpen }) => {
           <input
             type="password"
             {...register("password", { required: true })}
-            className="bg-blue-100 border border-black w-fit"
+            className="bg-blue-100 py-1 px-3 focus:outline outline-blue-100 rounded"
             placeholder="Enter password"
           />
           {errors.password && (
@@ -58,19 +53,22 @@ const Login = ({ handleOpen }) => {
 
         <input
           type="submit"
-          className="bg-blue-900 text-white px-4 rounded-sm w-full"
+          className="bg-blue-900 text-white px-4 py-1 rounded-sm w-full mb-6 disabled:opacity-40"
           value="login"
+          disabled={isLoading}
         />
+        {isError && (
+          <p className="mb-3 text-center text-red-600">{error.message}</p>
+        )}
+        <button
+          className="bg-green-500 w-full rounded text-slate-800 "
+          onClick={handleOpen}
+        >
+          Create new accout
+        </button>
       </form>
-      {isError && <p>{error.message}</p>}
-      <button
-        className="bg-blue-500 text-slate-50 px-3 rounded mt-3"
-        onClick={handleOpen}
-      >
-        Create new account
-      </button>
     </div>
   );
 };
-// const EnhancedAuthForm = withApiFunctions(AuthForm);
+
 export default Login;

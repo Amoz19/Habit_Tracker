@@ -12,14 +12,10 @@ const Signup = ({ handleClose }) => {
     formState: { errors },
   } = useForm();
 
-  const { isSuccess, isError, isLoading, mutate } = useAuthFunction();
+  const { isSuccess, isError, isLoading, error, mutate } = useAuthFunction();
 
   if (isSuccess) {
     return <Navigate to="/login" />;
-  }
-
-  if (isLoading) {
-    return <Loading />;
   }
 
   const onHandleSubmit = (data, e) => {
@@ -29,19 +25,19 @@ const Signup = ({ handleClose }) => {
   };
 
   return (
-    <div className="bg-red-100 flex flex-col justify-center items-center flex-1">
+    <div className="bg-zinc-900 flex flex-col justify-center items-center flex-1">
       <form
         onSubmit={handleSubmit(onHandleSubmit)}
-        className="bg-slate-100 w-fit p-6"
+        className="bg-slate-100 w-fit p-6 rounded"
       >
-        <div onClick={handleClose}>
-          <p>X</p>
+        <div onClick={handleClose} className=" flex justify-end mb-3">
+          <p className="w-fit bg-red-300 px-3 py-1 rounded text-white">X</p>
         </div>
         <div>
           <input
             type="text"
             {...register("username", { required: true })}
-            className="bg-blue-100 border border-black px-6"
+            className="bg-blue-100 py-1 px-3 focus:outline outline-blue-100 rounded"
             placeholder="Enter username"
           />
           {errors.username && (
@@ -52,7 +48,7 @@ const Signup = ({ handleClose }) => {
           <input
             type="password"
             {...register("password", { required: true })}
-            className="bg-blue-100 border border-black w-fit px-6"
+            className="bg-blue-100 py-1 px-3 focus:outline outline-blue-100 rounded"
             placeholder="Enter password"
           />
           {errors.password && (
@@ -62,11 +58,14 @@ const Signup = ({ handleClose }) => {
 
         <input
           type="submit"
-          className="bg-blue-900 text-white px-4 rounded-sm w-full"
+          className="bg-blue-900 text-white px-4 py-1 rounded-sm w-full disabled:opacity-40"
           value="signup"
+          disabled={isLoading}
         />
+        {isError && (
+          <p className="mt-3 text-center text-red-600">{error.message}</p>
+        )}
       </form>
-      {isError && <p>Username already taken</p>}
     </div>
   );
 };

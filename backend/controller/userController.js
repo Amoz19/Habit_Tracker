@@ -42,7 +42,6 @@ const userLogin = async (req, res) => {
 
   try {
     const userCredential = await Usermodel.findOne({ username });
-    console.log(userCredential);
     if (!userCredential) {
       res.status(400).send("Wrong Credential");
     }
