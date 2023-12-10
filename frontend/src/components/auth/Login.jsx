@@ -1,8 +1,16 @@
 import { useForm } from "react-hook-form";
 import { Navigate } from "react-router-dom";
 import { useAuthFunction } from "../../hook/useAuthForm.js";
+import { useUser } from "../../context/AuthContext.jsx";
+import { useEffect } from "react";
 
 const Login = ({ handleOpen }) => {
+  const { user, login } = useUser();
+
+  if (user) {
+    return <Navigate to="/home" />;
+  }
+
   const {
     register,
     handleSubmit,
@@ -10,11 +18,17 @@ const Login = ({ handleOpen }) => {
     formState: { errors },
   } = useForm();
 
-  const { isSuccess, isError, error, isLoading, mutate } = useAuthFunction();
+  const { isSuccess, data, isError, error, isLoading, mutate } =
+    useAuthFunction();
 
-  if (isSuccess) {
-    return <Navigate to="/home" />;
-  }
+  useEffect(() => {
+    const setUser = async () => {
+      if (isSuccess) {
+        await login(data);
+      }
+    };
+    setUser();
+  }, [data]);
 
   const onHandleSubmit = (data, e) => {
     e.preventDefault();

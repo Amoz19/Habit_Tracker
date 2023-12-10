@@ -2,7 +2,6 @@ import { useMutation, useQueries, useQuery } from "react-query";
 import axios from "axios";
 
 const authFunction = async (formData, query) => {
-  console.log(formData, query);
   try {
     const { data } = await axios.post(
       `${import.meta.env.VITE_AUTH_API_URL}/${query}`,
