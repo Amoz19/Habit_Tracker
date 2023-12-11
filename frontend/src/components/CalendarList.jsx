@@ -11,7 +11,7 @@ const CalendarList = ({ apiFunctions }) => {
   const { user } = useUser();
   const { isError, isLoading, data } = useCustomQuery(
     apiFunctions.getAll.key,
-    () => apiFunctions.getAll.func()
+    () => apiFunctions.getAll.func(user.id)
   );
 
   if (!user) {
@@ -41,7 +41,7 @@ const CalendarList = ({ apiFunctions }) => {
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-8 justify-start h-auto">
               {data.map((data) => (
                 <div
-                  key={data.uniqueId}
+                  key={data._id}
                   className="bg-slate-900 w-32 flex justify-center items-center h-32 mr-6 my-3 rounded text-white/80"
                   onClick={() => handleClick(data._id)}
                 >

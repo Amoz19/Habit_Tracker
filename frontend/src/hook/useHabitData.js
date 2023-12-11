@@ -9,10 +9,10 @@ import axios from "axios";
 //   return data;
 // };
 
-const addNewHabit = async ({ uniqueId, habitName, getFullYear }) => {
+const addNewHabit = async ({ userId, habitName, getFullYear }) => {
   try {
     return await axios.post(import.meta.env.VITE_API_URL, {
-      uniqueId,
+      userId,
       habitName,
       getFullYear,
     });

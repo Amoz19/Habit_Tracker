@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const CalendarModel = new mongoose.Schema({
-  uniqueId: {
+  userId: {
     type: String,
     required: true,
   },
