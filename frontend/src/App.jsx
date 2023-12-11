@@ -5,6 +5,8 @@ import EnhancedCalendar from "./components/Calendar";
 import NotFound from "./components/NotFound";
 import Auth from "./components/auth/Auth";
 import { AuthContextProvider } from "./context/AuthContext.jsx";
+import RequireAuth from "./components/RequireAuth.jsx";
+import Loading from "./components/Loading.jsx";
 
 function App() {
   return (
@@ -13,8 +15,22 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/auth" element={<Auth />} />
-            <Route path="/home" element={<EnhancedCalendarList />} />
-            <Route path="/:id" element={<EnhancedCalendar />} />
+            <Route
+              path="/"
+              element={
+                <RequireAuth>
+                  <EnhancedCalendarList />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/:id"
+              element={
+                <RequireAuth>
+                  <EnhancedCalendar />
+                </RequireAuth>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

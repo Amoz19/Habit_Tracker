@@ -1,15 +1,14 @@
 import { useForm } from "react-hook-form";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuthFunction } from "../../hook/useAuthForm.js";
 import { useUser } from "../../context/AuthContext.jsx";
-import { useEffect } from "react";
+import { QueryClient } from "react-query";
 
 const Login = ({ handleOpen }) => {
-  const { user, login } = useUser();
-
-  if (user) {
-    return <Navigate to="/home" />;
-  }
+  const queryClient = QueryClient();
+  const { login } = useUser();
+  const { isError, error, isLoading, mutate } = useAuthFunction();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -18,22 +17,18 @@ const Login = ({ handleOpen }) => {
     formState: { errors },
   } = useForm();
 
-  const { isSuccess, data, isError, error, isLoading, mutate } =
-    useAuthFunction();
-
-  useEffect(() => {
-    const setUser = async () => {
-      if (isSuccess) {
-        await login(data);
-      }
-    };
-    setUser();
-  }, [data]);
-
   const onHandleSubmit = (data, e) => {
     e.preventDefault();
 
-    mutate({ formData: data, query: "login" });
+    mutate(
+      { formData: data, query: "login" },
+      {
+        onSuccess: (data) => {
+          login(data);
+          navigate("/");
+        },
+      }
+    );
   };
 
   return (
@@ -75,7 +70,7 @@ const Login = ({ handleOpen }) => {
           <p className="mb-3 text-center text-red-600">{error.message}</p>
         )}
         <button
-          className="bg-green-500 w-full rounded text-slate-800 "
+          className="bg-green-500 w-full rounded text-white "
           onClick={handleOpen}
         >
           Create new accout
