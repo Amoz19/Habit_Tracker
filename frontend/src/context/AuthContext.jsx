@@ -6,15 +6,15 @@ const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({ children }) => {
   const { data, isLoading } = useGetUserFunction();
+  console.log(data);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setUser(data.user);
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (data) {
+      setUser(data.user);
+    }
+  }, [data]);
 
-  const [user, setUser] = useState(data ? data.user : null);
-  console.log(user);
+  const [user, setUser] = useState(null);
 
   const login = (user) => {
     setUser(user);

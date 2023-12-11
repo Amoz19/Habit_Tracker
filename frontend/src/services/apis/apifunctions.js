@@ -1,7 +1,10 @@
 import axios from "axios";
 
-const getAllHabits = async () => {
-  const { data } = await axios.get(import.meta.env.VITE_API_URL);
+const getAllHabits = async (userId) => {
+  const { data } = await axios.post(
+    `${import.meta.env.VITE_API_URL}/getUserData`,
+    { userId }
+  );
   return data;
 };
 

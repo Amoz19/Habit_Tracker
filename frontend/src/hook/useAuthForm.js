@@ -49,5 +49,5 @@ export const useLogoutFunction = () => {
 };
 
 export const useGetUserFunction = () => {
-  return useQuery("user", getUserFunction);
+  return useQuery("user", getUserFunction, { retry: false });
 };

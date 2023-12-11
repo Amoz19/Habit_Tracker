@@ -1,12 +1,13 @@
 import { useState } from "react";
 import generateCalendar from "../services/data";
 import { addHabitData } from "../hook/useHabitData";
-import { v4 as uuidv4 } from "uuid";
+import { useUser } from "../context/AuthContext";
 
 const AddNewHabit = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [habitName, setHabitName] = useState("");
   const { isLoading, mutate: addNewHabit } = addHabitData();
+  const { user } = useUser();
 
   const getFullYear = generateCalendar();
 
@@ -18,12 +19,12 @@ const AddNewHabit = () => {
     setHabitName(e.target.value);
   }
 
-  async function handleClick() {
+  function handleClick() {
     setIsOpen(false);
     setHabitName("");
 
     addNewHabit({
-      uniqueId: uuidv4(),
+      userId: user.id,
       habitName,
       getFullYear,
     });

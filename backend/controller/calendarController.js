@@ -1,9 +1,9 @@
 const CalendarModel = require("../models/CalendarModel");
 
 const addFullYear = async (req, res) => {
-  const { uniqueId, habitName, getFullYear } = req.body;
+  const { userId, habitName, getFullYear } = req.body;
   const postFullYear = {
-    uniqueId,
+    userId,
     habitName,
     getFullYear,
   };
@@ -17,8 +17,9 @@ const addFullYear = async (req, res) => {
 };
 
 const getFullYear = async (req, res) => {
+  const { userId } = req.body;
   try {
-    const fullYear = await CalendarModel.find();
+    const fullYear = await CalendarModel.find({ userId });
     res.status(200).json(fullYear);
   } catch (error) {
     res.status(404).json(error.message);

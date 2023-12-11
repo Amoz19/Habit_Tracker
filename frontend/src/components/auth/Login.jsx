@@ -2,10 +2,10 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuthFunction } from "../../hook/useAuthForm.js";
 import { useUser } from "../../context/AuthContext.jsx";
-import { QueryClient } from "react-query";
+// import { QueryClient } from "react-query";
 
 const Login = ({ handleOpen }) => {
-  const queryClient = QueryClient();
+  // const queryClient = QueryClient();
   const { login } = useUser();
   const { isError, error, isLoading, mutate } = useAuthFunction();
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const Login = ({ handleOpen }) => {
       { formData: data, query: "login" },
       {
         onSuccess: (data) => {
-          login(data);
+          login(data.user);
           navigate("/");
         },
       }

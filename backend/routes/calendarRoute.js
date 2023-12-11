@@ -9,7 +9,7 @@ const {
 const router = express.Router();
 
 router.post("/", addFullYear);
-router.get("/", getFullYear);
+router.post("/getUserData", getFullYear);
 router.get("/:groupId", getFullYearById);
 router.patch("/", updateComplete);
 

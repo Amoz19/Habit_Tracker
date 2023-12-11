@@ -7,6 +7,7 @@ import Auth from "./components/auth/Auth";
 import { AuthContextProvider } from "./context/AuthContext.jsx";
 import RequireAuth from "./components/RequireAuth.jsx";
 import Loading from "./components/Loading.jsx";
+import Home from "./components/Home.jsx";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <AuthContextProvider>
         <Routes>
           <Route element={<Layout />}>
+            {/* <Route path="/" element={<Home />} /> */}
             <Route path="/auth" element={<Auth />} />
             <Route
               path="/"
