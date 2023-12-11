@@ -8,15 +8,10 @@ const Signup = ({ handleClose }) => {
     register,
     handleSubmit,
     reset,
-    getValues,
     formState: { errors },
   } = useForm();
 
   const { isSuccess, isError, isLoading, error, mutate } = useAuthFunction();
-
-  if (isSuccess) {
-    return <Navigate to="/login" />;
-  }
 
   const onHandleSubmit = (data, e) => {
     e.preventDefault();
@@ -30,8 +25,22 @@ const Signup = ({ handleClose }) => {
         onSubmit={handleSubmit(onHandleSubmit)}
         className="bg-slate-100 w-fit p-6 rounded"
       >
-        <div onClick={handleClose} className=" flex justify-end mb-3">
-          <p className="w-fit bg-red-300 px-3 py-1 rounded text-white">X</p>
+        <div
+          onClick={handleClose}
+          className=" flex justify-between items-center mb-3"
+        >
+          {isSuccess && <p className="text-green-600">Success</p>}
+          <div className="w-fit py-1  text-white">
+            {
+              <div onClick={handleClose}>
+                {isSuccess ? (
+                  <p className="bg-green-600 px-3 py-1 rounded">Login</p>
+                ) : (
+                  <p className="bg-red-600 px-3 py-1 rounded">X</p>
+                )}
+              </div>
+            }
+          </div>
         </div>
         <div>
           <input

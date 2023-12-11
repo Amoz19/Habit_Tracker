@@ -68,17 +68,25 @@ const userLogin = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-  req.session.destroy((error) => {
-    if (error) throw error;
-    res.clearCookie("session-id");
-    res.send("Successfully Logout");
-  });
+  try {
+    req.session.destroy((error) => {
+      if (error) throw error;
+      res.clearCookie("session-id");
+      res.send("Successfully Logout");
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const checkAuth = async (req, res) => {
-  const sessuser = req.session.sessUser;
-  if (!sessuser) res.status(401).send("Did not login yet");
-  res.json({ user: sessuser });
+  try {
+    const sessuser = req.session.user;
+    if (!sessuser) res.status(401).send("Did not login yet");
+    res.json({ user: sessuser });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = { createNewUser, userLogin, logout, checkAuth };
