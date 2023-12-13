@@ -15,8 +15,8 @@ function App() {
     <BrowserRouter>
       <AuthContextProvider>
         <Routes>
+          <Route path="/" element={<LandingPage />} />
           <Route element={<Layout />}>
-            <Route path="/" element={<LandingPage />} />
             <Route path="/auth" element={<Auth />} />
             <Route
               path="/habits"
