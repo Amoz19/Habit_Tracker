@@ -21,11 +21,14 @@ const Navbar = () => {
   return (
     <div className="bg-slate-900/90 px-8 md:px-32 py-6 sticky top-0 text-white flex justify-between">
       <img src={logo} alt="logo" className="w-24" />
-      <div>
+      <div className="flex flex-col justify-between ">
         {user && (
           <>
             {user && <p>Welcome, {user.username}</p>}
-            <button onClick={handleLogout} className="bg-blue-900">
+            <button
+              onClick={handleLogout}
+              className="bg-red-900 px-2 rounded-2xl mt-4"
+            >
               Logout
             </button>
           </>

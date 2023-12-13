@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import generateCalendar from "../services/data";
 import { addHabitData } from "../hook/useHabitData";
 import { useUser } from "../context/AuthContext";
@@ -6,13 +6,17 @@ import { useUser } from "../context/AuthContext";
 const AddNewHabit = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [habitName, setHabitName] = useState("");
-  const { isLoading, mutate: addNewHabit } = addHabitData();
+  const { mutate: addNewHabit } = addHabitData();
   const { user } = useUser();
 
   const getFullYear = generateCalendar();
 
   function handleOpen() {
     setIsOpen(true);
+  }
+
+  function handleClose() {
+    setIsOpen(false);
   }
 
   function handleChange(e) {
@@ -31,7 +35,7 @@ const AddNewHabit = () => {
   }
 
   return (
-    <div className="fixed top-4 right-6">
+    <div className="fixed bottom-12 right-6">
       <p
         onClick={handleOpen}
         className={`${
@@ -48,14 +52,21 @@ const AddNewHabit = () => {
           value={habitName}
           onChange={handleChange}
         />
-        <button
-          onClick={handleClick}
-          className="bg-blue-500 text-white px-3 py-1 rounded mx-3"
-        >
-          add
-        </button>
+        <div className="flex">
+          <button
+            onClick={handleClick}
+            className="bg-blue-500 text-white px-3 py-1 rounded mx-3"
+          >
+            add
+          </button>
+          <button
+            onClick={handleClose}
+            className="bg-red-500 text-white px-3 py-1 rounded"
+          >
+            x
+          </button>
+        </div>
       </div>
-      <p>{isLoading && <span>Please Wait</span>}</p>
     </div>
   );
 };

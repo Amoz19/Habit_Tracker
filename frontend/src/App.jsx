@@ -8,6 +8,7 @@ import { AuthContextProvider } from "./context/AuthContext.jsx";
 import RequireAuth from "./components/RequireAuth.jsx";
 import Loading from "./components/Loading.jsx";
 import Home from "./components/Home.jsx";
+import LandingPage from "./components/LandingPage.jsx";
 
 function App() {
   return (
@@ -15,10 +16,10 @@ function App() {
       <AuthContextProvider>
         <Routes>
           <Route element={<Layout />}>
-            {/* <Route path="/" element={<Home />} /> */}
+            <Route path="/" element={<LandingPage />} />
             <Route path="/auth" element={<Auth />} />
             <Route
-              path="/"
+              path="/habits"
               element={
                 <RequireAuth>
                   <EnhancedCalendarList />
@@ -26,7 +27,7 @@ function App() {
               }
             />
             <Route
-              path="/:id"
+              path="/habits:id"
               element={
                 <RequireAuth>
                   <EnhancedCalendar />
