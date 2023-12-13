@@ -21,7 +21,7 @@ const CalendarList = ({ apiFunctions }) => {
   const navigator = useNavigate();
 
   const handleClick = (id) => {
-    navigator(`/${id}`);
+    navigator(`/habits/${id}`);
   };
 
   if (isLoading) {
