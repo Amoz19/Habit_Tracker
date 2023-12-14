@@ -60,8 +60,12 @@ app.use(
   })
 );
 
-app.use("/api/v1", calendarRoute);
+app.use("/api/v1", allowCors(calendarRoute));
 app.use("/api/user", allowCors(userRoute));
+
+app.get("/", (req, res) => {
+  return res.send("Hello");
+});
 
 mongoose
   .connect(dbConnect)
