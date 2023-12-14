@@ -30,11 +30,11 @@ const Calendar = ({ apiFunctions }) => {
   const breadCrumb = [
     {
       name: "Home",
-      path: "/",
+      path: "/habits",
     },
     {
       name: calendaData[0].habitName,
-      path: `/${id}`,
+      path: `/habits/${id}`,
     },
   ];
 

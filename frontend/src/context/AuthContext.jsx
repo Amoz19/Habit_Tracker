@@ -6,7 +6,6 @@ const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({ children }) => {
   const { data, isLoading } = useGetUserFunction();
-  console.log(data);
 
   useEffect(() => {
     if (data) {

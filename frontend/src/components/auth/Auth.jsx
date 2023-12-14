@@ -9,7 +9,7 @@ const Auth = () => {
   const { user } = useUser();
 
   if (user) {
-    return <Navigate to="/" />;
+    return <Navigate to="/habits" />;
   }
 
   const handleOpen = () => {

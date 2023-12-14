@@ -6,7 +6,7 @@ const createNewUser = async (req, res) => {
   const { username, password } = req.body;
   const saltRounds = 10;
 
-  if (!username && !password) {
+  if (!username || !password) {
     return res.status(400).send("Please fill all the fields");
   }
 

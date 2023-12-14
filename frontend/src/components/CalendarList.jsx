@@ -9,10 +9,11 @@ import { useUser } from "../context/AuthContext";
 
 const CalendarList = ({ apiFunctions }) => {
   const { user } = useUser();
-  const { isError, isLoading, data } = useCustomQuery(
+  const { isError, isLoading, data, isFetched } = useCustomQuery(
     apiFunctions.getAll.key,
     () => apiFunctions.getAll.func(user.id)
   );
+  console.log(data);
 
   if (!user) {
     return <Navigate to="/auth" />;
@@ -36,7 +37,7 @@ const CalendarList = ({ apiFunctions }) => {
     <>
       {data.length > 0 ? (
         <div className="px-8 md:px-32 bg-zinc-900 flex flex-1">
-          {isLoading && <h1>Loading</h1>}
+          {isLoading && <h1>Adding</h1>}
           <div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-8 justify-start h-auto">
               {data.map((data) => (

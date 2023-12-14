@@ -27,14 +27,14 @@ function App() {
               }
             />
             <Route
-              path="/habits:id"
+              path="/habits/:id"
               element={
                 <RequireAuth>
                   <EnhancedCalendar />
                 </RequireAuth>
               }
             />
-            <Route path="*" element={<NotFound />} />
+            {/* <Route path="*" element={<NotFound />} /> */}
           </Route>
         </Routes>
       </AuthContextProvider>

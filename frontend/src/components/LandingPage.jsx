@@ -4,6 +4,7 @@ import logo from "../assets/logo.gif";
 // import track from "../assets/track.png";
 import { IonCaretForward } from "../assets/icon.jsx";
 import styles from "./LandingPage.module.css";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
   return (
@@ -27,7 +28,9 @@ const LandingPage = () => {
           </h1>
           <p className="my-4">Persistance with your habits.</p>
           <div className="bg-[#0A0857] text-slate-100 rounded px-3 py-1 flex justify-between items-center text-l">
-            <button className="mr-2">Get Started</button>
+            <Link to="/auth" className="mr-2">
+              Get Started
+            </Link>
             <IonCaretForward />
           </div>
         </div>

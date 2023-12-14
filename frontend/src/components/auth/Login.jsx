@@ -25,7 +25,7 @@ const Login = ({ handleOpen }) => {
       {
         onSuccess: (data) => {
           login(data.user);
-          navigate("/");
+          navigate("/habits");
         },
       }
     );
