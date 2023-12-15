@@ -38,8 +38,6 @@ const allowCors = (fn) => async (req, res) => {
 //   })
 // );
 
-app.use(express.json());
-
 const mongoDbStore = new MongoDbStore({
   uri: dbConnect,
   collection: "userSessions",
@@ -54,12 +52,13 @@ app.use(
     store: mongoDbStore,
     cookie: {
       maxAge: 1000 * 60 * 60 * 3,
-      sameSite: false,
-      secure: false,
+      sameSite: "Lax",
+      secure: process.env.NODE_ENV === "production",
     },
   })
 );
 
+app.use(express.json());
 app.use("/api/v1", allowCors(calendarRoute));
 app.use("/api/user", allowCors(userRoute));
 app.use(middlewares.notFound);
