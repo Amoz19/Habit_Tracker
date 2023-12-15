@@ -1,19 +1,17 @@
 import AddNewHabit from "./AddNewHabit";
-import { Navigate, redirect, useNavigate } from "react-router-dom";
-
+import { Navigate, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import useCustomQuery from "../hook/useCustomQuery";
 import withApiFunctions from "../hoc/withApiFunctions";
 import Loading from "./Loading";
 import { useUser } from "../context/AuthContext";
-// import { apiFunctionss } from "../services/apis/habits";
 
 const CalendarList = ({ apiFunctions }) => {
   const { user } = useUser();
-  const { isError, isLoading, data, isFetched } = useCustomQuery(
+  const { isError, isLoading, data, refetch } = useCustomQuery(
     apiFunctions.getAll.key,
     () => apiFunctions.getAll.func(user.id)
   );
-  console.log(data);
 
   if (!user) {
     return <Navigate to="/auth" />;
