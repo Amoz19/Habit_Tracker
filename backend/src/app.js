@@ -1,7 +1,7 @@
 const express = require("express");
-// const cors = require("cors");
-const calendarRoute = require("./routes/calendarRoute");
-const userRoute = require("./routes/userRoute");
+const cors = require("cors");
+const calendarRoute = require("../routes/calendarRoute");
+const userRoute = require("../routes/userRoute");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDbStore = require("connect-mongodb-session")(session);
@@ -15,7 +15,7 @@ const app = express();
 
 const allowCors = (fn) => async (req, res) => {
   res.setHeader("Access-Control-Allow-Credentials", true);
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET,OPTIONS,PATCH,DELETE,POST,PUT"
@@ -33,7 +33,7 @@ const allowCors = (fn) => async (req, res) => {
 
 // app.use(
 //   cors({
-//     origin: "*",
+//     origin: "http://localhost:5173",
 //     credentials: true,
 //   })
 // );
@@ -55,7 +55,7 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 60 * 3,
       sameSite: false,
-      secure: true,
+      secure: false,
     },
   })
 );
@@ -69,9 +69,17 @@ app.get("/", (req, res) => {
   return res.send("Hello");
 });
 
+const port = process.env.PORT || 5000;
+
 mongoose
   .connect(dbConnect)
   .then(() => console.log("db-connected"))
   .catch((err) => console.log(err.message));
+
+app.listen(port, () => {
+  /* eslint-disable no-console */
+  console.log(`Listening: http://localhost:${port}`);
+  /* eslint-enable no-console */
+});
 
 module.exports = app;

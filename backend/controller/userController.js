@@ -82,7 +82,7 @@ const logout = async (req, res) => {
 const checkAuth = async (req, res) => {
   try {
     const sessuser = req.session.user;
-    if (!sessuser) res.status(401).send("Did not login yet");
+    if (!sessuser) return res.status(401).send("Did not login yet");
     res.json({ user: sessuser });
   } catch (error) {
     console.log(error);
