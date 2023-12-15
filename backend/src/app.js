@@ -59,14 +59,15 @@ app.use(
 );
 
 app.use(express.json());
+
+app.get("/", (req, res) => {
+  return res.json({ greeting: "Hello" });
+});
+
 app.use("/api/v1", allowCors(calendarRoute));
 app.use("/api/user", allowCors(userRoute));
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
-
-app.get("/", (req, res) => {
-  return res.send("Hello");
-});
 
 const port = process.env.PORT || 5000;
 
