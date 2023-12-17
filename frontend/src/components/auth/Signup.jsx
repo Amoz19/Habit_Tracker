@@ -20,7 +20,7 @@ const Signup = ({ handleClose }) => {
   };
 
   return (
-    <div className="bg-zinc-900 flex flex-col justify-center items-center flex-1">
+    <div className="bg-gradient-to-b from-indigo-200 to-indigo-300 flex flex-col justify-center items-center flex-1">
       <form
         onSubmit={handleSubmit(onHandleSubmit)}
         className="bg-slate-100 w-fit p-6 rounded"
