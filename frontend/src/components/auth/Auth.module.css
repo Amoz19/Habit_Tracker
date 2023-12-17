@@ -1,0 +1,8 @@
+.placeholder::placeholder {
+  font-size: 14px;
+  color: #00000088;
+}
+
+.color::placeholder {
+  color: #00000088;
+}
