@@ -40,28 +40,34 @@ const AddNewHabit = () => {
         onClick={handleOpen}
         className={`${
           isOpen ? "hidden" : "flex"
-        } bg-white px-6 py-2 rounded-full`}
+        } bg-white px-6 py-2 rounded-full shadow`}
       >
         +
       </p>
-      <div className={`${isOpen ? "flex" : "hidden"}`}>
+      <div
+        className={`${
+          isOpen
+            ? "fixed inset-0 bg-gray-100/40 flex justify-center items-center"
+            : "hidden"
+        }`}
+      >
         <input
           type="text"
           placeholder="Enter habit"
-          className="border border-blue-300 focus:outline-none focus:border-blue-500 px-3 py-0.5 rounded"
+          className="w-fit border border-gray-300 focus:outline-none focus:border-gray-300 px-3 py-0.5 rounded"
           value={habitName}
           onChange={handleChange}
         />
         <div className="flex">
           <button
             onClick={handleClick}
-            className="bg-blue-500 text-white px-3 py-1 rounded mx-3"
+            className="border border-gray-300 bg-indigo-500 text-white px-3 py-1 rounded mx-3"
           >
             add
           </button>
           <button
             onClick={handleClose}
-            className="bg-red-500 text-white px-3 py-1 rounded"
+            className="border border-gray-300 text-red-500 px-3 py-1 rounded"
           >
             x
           </button>

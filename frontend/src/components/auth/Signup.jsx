@@ -52,7 +52,7 @@ const Signup = ({ handleClose }) => {
             }
           </div>
         </div>
-        <h1 className="text-l md:text-xl font-black text-blue-900 mb-4 ">
+        <h1 className="text-2xl font-black text-blue-900 mb-4 ">
           Create New Account
         </h1>
         <div className="my-4 flex flex-col">
