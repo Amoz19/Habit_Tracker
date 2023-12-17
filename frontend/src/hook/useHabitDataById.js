@@ -18,17 +18,34 @@ const updateHabit = async (prams) => {
 export const useUpdateHabit = (id) => {
   const queryClient = useQueryClient();
   return useMutation(updateHabit, {
-    onSuccess: () => {
-      queryClient.invalidateQueries([["habits", id]]);
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries([["habits", id]]);
+    // },
+    onMutate: (variables) => {
+      queryClient.cancelQueries([["habits", id]]);
+      const previosHabitsData = queryClient.getQueriesData([["habits", id]]);
+      const getpreviosData = previosHabitsData[0][1];
+      const modifyData = getpreviosData[0].getFullYear;
+
+      console.log(previosHabitsData);
+
+      const monthIndex = modifyData.findIndex(
+        (data) => data._id === variables.monthIndex
+      );
+
+      const getAllDays = modifyData[monthIndex].days;
+
+      const dayIndex = getAllDays.findIndex(
+        (data) => data._id === variables.dayIndex
+      );
+
+      getAllDays[dayIndex].isisComplete = true;
+
+      queryClient.setQueriesData([["habits", id]], (oldQueryData) => {
+        const newData = [...oldQueryData];
+        newData[0].getFullYear[monthIndex].days[dayIndex].isComplete = true;
+        return newData;
+      });
     },
   });
 };
-// import { useDataFetch } from "./dataFetch";
-
-// export function useHabitDataById(id) {
-//   return useDataFetch(getHabitById, id);
-// }
-
-// export function useOtherDataById(id) {
-//   return useDataFetch(getOtherDataById, id);
-// }

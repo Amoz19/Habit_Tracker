@@ -32,27 +32,36 @@ const Login = ({ handleOpen }) => {
   };
 
   return (
-    <div className="bg-zinc-900 flex flex-col justify-center items-center flex-1">
+    <div className="bg-gradient-to-b from-indigo-200 to-indigo-300 flex flex-col justify-center h-screen items-center">
       <form
         onSubmit={handleSubmit(onHandleSubmit)}
-        className="bg-slate-100 w-fit p-6 rounded"
+        className="bg-slate-100 w-2/6 p-6 rounded"
       >
-        <div>
+        <h1 className="text-2xl mb-4">Login</h1>
+        <div className="flex flex-col">
+          <label htmlFor="username" className="mb-2 text-sm font-medium">
+            Username
+          </label>
           <input
             type="text"
             {...register("username", { required: true })}
-            className="bg-blue-100 py-1 px-3 focus:outline outline-blue-100 rounded"
+            id="username"
+            className="border border-gray-300 py-1 px-3 focus:outline outline-blue-100 rounded"
             placeholder="Enter username"
           />
           {errors.username && (
             <p className="text-red-900">Username is required</p>
           )}
         </div>
-        <div className="py-6">
+        <div className="my-4 flex flex-col">
+          <label htmlFor="password" className="mb-2 text-sm font-medium">
+            Password
+          </label>
           <input
             type="password"
             {...register("password", { required: true })}
-            className="bg-blue-100 py-1 px-3 focus:outline outline-blue-100 rounded"
+            id="password"
+            className="py-1 px-3 focus:outline outline-blue-100 rounded"
             placeholder="Enter password"
           />
           {errors.password && (

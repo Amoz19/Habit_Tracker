@@ -28,8 +28,8 @@ const addNewHabit = async ({ userId, habitName, getFullYear }) => {
 export const addHabitData = () => {
   const queryClient = useQueryClient();
   return useMutation(addNewHabit, {
-    onMutate: async (newHabit) => {
-      await queryClient.cancelQueries("habits");
+    onMutate: (newHabit) => {
+      queryClient.cancelQueries("habits");
       const previosHabitsData = queryClient.getQueriesData("habits");
       queryClient.setQueriesData("habits", (oldQueryData) => {
         return [...oldQueryData, { ...newHabit }];
