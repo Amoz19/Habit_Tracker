@@ -52,7 +52,7 @@ app.use(
     store: mongoDbStore,
     cookie: {
       maxAge: 1000 * 60 * 60 * 3,
-      sameSite: false,
+      sameSite: "strict",
       secure: process.env.NODE_ENV === "production",
     },
   })
