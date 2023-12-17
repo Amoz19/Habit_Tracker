@@ -39,13 +39,13 @@ const Calendar = ({ apiFunctions }) => {
   ];
 
   return (
-    <div className="px-4 md:px-16 lg:px-32 pb-6">
+    <div className="px-4 md:px-16 lg:px-32 pb-6 bg-[#FAFAFA]">
       <BreadCrumb breadCrumb={breadCrumb} />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 ">
         {calendaData[0].getFullYear.map((data) => (
-          <table key={data._id} className="bg-blue-100 p-6 rounded">
+          <table key={data._id} className="bg-white p-6 rounded-lg shadow">
             <thead className="text-xl ">
-              <tr className="flex justify-between py-6 px-3 text-slate-700">
+              <tr className="flex justify-between py-6 px-3 text-slate-600">
                 <td>{data.year}</td>
                 <td>{data.month}</td>
               </tr>
@@ -59,7 +59,7 @@ const Calendar = ({ apiFunctions }) => {
                     }}
                     className={`${
                       day.isComplete
-                        ? "bg-green-400  rounded-[100%]"
+                        ? "bg-[#1f39a0]  rounded-[100%] text-white"
                         : "bg-none"
                     } w-8 text-center`}
                   >

@@ -34,14 +34,14 @@ const CalendarList = ({ apiFunctions }) => {
   return (
     <>
       {data.length > 0 ? (
-        <div className="px-8 md:px-32 bg-zinc-900 flex flex-1">
+        <div className="px-8 md:px-32 bg-[#FAFAFA] flex flex-1">
           {isLoading && <h1>Adding</h1>}
           <div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-8 justify-start h-auto">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-5 justify-start h-auto">
               {data.map((data) => (
                 <div
                   key={data._id}
-                  className="bg-slate-900 w-32 flex justify-center items-center h-32 mr-6 my-3 rounded text-white/80"
+                  className="bg-white w-32 flex justify-center items-center h-32  mt-6 rounded-lg shadow "
                   onClick={() => handleClick(data._id)}
                 >
                   <h3>{data.habitName}</h3>
