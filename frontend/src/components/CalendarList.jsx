@@ -37,7 +37,7 @@ const CalendarList = ({ apiFunctions }) => {
         <div className="px-8 md:px-32 bg-[#2c3e50] flex flex-1 ">
           {/* grid grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-5 */}
           <div className=" w-full">
-            <h2 className="text-[#0D20EE] text-2xl font-black mt-2">
+            <h2 className="text-indigo-500 text-2xl font-black mt-2">
               Your habits
             </h2>
             <div className="grid lg:grid-cols-2">

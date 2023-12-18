@@ -10,6 +10,7 @@ const AddNewHabit = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const { mutate: addNewHabit } = addHabitData();
@@ -26,19 +27,19 @@ const AddNewHabit = () => {
   }
 
   function onHandleSubmit(data, e) {
+    reset();
     e.preventDefault();
     setIsOpen(false);
-    setHabitName("");
 
     addNewHabit({
       userId: user.id,
-      data,
+      habitName: data.habitName,
       getFullYear,
     });
   }
 
   return (
-    <form className="fixed bottom-12 right-6">
+    <div className="fixed bottom-12 right-6">
       <p
         onClick={handleOpen}
         className={`${
@@ -54,10 +55,7 @@ const AddNewHabit = () => {
             : "hidden"
         }`}
       >
-        <div
-          className=" bg-[#2D2D2D] p-6 rounded-lg shadow-xl max-w-sm w-full"
-          onSubmit={handleSubmit(onHandleSubmit)}
-        >
+        <div className=" bg-[#2D2D2D] p-6 rounded-lg shadow-xl max-w-sm w-full">
           <h3 className="text-white font-bold">Add new Habits</h3>
           <div className="my-4 text-sm ">
             <label className=" text-white" htmlFor="newhabit">
@@ -67,19 +65,22 @@ const AddNewHabit = () => {
               type="text"
               {...register("habitName", { required: true })}
               placeholder="Enter habit"
-              className="w-full border border-gray-300 focus:outline-none focus:border-gray-300 px-3 py-0.5 rounded mt-2"
+              className="w-full border border-gray-300 focus:outline-none focus:border-gray-300 px-3 py-0.5 rounded my-2"
               // value={habitName}
               id="newhabit"
-              required
             />
+            {errors.habitName && (
+              <p className="text-red-500">Enter Something</p>
+            )}
           </div>
 
           <div className="flex justify-end text-sm">
-            <input
-              type="submit"
+            <button
               className="border border-gray-300 bg-indigo-500 text-white  px-3 py-1 rounded mx-3"
-              value="Add"
-            />
+              onClick={handleSubmit(onHandleSubmit)}
+            >
+              Add
+            </button>
 
             <button
               onClick={handleClose}
@@ -90,7 +91,7 @@ const AddNewHabit = () => {
           </div>
         </div>
       </div>
-    </form>
+    </div>
   );
 };
 
