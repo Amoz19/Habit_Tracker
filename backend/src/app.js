@@ -15,10 +15,7 @@ const app = express();
 
 const allowCors = (fn) => async (req, res) => {
   res.setHeader("Access-Control-Allow-Credentials", true);
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "https://habit-tracker-p4rf.vercel.app"
-  );
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET,OPTIONS,PATCH,DELETE,POST,PUT"
@@ -34,12 +31,7 @@ const allowCors = (fn) => async (req, res) => {
   return await fn(req, res);
 };
 
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173",
-//     credentials: true,
-//   })
-// );
+console.log("NODE_ENV:", process.env.NODE_ENV);
 
 const mongoDbStore = new MongoDbStore({
   uri: dbConnect,
@@ -55,8 +47,8 @@ app.use(
     store: mongoDbStore,
     cookie: {
       maxAge: 1000 * 60 * 60 * 3,
-      sameSite: "strict",
-      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      secure: false,
     },
   })
 );
@@ -80,9 +72,7 @@ mongoose
   .catch((err) => console.log(err.message));
 
 app.listen(port, () => {
-  /* eslint-disable no-console */
   console.log(`Listening: http://localhost:${port}`);
-  /* eslint-enable no-console */
 });
 
 module.exports = app;
