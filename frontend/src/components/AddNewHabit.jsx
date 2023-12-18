@@ -2,10 +2,16 @@ import { useState, useEffect } from "react";
 import generateCalendar from "../services/data";
 import { addHabitData } from "../hook/useHabitData";
 import { useUser } from "../context/AuthContext";
+import { useForm } from "react-hook-form";
 
 const AddNewHabit = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [habitName, setHabitName] = useState("");
+  // const [habitName, setHabitName] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const { mutate: addNewHabit } = addHabitData();
   const { user } = useUser();
 
@@ -19,23 +25,20 @@ const AddNewHabit = () => {
     setIsOpen(false);
   }
 
-  function handleChange(e) {
-    setHabitName(e.target.value);
-  }
-
-  function handleClick() {
+  function onHandleSubmit(data, e) {
+    e.preventDefault();
     setIsOpen(false);
     setHabitName("");
 
     addNewHabit({
       userId: user.id,
-      habitName,
+      data,
       getFullYear,
     });
   }
 
   return (
-    <div className="fixed bottom-12 right-6">
+    <form className="fixed bottom-12 right-6">
       <p
         onClick={handleOpen}
         className={`${
@@ -47,33 +50,47 @@ const AddNewHabit = () => {
       <div
         className={`${
           isOpen
-            ? "fixed inset-0 bg-gray-100/40 flex justify-center items-center"
+            ? "fixed inset-0 bg-gray-900 flex justify-center items-center"
             : "hidden"
         }`}
       >
-        <input
-          type="text"
-          placeholder="Enter habit"
-          className="w-fit border border-gray-300 focus:outline-none focus:border-gray-300 px-3 py-0.5 rounded"
-          value={habitName}
-          onChange={handleChange}
-        />
-        <div className="flex">
-          <button
-            onClick={handleClick}
-            className="border border-gray-300 bg-indigo-500 text-white px-3 py-1 rounded mx-3"
-          >
-            add
-          </button>
-          <button
-            onClick={handleClose}
-            className="border border-gray-300 text-red-500 px-3 py-1 rounded"
-          >
-            x
-          </button>
+        <div
+          className=" bg-[#2D2D2D] p-6 rounded-lg shadow-xl max-w-sm w-full"
+          onSubmit={handleSubmit(onHandleSubmit)}
+        >
+          <h3 className="text-white font-bold">Add new Habits</h3>
+          <div className="my-4 text-sm ">
+            <label className=" text-white" htmlFor="newhabit">
+              Habit Name
+            </label>
+            <input
+              type="text"
+              {...register("habitName", { required: true })}
+              placeholder="Enter habit"
+              className="w-full border border-gray-300 focus:outline-none focus:border-gray-300 px-3 py-0.5 rounded mt-2"
+              // value={habitName}
+              id="newhabit"
+              required
+            />
+          </div>
+
+          <div className="flex justify-end text-sm">
+            <input
+              type="submit"
+              className="border border-gray-300 bg-indigo-500 text-white  px-3 py-1 rounded mx-3"
+              value="Add"
+            />
+
+            <button
+              onClick={handleClose}
+              className="border border-gray-300 bg-red-500 text-white px-3 py-1 rounded"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

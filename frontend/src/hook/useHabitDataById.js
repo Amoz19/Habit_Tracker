@@ -1,26 +1,13 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 
-// const getHabitById = async (id) => {
-//   const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/${id}`);
-//   return data;
-// };
-
 const updateHabit = async (prams) => {
-  // console.log(prams);
   return await axios.patch(import.meta.env.VITE_API_URL, { ...prams });
 };
-
-// export const useHabitDataById = (id) => {
-//   return useQuery(["habitsId"], () => getHabitById(id));
-// };
 
 export const useUpdateHabit = (id) => {
   const queryClient = useQueryClient();
   return useMutation(updateHabit, {
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries([["habits", id]]);
-    // },
     onMutate: (variables) => {
       queryClient.cancelQueries([["habits", id]]);
       const previosHabitsData = queryClient.getQueriesData([["habits", id]]);
@@ -39,7 +26,11 @@ export const useUpdateHabit = (id) => {
         (data) => data._id === variables.dayIndex
       );
 
-      getAllDays[dayIndex].isisComplete = true;
+      let checkIsComplete = getAllDays[dayIndex].isComplete;
+
+      console.log(checkIsComplete);
+
+      checkIsComplete = checkIsComplete ? false : true;
 
       queryClient.setQueriesData([["habits", id]], (oldQueryData) => {
         const newData = [...oldQueryData];

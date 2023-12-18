@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import logo from "../assets/animation.gif";
+import logo from "../assets/animatelogo.gif";
 import { useUser } from "../context/AuthContext";
 import { useLogoutFunction } from "../hook/useAuthForm";
 import { useNavigate } from "react-router-dom";
@@ -19,15 +19,15 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b from-indigo-200 to-indigo-300 shadow-sm px-8 md:px-32 py-6 sticky top-0 flex justify-between">
+    <div className="bg-[#2c3e50] shadow px-8 md:px-32 py-6 sticky top-0 flex justify-between">
       <img src={logo} alt="logo" className="w-24" />
       <div>
         {user && (
           <div className="flex items-center">
-            {user && <p className="text-white">Hi, {user.username}</p>}
+            {user && <p className="text-white text-sm">Hi, {user.username}</p>}
             <button
               onClick={handleLogout}
-              className="bg-white text-indigo-500 p-2 rounded ml-4"
+              className="bg-indigo-500  text-white p-2 rounded ml-4 text-sm"
             >
               Logout
             </button>

@@ -1,13 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-// import apiClient from "../services/api-client";
 import axios from "axios";
-
-// import "react-toastify/dist/ReactToastify.css";
-
-// const getHabits = async () => {
-//   const { data } = await axios.get(import.meta.env.VITE_API_URL);
-//   return data;
-// };
 
 const addNewHabit = async ({ userId, habitName, getFullYear }) => {
   try {
@@ -20,10 +12,6 @@ const addNewHabit = async ({ userId, habitName, getFullYear }) => {
     console.log(error.message);
   }
 };
-
-// export const useHabitData = () => {
-//   return useQuery(["habits"], getHabits);
-// };
 
 export const addHabitData = () => {
   const queryClient = useQueryClient();
@@ -44,8 +32,3 @@ export const addHabitData = () => {
     },
   });
 };
-
-//  onSuccess: () => {
-//       queryClient.invalidateQueries("habits");
-//       toast.success("Success, Please wait for update...");
-//     },
