@@ -65,4 +65,19 @@ const updateComplete = async (req, res) => {
   }
 };
 
-module.exports = { addFullYear, getFullYear, getFullYearById, updateComplete };
+const deleteHabit = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await CalendarModel.findByIdAndDelete(id);
+    res.json({ message: "Successfully deleted" });
+  } catch (error) {
+    res.status(404).json(error.message);
+  }
+};
+module.exports = {
+  addFullYear,
+  getFullYear,
+  getFullYearById,
+  updateComplete,
+  deleteHabit,
+};
