@@ -14,8 +14,6 @@ export const useUpdateHabit = (id) => {
       const getpreviosData = previosHabitsData[0][1];
       const modifyData = getpreviosData[0].getFullYear;
 
-      console.log(previosHabitsData);
-
       const monthIndex = modifyData.findIndex(
         (data) => data._id === variables.monthIndex
       );
@@ -27,8 +25,6 @@ export const useUpdateHabit = (id) => {
       );
 
       let checkIsComplete = getAllDays[dayIndex].isComplete;
-
-      console.log(checkIsComplete);
 
       checkIsComplete = checkIsComplete ? false : true;
 
