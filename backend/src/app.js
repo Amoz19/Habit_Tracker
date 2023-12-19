@@ -34,8 +34,6 @@ const allowCors = (fn) => async (req, res) => {
   return await fn(req, res);
 };
 
-console.log("NODE_ENV:", process.env.NODE_ENV);
-
 const mongoDbStore = new MongoDbStore({
   uri: dbConnect,
   collection: "userSessions",
