@@ -27,15 +27,18 @@ const AddNewHabit = () => {
   }
 
   function onHandleSubmit(data, e) {
-    reset();
     e.preventDefault();
-    setIsOpen(false);
 
     addNewHabit({
       userId: user.id,
       habitName: data.habitName,
       getFullYear,
     });
+
+    reset({
+      habitName: "",
+    });
+    setIsOpen(false);
   }
 
   return (
@@ -66,7 +69,6 @@ const AddNewHabit = () => {
               {...register("habitName", { required: true })}
               placeholder="Enter habit"
               className="w-full border border-gray-300 focus:outline-none focus:border-gray-300 px-3 py-0.5 rounded my-2"
-              // value={habitName}
               id="newhabit"
             />
             {errors.habitName && (
