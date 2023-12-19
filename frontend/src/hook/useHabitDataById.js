@@ -5,6 +5,10 @@ const updateHabit = async (prams) => {
   return await axios.patch(import.meta.env.VITE_API_URL, { ...prams });
 };
 
+const deleteHabit = async (id) => {
+  return await axios.delete(`${import.meta.env.VITE_API_URL}/${id}`);
+};
+
 export const useUpdateHabit = (id) => {
   const queryClient = useQueryClient();
   return useMutation(updateHabit, {
@@ -33,6 +37,30 @@ export const useUpdateHabit = (id) => {
         newData[0].getFullYear[monthIndex].days[dayIndex].isComplete = true;
         return newData;
       });
+    },
+  });
+};
+
+export const useDeleteHabit = () => {
+  const queryClient = useQueryClient();
+  return useMutation(deleteHabit, {
+    onMutate: (variables) => {
+      console.log(variables);
+      queryClient.cancelQueries(["habits"]);
+      const previosHabitsData = queryClient.getQueriesData(["habits"]);
+      queryClient.setQueriesData(["habits"], (oldData) => {
+        const newData = oldData.filter((item) => item._id !== variables);
+        return newData;
+      });
+      return { previosHabitsData };
+    },
+    onSettled: (_err, _deletedItemId, context) => {
+      if (context?.previousHabitsData) {
+        queryClient.setQueryData(["habits"], context.previousHabitsData);
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["habits"]);
     },
   });
 };

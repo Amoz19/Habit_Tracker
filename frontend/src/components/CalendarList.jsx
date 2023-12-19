@@ -5,6 +5,7 @@ import useCustomQuery from "../hook/useCustomQuery";
 import withApiFunctions from "../hoc/withApiFunctions";
 import Loading from "./Loading";
 import { useUser } from "../context/AuthContext";
+import { useDeleteHabit } from "../hook/useHabitDataById";
 
 const CalendarList = ({ apiFunctions }) => {
   const { user } = useUser();
@@ -12,6 +13,12 @@ const CalendarList = ({ apiFunctions }) => {
     apiFunctions.getAll.key,
     () => apiFunctions.getAll.func(user.id)
   );
+
+  const { mutate } = useDeleteHabit();
+
+  const handleDelete = (id) => {
+    mutate(id);
+  };
 
   if (!user) {
     return <Navigate to="/auth" />;
@@ -49,7 +56,10 @@ const CalendarList = ({ apiFunctions }) => {
                   <h3 onClick={() => handleClick(data._id)}>
                     {data.habitName}
                   </h3>
-                  <button className="bg-[#e74c3c] text-white px-3 rounded-sm">
+                  <button
+                    className="bg-[#e74c3c] text-white px-3 rounded-sm"
+                    onClick={() => handleDelete(data._id)}
+                  >
                     Delete
                   </button>
                 </div>
