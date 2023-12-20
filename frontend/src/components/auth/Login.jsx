@@ -32,7 +32,7 @@ const Login = ({ handleOpen }) => {
   };
 
   return (
-    <div className="bg-gradient-to-b from-indigo-200 to-indigo-300 flex flex-col justify-center h-screen items-center">
+    <div className="bg-gradient-to-b from-indigo-200 to-indigo-300 flex flex-col justify-center h-[100dvh] items-center">
       <form
         onSubmit={handleSubmit(onHandleSubmit)}
         className="bg-slate-100 w-[90%] md:w-3/6 p-6 rounded"

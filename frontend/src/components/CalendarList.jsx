@@ -1,15 +1,16 @@
 import AddNewHabit from "./AddNewHabit";
-import { Navigate, useFetcher, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import useCustomQuery from "../hook/useCustomQuery";
 import withApiFunctions from "../hoc/withApiFunctions";
 import Loading from "./Loading";
 import { useUser } from "../context/AuthContext";
 import { useDeleteHabit } from "../hook/useHabitDataById";
+import Fetching from "./Fetching";
+import { useEffect } from "react";
 
 const CalendarList = ({ apiFunctions }) => {
   const { user } = useUser();
-  const { isError, isLoading, data, refetch, isRefetching } = useCustomQuery(
+  const { isError, isLoading, data, isRefetching } = useCustomQuery(
     apiFunctions.getAll.key,
     () => apiFunctions.getAll.func(user.id)
   );
@@ -30,8 +31,12 @@ const CalendarList = ({ apiFunctions }) => {
     navigator(`/habits/${id}`);
   };
 
-  if (isRefetching) {
+  if (isLoading) {
     return <Loading />;
+  }
+
+  if (isRefetching) {
+    return <Fetching />;
   }
 
   if (isError) {
@@ -56,24 +61,52 @@ const CalendarList = ({ apiFunctions }) => {
                   <h3 onClick={() => handleClick(data._id)}>
                     {data.habitName}
                   </h3>
-                  <button
+                  {/* <button
                     className="bg-[#e74c3c] text-white px-3 rounded-sm"
                     onClick={() => handleDelete(data._id)}
                   >
                     Delete
-                  </button>
+                  </button> */}
+                  <p onClick={() => handleDelete(data._id)}>x</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
       ) : (
-        <h1 className="flex flex-1 justify-center items-center">Add new</h1>
+        <div className="flex flex-col flex-1 justify-center items-center bg-[#2c3e50]">
+          <RocketIcon className="text-[#f1edef] w-12 h-12 mb-3" />
+          <h1 className="  text-white text-xl text-center">
+            No habits? Build your habits.
+          </h1>
+        </div>
       )}
       <AddNewHabit />
     </>
   );
 };
+
+function RocketIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+      <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+    </svg>
+  );
+}
 
 const EnhancedCalendarList = withApiFunctions(CalendarList);
 

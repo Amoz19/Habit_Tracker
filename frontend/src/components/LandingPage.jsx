@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 //         <img src={dotGrid} className="w-56 h-56 fixed bottom-32 left-30" />
 //         <img src={dotGrid} className="w-56 h-56 fixed top-22 right-64" />
 //       </div>
-//       <div className="flex justify-center h-screen items-center relative">
+//       <div className="flex justify-center h-[100dvh] items-center relative">
 //         <div className="flex flex-col items-center">
 //           <h1 className={`${styles.title} text-3xl md:text-5xl text-[#0A0857]`}>
 //             Habit Tracker
@@ -51,7 +51,7 @@ import { useNavigate } from "react-router-dom";
 export default function LandingPage() {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-200 to-indigo-300 flex flex-col items-center justify-center">
+    <div className="min-h-[100dvh] bg-gradient-to-b from-indigo-200 to-indigo-300 flex flex-col items-center justify-center">
       <div className="bg-white bg-opacity-20 rounded-full p-1.5 inline-block mb-8">
         <div className="bg-white rounded-full w-14 h-2.5" />
       </div>
