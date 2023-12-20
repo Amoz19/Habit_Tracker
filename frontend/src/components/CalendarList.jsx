@@ -1,5 +1,5 @@
 import AddNewHabit from "./AddNewHabit";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useFetcher, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import useCustomQuery from "../hook/useCustomQuery";
 import withApiFunctions from "../hoc/withApiFunctions";
@@ -9,7 +9,7 @@ import { useDeleteHabit } from "../hook/useHabitDataById";
 
 const CalendarList = ({ apiFunctions }) => {
   const { user } = useUser();
-  const { isError, isLoading, data, refetch } = useCustomQuery(
+  const { isError, isLoading, data, refetch, isRefetching } = useCustomQuery(
     apiFunctions.getAll.key,
     () => apiFunctions.getAll.func(user.id)
   );
@@ -30,7 +30,7 @@ const CalendarList = ({ apiFunctions }) => {
     navigator(`/habits/${id}`);
   };
 
-  if (isLoading) {
+  if (isRefetching) {
     return <Loading />;
   }
 
