@@ -10,7 +10,7 @@ const addFullYear = async (req, res) => {
 
   try {
     const savedCalendar = await CalendarModel.create(postFullYear);
-    res.status(201).json(savedCalendar);
+    return res.status(201).json(savedCalendar);
   } catch (error) {
     res.status(404).json(error.message);
   }
