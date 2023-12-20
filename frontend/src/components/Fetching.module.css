@@ -1,0 +1,43 @@
+.progress {
+  width: 33.6px;
+  height: 67.2px;
+  animation: progress-sze6ck 2s infinite backwards;
+  background: linear-gradient(
+    0deg,
+    #474bff,
+    #474bff 50%,
+    transparent 50%,
+    transparent
+  );
+  background-size: 100% 200%;
+  background-repeat: no-repeat;
+  border: 6.7px solid #dbdcef;
+  border-radius: 16.8px;
+}
+
+@keyframes progress-sze6ck {
+  0% {
+    background-position: 0 0;
+    transform: rotate(0deg);
+  }
+
+  25% {
+    background-position: 0 100%;
+    transform: rotate(0deg);
+  }
+
+  50% {
+    background-position: 0 100%;
+    transform: rotate(180deg);
+  }
+
+  75% {
+    background-position: 0 200%;
+    transform: rotate(180deg);
+  }
+
+  100% {
+    background-position: 0 200%;
+    transform: rotate(360deg);
+  }
+}
