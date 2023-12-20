@@ -15,6 +15,8 @@ const CalendarList = ({ apiFunctions }) => {
     () => apiFunctions.getAll.func(user.id)
   );
 
+  console.log(data);
+
   const { mutate } = useDeleteHabit();
 
   const handleDelete = (id) => {
@@ -35,9 +37,9 @@ const CalendarList = ({ apiFunctions }) => {
     return <Loading />;
   }
 
-  if (isRefetching) {
-    return <Fetching />;
-  }
+  // if (isRefetching) {
+  //   return <Fetching />;
+  // }
 
   if (isError) {
     return <p>Something went Wrong {isError.message}</p>;
@@ -53,9 +55,9 @@ const CalendarList = ({ apiFunctions }) => {
               Your habits
             </h2>
             <div className="grid lg:grid-cols-2">
-              {data.map((data) => (
+              {data.map((data, index) => (
                 <div
-                  key={data._id}
+                  key={index}
                   className="w-full max-w-xs px-6 py-2 bg-white text-slate-800 flex justify-between  mt-6 rounded shadow text-sm"
                 >
                   <h3 onClick={() => handleClick(data._id)}>
