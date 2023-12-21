@@ -18,25 +18,14 @@ export const addHabitData = () => {
   const queryClient = useQueryClient();
   return useMutation(addNewHabit, {
     onMutate: async (newHabit) => {
-      queryClient.cancelQueries("habits");
+      await queryClient.cancelQueries("habits");
       const previousHabitsData = queryClient.getQueryData("habits");
 
-      // Add a placeholder object with an optimistic ID
-      const optimisticId = Date.now();
       queryClient.setQueryData("habits", (oldQueryData) => {
-        return [...oldQueryData, { id: optimisticId, ...newHabit }];
+        return [...oldQueryData, { ...newHabit, id: 1 }];
       });
 
-      return { previousHabitsData, optimisticId };
-    },
-    onSuccess: (data, newHabit, context) => {
-      // Update the optimistic update with the actual ID from the server response
-      queryClient.setQueryData("habits", (oldQueryData) => {
-        const updatedData = oldQueryData.map((habit) =>
-          habit.id === context.optimisticId ? { ...data, ...newHabit } : habit
-        );
-        return updatedData;
-      });
+      return { previousHabitsData };
     },
     onError: (_error, __habit, context) => {
       queryClient.setQueriesData("habits", context.previousHabitsData);
