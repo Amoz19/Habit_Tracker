@@ -22,7 +22,7 @@ export const addHabitData = () => {
       const previousHabitsData = queryClient.getQueryData("habits");
 
       queryClient.setQueryData("habits", (oldQueryData) => {
-        return [...oldQueryData, { ...newHabit, id: 1 }];
+        return [...oldQueryData, { ...newHabit }];
       });
 
       return { previousHabitsData };

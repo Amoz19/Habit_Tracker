@@ -10,9 +10,10 @@ import { useEffect } from "react";
 
 const CalendarList = ({ apiFunctions }) => {
   const { user } = useUser();
-  const { isError, isLoading, data, isRefetching } = useCustomQuery(
+  const { isError, isLoading, data, isFetching } = useCustomQuery(
     apiFunctions.getAll.key,
-    () => apiFunctions.getAll.func(user.id)
+    () => apiFunctions.getAll.func(user.id),
+    { staleTime: 5 * 60 * 1000 }
   );
 
   const { mutate } = useDeleteHabit();
@@ -31,23 +32,22 @@ const CalendarList = ({ apiFunctions }) => {
     navigator(`/habits/${id}`);
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isRefetching) {
-    return <Fetching />;
-  }
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
 
   if (isError) {
     return <p>Something went Wrong {isError.message}</p>;
+  }
+
+  if (isFetching) {
+    return <Fetching />;
   }
 
   return (
     <>
       {data.length > 0 ? (
         <div className="px-8 md:px-32 bg-[#2c3e50] flex flex-1 ">
-          {/* grid grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-5 */}
           <div className=" w-full">
             <h2 className="text-indigo-500 text-2xl font-black mt-2">
               Your habits
@@ -56,18 +56,17 @@ const CalendarList = ({ apiFunctions }) => {
               {data.map((data, index) => (
                 <div
                   key={index}
-                  className="w-full max-w-xs px-6 py-2 bg-white text-slate-800 flex justify-between  mt-6 rounded shadow text-sm"
+                  className="w-full max-w-xs px-6 py-2 bg-white text-slate-800 flex justify-between items-center mt-6 rounded shadow text-sm"
                 >
                   <h3 onClick={() => handleClick(data._id)}>
                     {data.habitName}
                   </h3>
-                  {/* <button
-                    className="bg-[#e74c3c] text-white px-3 rounded-sm"
+                  <p
                     onClick={() => handleDelete(data._id)}
+                    className="text-xl text-red-700"
                   >
-                    Delete
-                  </button> */}
-                  <p onClick={() => handleDelete(data._id)}>x</p>
+                    x
+                  </p>
                 </div>
               ))}
             </div>
