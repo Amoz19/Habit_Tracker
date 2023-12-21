@@ -45,7 +45,6 @@ export const useDeleteHabit = () => {
   const queryClient = useQueryClient();
   return useMutation(deleteHabit, {
     onMutate: (variables) => {
-      console.log(variables);
       queryClient.cancelQueries(["habits"]);
       const previosHabitsData = queryClient.getQueriesData(["habits"]);
       queryClient.setQueriesData(["habits"], (oldData) => {
@@ -59,8 +58,8 @@ export const useDeleteHabit = () => {
         queryClient.setQueryData(["habits"], context.previousHabitsData);
       }
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["habits"]);
-    },
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries(["habits"]);
+    // },
   });
 };
