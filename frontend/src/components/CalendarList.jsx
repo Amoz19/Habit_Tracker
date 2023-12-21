@@ -15,8 +15,6 @@ const CalendarList = ({ apiFunctions }) => {
     () => apiFunctions.getAll.func(user.id)
   );
 
-  console.log(data);
-
   const { mutate } = useDeleteHabit();
 
   const handleDelete = (id) => {
@@ -37,9 +35,9 @@ const CalendarList = ({ apiFunctions }) => {
     return <Loading />;
   }
 
-  // if (isRefetching) {
-  //   return <Fetching />;
-  // }
+  if (isRefetching) {
+    return <Fetching />;
+  }
 
   if (isError) {
     return <p>Something went Wrong {isError.message}</p>;
