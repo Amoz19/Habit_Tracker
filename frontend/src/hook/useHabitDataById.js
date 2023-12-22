@@ -58,8 +58,8 @@ export const useDeleteHabit = () => {
         queryClient.setQueryData(["habits"], context.previousHabitsData);
       }
     },
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries(["habits"]);
-    // },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["habits"]);
+    },
   });
 };

@@ -8,7 +8,7 @@ const addNewHabit = async ({ userId, habitName, getFullYear }) => {
       habitName,
       getFullYear,
     });
-    return data;
+    return data._id;
   } catch (error) {
     console.log(error.message);
   }
