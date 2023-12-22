@@ -58,7 +58,10 @@ const AddNewHabit = () => {
             : "hidden"
         }`}
       >
-        <div className=" bg-[#2D2D2D] p-6 rounded-lg shadow-xl max-w-sm w-full">
+        <form
+          className=" bg-[#2D2D2D] p-6 rounded-lg shadow-xl max-w-sm w-full"
+          onSubmit={handleSubmit(onHandleSubmit)}
+        >
           <h3 className="text-white font-bold">Add new Habits</h3>
           <div className="my-4 text-sm ">
             <label className=" text-white" htmlFor="newhabit">
@@ -77,21 +80,20 @@ const AddNewHabit = () => {
           </div>
 
           <div className="flex justify-end text-sm">
-            <button
+            <input
+              type="submit"
               className="border border-gray-300 bg-indigo-500 text-white  px-3 py-1 rounded mx-3"
-              onClick={handleSubmit(onHandleSubmit)}
-            >
-              Add
-            </button>
+              value="Add"
+            />
 
-            <button
+            <input
+              type="reset"
               onClick={handleClose}
               className="border border-gray-300 bg-red-500 text-white px-3 py-1 rounded"
-            >
-              Cancel
-            </button>
+              value="Cancel"
+            />
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

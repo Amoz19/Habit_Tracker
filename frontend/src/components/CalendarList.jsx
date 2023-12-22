@@ -32,16 +32,12 @@ const CalendarList = ({ apiFunctions }) => {
     navigator(`/habits/${id}`);
   };
 
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (isError) {
     return <p>Something went Wrong {isError.message}</p>;
-  }
-
-  if (isFetching) {
-    return <Fetching />;
   }
 
   return (
@@ -56,7 +52,9 @@ const CalendarList = ({ apiFunctions }) => {
               {data.map((data, index) => (
                 <div
                   key={index}
-                  className="w-full max-w-xs px-6 py-2 bg-white text-slate-800 flex justify-between items-center mt-6 rounded shadow text-sm"
+                  className={`${
+                    isLoading && opacity - 60
+                  } w-full max-w-xs px-6 py-2 bg-white text-slate-800 flex justify-between items-center mt-6 rounded shadow text-sm`}
                 >
                   <h3 onClick={() => handleClick(data._id)}>
                     {data.habitName}
