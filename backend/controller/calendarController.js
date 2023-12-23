@@ -1,8 +1,9 @@
 const CalendarModel = require("../models/CalendarModel");
 
 const addFullYear = async (req, res) => {
-  const { userId, habitName, getFullYear } = req.body;
+  const { userId, habitName, getFullYear, uniqueId } = req.body;
   const postFullYear = {
+    uniqueId,
     userId,
     habitName,
     getFullYear,
@@ -28,7 +29,7 @@ const getFullYear = async (req, res) => {
 
 const getFullYearById = async (req, res) => {
   try {
-    const fullYear = await CalendarModel.find({ _id: req.params.groupId });
+    const fullYear = await CalendarModel.find({ uniqueId: req.params.id });
     res.status(200).json(fullYear);
   } catch (error) {
     res.status(404).json(error.message);
@@ -68,7 +69,7 @@ const updateComplete = async (req, res) => {
 const deleteHabit = async (req, res) => {
   const { id } = req.params;
   try {
-    await CalendarModel.findByIdAndDelete(id);
+    await CalendarModel.findOneAndDelete({ uniqueId: id });
     res.json({ message: "Successfully deleted" });
   } catch (error) {
     res.status(404).json(error.message);
