@@ -3,10 +3,10 @@ import generateCalendar from "../services/data";
 import { addHabitData } from "../hook/useHabitData";
 import { useUser } from "../context/AuthContext";
 import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
 
 const AddNewHabit = () => {
   const [isOpen, setIsOpen] = useState(false);
-  // const [habitName, setHabitName] = useState("");
   const {
     register,
     handleSubmit,
@@ -30,6 +30,7 @@ const AddNewHabit = () => {
     e.preventDefault();
 
     addNewHabit({
+      uniqueId: uuidv4(),
       userId: user.id,
       habitName: data.habitName,
       getFullYear,

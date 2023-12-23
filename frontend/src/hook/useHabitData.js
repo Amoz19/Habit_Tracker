@@ -1,9 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 
-const addNewHabit = async ({ userId, habitName, getFullYear }) => {
+const addNewHabit = async ({ uniqueId, userId, habitName, getFullYear }) => {
   try {
     const { data } = await axios.post(import.meta.env.VITE_API_URL, {
+      uniqueId,
       userId,
       habitName,
       getFullYear,
@@ -20,13 +21,12 @@ export const addHabitData = () => {
     onMutate: async (newHabit) => {
       await queryClient.cancelQueries("habits");
       const previousHabitsData = queryClient.getQueryData("habits");
-
       queryClient.setQueryData("habits", (oldQueryData) => {
         return [...oldQueryData, { ...newHabit }];
       });
-
       return { previousHabitsData };
     },
+
     onError: (_error, __habit, context) => {
       queryClient.setQueriesData("habits", context.previousHabitsData);
     },
