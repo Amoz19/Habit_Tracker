@@ -16,6 +16,7 @@ const CalendarList = ({ apiFunctions }) => {
     { staleTime: 5 * 60 * 1000 }
   );
 
+  console.log(data);
   const { mutate } = useDeleteHabit();
 
   const handleDelete = (id) => {
@@ -49,18 +50,18 @@ const CalendarList = ({ apiFunctions }) => {
               Your habits
             </h2>
             <div className="grid lg:grid-cols-2">
-              {data.map((data, index) => (
+              {data.map((data) => (
                 <div
-                  key={index}
+                  key={data.uniqueId}
                   className={`${
                     isLoading && opacity - 60
                   } w-full max-w-xs px-6 py-2 bg-white text-slate-800 flex justify-between items-center mt-6 rounded shadow text-sm`}
                 >
-                  <h3 onClick={() => handleClick(data._id)}>
+                  <h3 onClick={() => handleClick(data.uniqueId)}>
                     {data.habitName}
                   </h3>
                   <p
-                    onClick={() => handleDelete(data._id)}
+                    onClick={() => handleDelete(data.uniqueId)}
                     className="text-xl text-red-700"
                   >
                     x
