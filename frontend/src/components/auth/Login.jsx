@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuthFunction } from "../../hook/useAuthForm.js";
 import { useUser } from "../../context/AuthContext.jsx";
-import styles from "./Auth.module.css";
+import styles from "../../style/Auth.module.css";
 
 const Login = ({ handleOpen }) => {
   // const queryClient = QueryClient();

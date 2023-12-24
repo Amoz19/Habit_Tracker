@@ -7,7 +7,7 @@ import Auth from "./components/auth/Auth";
 import { AuthContextProvider } from "./context/AuthContext.jsx";
 import RequireAuth from "./components/RequireAuth.jsx";
 import Loading from "./components/Loading.jsx";
-import Home from "./components/Home.jsx";
+// import Home from "./components/Home.jsx";
 import LandingPage from "./components/LandingPage.jsx";
 
 function App() {
