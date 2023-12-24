@@ -37,16 +37,20 @@ const getFullYearById = async (req, res) => {
 };
 
 const updateComplete = async (req, res) => {
-  const { id, monthIndex, dayIndex } = req.body;
+  const { id, monthIndex, dayIndex, isComplete } = req.body;
+
+  const toggleComplete = !isComplete;
 
   try {
+    // const calendarData = await CalendarModel.findOne({ _id: id });
+
     const updateData = await CalendarModel.updateOne(
       {
         _id: id,
       },
       {
         $set: {
-          "getFullYear.$[month].days.$[day].isComplete": true,
+          "getFullYear.$[month].days.$[day].isComplete": toggleComplete,
         },
       },
       {
