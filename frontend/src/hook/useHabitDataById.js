@@ -56,7 +56,7 @@ export const useDeleteHabit = () => {
       queryClient.cancelQueries(["habits"]);
       const previosHabitsData = queryClient.getQueriesData(["habits"]);
       queryClient.setQueriesData(["habits"], (oldData) => {
-        const newData = oldData.filter((item) => item._id !== variables);
+        const newData = oldData.filter((item) => item.uniqueId !== variables);
         return newData;
       });
       return { previosHabitsData };
