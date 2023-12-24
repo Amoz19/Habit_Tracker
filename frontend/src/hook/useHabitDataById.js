@@ -11,6 +11,11 @@ const deleteHabit = async (id) => {
 
 export const useUpdateHabit = (id) => {
   const queryClient = useQueryClient();
+  // return useMutation(updateHabit, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries([["habits", id]]);
+  //   },
+  // });
   return useMutation(updateHabit, {
     onMutate: (variables) => {
       queryClient.cancelQueries([["habits", id]]);
@@ -30,11 +35,12 @@ export const useUpdateHabit = (id) => {
 
       let checkIsComplete = getAllDays[dayIndex].isComplete;
 
-      checkIsComplete = checkIsComplete ? false : true;
+      // getAllDays[dayIndex].isComplete = !checkIsComplete;
 
       queryClient.setQueriesData([["habits", id]], (oldQueryData) => {
         const newData = [...oldQueryData];
-        newData[0].getFullYear[monthIndex].days[dayIndex].isComplete = true;
+        newData[0].getFullYear[monthIndex].days[dayIndex].isComplete =
+          !checkIsComplete;
         return newData;
       });
     },

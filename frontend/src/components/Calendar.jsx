@@ -8,6 +8,7 @@ import NotFound from "./NotFound";
 
 const Calendar = ({ apiFunctions }) => {
   const { id } = useParams();
+
   const {
     isLoading,
     data: calendaData,
@@ -23,8 +24,8 @@ const Calendar = ({ apiFunctions }) => {
     return <NotFound />;
   }
 
-  const handleDone = (id, monthIndex, dayIndex) => {
-    upateDay({ id, monthIndex, dayIndex });
+  const handleDone = (id, monthIndex, dayIndex, isComplete) => {
+    upateDay({ id, monthIndex, dayIndex, isComplete });
   };
 
   const breadCrumb = [
@@ -55,7 +56,12 @@ const Calendar = ({ apiFunctions }) => {
                 <tr key={day.day} className="px-3 text-slate-900">
                   <td
                     onClick={() => {
-                      handleDone(calendaData[0]._id, data._id, day._id);
+                      handleDone(
+                        calendaData[0]._id,
+                        data._id,
+                        day._id,
+                        day.isComplete
+                      );
                     }}
                     className={`${
                       day.isComplete

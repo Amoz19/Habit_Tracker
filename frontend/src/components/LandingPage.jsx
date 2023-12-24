@@ -6,7 +6,8 @@
 // import styles from "./LandingPage.module.css";
 // import { Link } from "react-router-dom";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
+import { useUser } from "../context/AuthContext";
 
 // const LandingPage = () => {
 //   return (
@@ -50,6 +51,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const { user } = useUser();
+  if (user) {
+    return <Navigate to="/habits" />;
+  }
   return (
     <div className="min-h-[100dvh] bg-gradient-to-b from-indigo-200 to-indigo-300 flex flex-col items-center justify-center">
       <div className="bg-white bg-opacity-20 rounded-full p-1.5 inline-block mb-8">
@@ -66,26 +71,5 @@ export default function LandingPage() {
         Get Started
       </button>
     </div>
-  );
-}
-
-function BarChartIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="12" x2="12" y1="20" y2="10" />
-      <line x1="18" x2="18" y1="20" y2="4" />
-      <line x1="6" x2="6" y1="20" y2="16" />
-    </svg>
   );
 }

@@ -1,8 +1,6 @@
 import { useForm } from "react-hook-form";
-import { Navigate } from "react-router-dom";
 import { useAuthFunction } from "../../hook/useAuthForm.js";
-import Loading from "../Loading.jsx";
-import styles from "./Auth.module.css";
+import styles from "../../style/Auth.module.css";
 
 const Signup = ({ handleClose }) => {
   const {

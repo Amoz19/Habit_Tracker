@@ -5,18 +5,19 @@ import withApiFunctions from "../hoc/withApiFunctions";
 import Loading from "./Loading";
 import { useUser } from "../context/AuthContext";
 import { useDeleteHabit } from "../hook/useHabitDataById";
-import Fetching from "./Fetching";
-import { useEffect } from "react";
+import { memo } from "react";
 
-const CalendarList = ({ apiFunctions }) => {
+const CalendarList = memo(({ apiFunctions }) => {
   const { user } = useUser();
-  const { isError, isLoading, data, isFetching } = useCustomQuery(
+  const { isError, isLoading, data } = useCustomQuery(
     apiFunctions.getAll.key,
     () => apiFunctions.getAll.func(user.id),
     { staleTime: 5 * 60 * 1000 }
   );
 
-  console.log(data);
+  // console.log(data);
+
+  // console.log("rendered");
   const { mutate } = useDeleteHabit();
 
   const handleDelete = (id) => {
@@ -73,8 +74,8 @@ const CalendarList = ({ apiFunctions }) => {
         </div>
       ) : (
         <div className="flex flex-col flex-1 justify-center items-center bg-[#2c3e50]">
-          <RocketIcon className="text-[#f1edef] w-12 h-12 mb-3" />
-          <h1 className="  text-white text-xl text-center">
+          <RocketIcon className="text-indigo-500 font-extrabold w-12 h-12 mb-3" />
+          <h1 className="  text-indigo-300 text-xl text-center">
             No habits? Build your habits.
           </h1>
         </div>
@@ -82,7 +83,7 @@ const CalendarList = ({ apiFunctions }) => {
       <AddNewHabit />
     </>
   );
-};
+});
 
 function RocketIcon(props) {
   return (
