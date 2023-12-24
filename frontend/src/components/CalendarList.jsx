@@ -9,15 +9,12 @@ import { memo } from "react";
 
 const CalendarList = memo(({ apiFunctions }) => {
   const { user } = useUser();
-  const { isError, isLoading, data } = useCustomQuery(
+  // console.log(user);
+  const { isError, isLoading, data, isRefetching } = useCustomQuery(
     apiFunctions.getAll.key,
-    () => apiFunctions.getAll.func(user.id),
-    { staleTime: 5 * 60 * 1000 }
+    () => apiFunctions.getAll.func(user.id)
   );
 
-  // console.log(data);
-
-  // console.log("rendered");
   const { mutate } = useDeleteHabit();
 
   const handleDelete = (id) => {
@@ -34,6 +31,9 @@ const CalendarList = memo(({ apiFunctions }) => {
     navigator(`/habits/${id}`);
   };
 
+  // if (isRefetching) {
+  //   return <Loading />;
+  // }
   if (isLoading) {
     return <Loading />;
   }
@@ -58,12 +58,15 @@ const CalendarList = memo(({ apiFunctions }) => {
                     isLoading && opacity - 60
                   } w-full max-w-xs px-6 py-2 bg-white text-slate-800 flex justify-between items-center mt-6 rounded shadow text-sm`}
                 >
-                  <h3 onClick={() => handleClick(data.uniqueId)}>
+                  <h3
+                    onClick={() => handleClick(data.uniqueId)}
+                    className="cursor-pointer"
+                  >
                     {data.habitName}
                   </h3>
                   <p
                     onClick={() => handleDelete(data.uniqueId)}
-                    className="text-xl text-red-700"
+                    className="text-xl text-red-700 cursor-pointer"
                   >
                     x
                   </p>

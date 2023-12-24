@@ -43,6 +43,8 @@ export const useUpdateHabit = (id) => {
           !checkIsComplete;
         return newData;
       });
+
+      return { previosHabitsData };
     },
   });
 };
