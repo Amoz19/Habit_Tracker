@@ -9,7 +9,7 @@ import { memo } from "react";
 
 const CalendarList = memo(({ apiFunctions }) => {
   const { user } = useUser();
-  // console.log(user);
+
   const { isError, isLoading, data, isRefetching } = useCustomQuery(
     apiFunctions.getAll.key,
     () => apiFunctions.getAll.func(user.id)
