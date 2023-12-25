@@ -35,16 +35,12 @@ export const useUpdateHabit = (id) => {
 
       let checkIsComplete = getAllDays[dayIndex].isComplete;
 
-      // getAllDays[dayIndex].isComplete = !checkIsComplete;
-
       queryClient.setQueriesData([["habits", id]], (oldQueryData) => {
         const newData = [...oldQueryData];
         newData[0].getFullYear[monthIndex].days[dayIndex].isComplete =
           !checkIsComplete;
         return newData;
       });
-
-      return { previosHabitsData };
     },
   });
 };
@@ -54,20 +50,13 @@ export const useDeleteHabit = () => {
   return useMutation(deleteHabit, {
     onMutate: (variables) => {
       queryClient.cancelQueries(["habits"]);
-      const previosHabitsData = queryClient.getQueriesData(["habits"]);
+      const previousHabitsData = queryClient.getQueriesData(["habits"]);
       queryClient.setQueriesData(["habits"], (oldData) => {
         const newData = oldData.filter((item) => item.uniqueId !== variables);
+        console.log(newData);
         return newData;
       });
-      return { previosHabitsData };
-    },
-    onSettled: (_err, _deletedItemId, context) => {
-      if (context?.previousHabitsData) {
-        queryClient.setQueryData(["habits"], context.previousHabitsData);
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["habits"]);
+      return { previousHabitsData };
     },
   });
 };
