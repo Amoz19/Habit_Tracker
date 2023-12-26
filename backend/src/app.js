@@ -49,7 +49,6 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 60 * 3,
       secure: process.env.VERCEL_ENV === "production",
-      sameSite: "Lax",
     },
   })
 );
