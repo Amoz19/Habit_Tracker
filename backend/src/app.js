@@ -44,11 +44,12 @@ app.use(
     name: "session-id",
     secret: secret,
     saveUninitialized: false,
-    resave: false,
+    resave: true,
     store: mongoDbStore,
     cookie: {
       maxAge: 1000 * 60 * 60 * 3,
-      secure: false,
+      sameSite: false,
+      secure: process.env.VERCEL_ENV === "production",
     },
   })
 );
@@ -56,7 +57,7 @@ app.use(
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  return res.json({ greeting: "Hello" });
+  return res.json({ greeting: process.env.VERCEL_ENV });
 });
 
 app.use("/api/v1", allowCors(calendarRoute));
