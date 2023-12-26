@@ -44,13 +44,14 @@ app.use(
     name: "session-id",
     secret: secret,
     saveUninitialized: false,
-    resave: true,
+    resave: false,
+    proxy: true,
     store: mongoDbStore,
     cookie: {
-      httpOnly: true,
+      httpOnly: false,
       sameSite: "none",
       maxAge: 1000 * 60 * 60 * 48,
-      secure: process.env.VERCEL_ENV === "production",
+      secure: true,
     },
   })
 );
