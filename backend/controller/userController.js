@@ -43,7 +43,7 @@ const userLogin = async (req, res) => {
   try {
     const userCredential = await Usermodel.findOne({ username });
     if (!userCredential) {
-      res.status(400).send("Wrong Credential");
+      res.status(400).send("User not found");
     }
 
     const isCorrectPassword = await bcrypt.compare(
