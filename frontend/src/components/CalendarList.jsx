@@ -9,6 +9,7 @@ import { memo } from "react";
 import styles from "../style/CalendarList.module.css";
 
 const CalendarList = memo(({ apiFunctions }) => {
+  const navigator = useNavigate();
   const { user } = useUser();
 
   const { isError, isLoading, data } = useCustomQuery(
@@ -34,8 +35,6 @@ const CalendarList = memo(({ apiFunctions }) => {
   if (!user) {
     return <Navigate to="/auth" />;
   }
-
-  const navigator = useNavigate();
 
   const handleClick = (id) => {
     navigator(`/habits/${id}`);
