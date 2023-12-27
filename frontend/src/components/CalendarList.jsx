@@ -6,13 +6,15 @@ import Loading from "./Loading";
 import { useUser } from "../context/AuthContext";
 import { useDeleteHabit } from "../hook/useHabitDataById";
 import { memo } from "react";
+import styles from "../style/CalendarList.module.css";
 
 const CalendarList = memo(({ apiFunctions }) => {
   const { user } = useUser();
 
-  const { isError, isLoading, data, isRefetching } = useCustomQuery(
+  const { isError, isLoading, data } = useCustomQuery(
     apiFunctions.getAll.key,
-    () => apiFunctions.getAll.func(user.id)
+    () => apiFunctions.getAll.func(user.id),
+    { staleTime: 5 * 60 * 1000 }
   );
 
   const { mutate } = useDeleteHabit();
@@ -20,6 +22,14 @@ const CalendarList = memo(({ apiFunctions }) => {
   const handleDelete = (id) => {
     mutate(id);
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <p>Something went Wrong {isError.message}</p>;
+  }
 
   if (!user) {
     return <Navigate to="/auth" />;
@@ -31,32 +41,19 @@ const CalendarList = memo(({ apiFunctions }) => {
     navigator(`/habits/${id}`);
   };
 
-  // if (isRefetching) {
-  //   return <Loading />;
-  // }
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    return <p>Something went Wrong {isError.message}</p>;
-  }
-
   return (
     <>
       {data.length > 0 ? (
-        <div className="px-8 md:px-32 bg-[#2c3e50] flex flex-1 ">
+        <div className="px-8 md:px-32 bg-gradient-to-b from-[#e6e6e6] via-[#ffffff] to-[#d4e6f1]  flex flex-1 ">
           <div className=" w-full">
-            <h2 className="text-indigo-500 text-2xl font-black mt-2">
-              Your habits
-            </h2>
+            <h2 className={styles.title}>Your habits</h2>
             <div className="grid lg:grid-cols-2">
               {data.map((data) => (
                 <div
                   key={data.uniqueId}
                   className={`${
                     isLoading && opacity - 60
-                  } w-full max-w-xs px-6 py-2 bg-white text-slate-800 flex justify-between items-center mt-6 rounded shadow text-sm`}
+                  } w-full max-w-xs px-6 py-2 bg-white text-blue-800 flex justify-between items-center mt-6 rounded shadow text-l`}
                 >
                   <h3
                     onClick={() => handleClick(data.uniqueId)}
@@ -76,9 +73,9 @@ const CalendarList = memo(({ apiFunctions }) => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col flex-1 justify-center items-center bg-[#2c3e50]">
-          <RocketIcon className="text-indigo-500 font-extrabold w-12 h-12 mb-3" />
-          <h1 className="  text-indigo-300 text-xl text-center">
+        <div className="flex flex-col flex-1 justify-center items-center bg-gradient-to-b from-[#e6e6e6] via-[#ffffff] to-[#d4e6f1]">
+          <RocketIcon className="text-indigo-800 font-extrabold w-12 h-12 mb-3" />
+          <h1 className="  text-indigo-700 text-xl text-center">
             No habits? Build your habits.
           </h1>
         </div>
