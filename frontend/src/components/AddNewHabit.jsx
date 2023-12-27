@@ -55,24 +55,24 @@ const AddNewHabit = () => {
       <div
         className={`${
           isOpen
-            ? "fixed inset-0 bg-gray-900 flex justify-center items-center"
+            ? "fixed inset-0 bg-gradient-to-b from-[#e6e6e6] via-[#ffffff] to-[#d4e6f1] flex justify-center items-center"
             : "hidden"
         }`}
       >
         <form
-          className=" bg-[#2D2D2D] p-6 rounded-lg shadow-xl max-w-sm w-full"
+          className="  p-6 rounded-lg shadow-xl max-w-sm w-full"
           onSubmit={handleSubmit(onHandleSubmit)}
         >
-          <h3 className="text-white font-bold">Add new Habits</h3>
+          <h3 className="text-indigo-900 font-bold text-xl">Add new Habits</h3>
           <div className="my-4 text-sm ">
-            <label className=" text-white" htmlFor="newhabit">
+            <label className=" text-indigo-900" htmlFor="newhabit">
               Habit Name
             </label>
             <input
               type="text"
               {...register("habitName", { required: true })}
               placeholder="Enter habit"
-              className="w-full border border-gray-300 focus:outline-none focus:border-gray-300 px-3 py-0.5 rounded my-2"
+              className="w-full border border-gray-300 focus:outline-none focus:border-gray-300 px-3 py-0.5  my-2"
               id="newhabit"
             />
             {errors.habitName && (
@@ -83,14 +83,14 @@ const AddNewHabit = () => {
           <div className="flex justify-end text-sm">
             <input
               type="submit"
-              className="border border-gray-300 bg-indigo-500 text-white  px-3 py-1 rounded mx-3"
+              className="  bg-indigo-500 text-white  px-3 py-1 rounded-md mx-3"
               value="Add"
             />
 
             <input
               type="reset"
               onClick={handleClose}
-              className="border border-gray-300 bg-red-500 text-white px-3 py-1 rounded"
+              className=" bg-red-500 text-white px-3 py-1 rounded-md"
               value="Cancel"
             />
           </div>

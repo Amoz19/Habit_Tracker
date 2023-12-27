@@ -9,12 +9,14 @@ const BreadCrumb = ({ breadCrumb }) => {
         <div className="flex items-center" key={data.name}>
           <Link
             to={data.path}
-            className="w-full px-2 hover:underline transition-all text-zinc-700 "
+            className={`w-full px-2 hover:underline transition-all ${
+              breadCrumb.length - 1 == i ? "text-blue-700" : "text-black"
+            }`}
           >
             {data.name}
           </Link>
           {breadCrumb.length - 1 !== i ? (
-            <IcBaselineGreaterThan className="text-xl outline outline-1" />
+            <IcBaselineGreaterThan className="text-3xl" />
           ) : null}
         </div>
       ))}

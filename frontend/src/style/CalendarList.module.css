@@ -1,0 +1,35 @@
+.title {
+  position: relative;
+  width: fit-content;
+  display: felx;
+  margin: 10px;
+
+  text-align: center;
+  font-weight: bold;
+  font-size: x-large;
+  color: rgb(76, 15, 219);
+}
+
+.title::after {
+  position: absolute;
+  margin-top: 3px;
+  border-radius: 5px;
+  display: flex;
+  content: "";
+  width: 100%;
+  height: 3px;
+  background: blue;
+  transform: rotate(2deg);
+}
+
+.title::before {
+  position: absolute;
+  margin-top: 48px;
+  border-radius: 5px;
+  display: flex;
+  content: "";
+  width: 100%;
+  height: 3px;
+  background: blue;
+  transform: rotate(2deg);
+}

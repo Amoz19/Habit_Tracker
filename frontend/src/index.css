@@ -1,15 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&family=Galada&family=Poppins&family=Roboto&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Mona Sans";
-  src: url("./font/MonaSans-Medium.woff2") format("woff2 supports variations"),
-    url("./font/MonaSans-Medium.woff2") format("woff2-variations");
-  font-weight: 200 900;
-  font-stretch: 75% 125%;
-}
-
 html {
-  font-family: "Mona Sans";
+  font-family: "Roboto", sans-serif;
 }
