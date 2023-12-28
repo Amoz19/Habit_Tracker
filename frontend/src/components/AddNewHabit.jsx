@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import generateCalendar from "../services/data";
 import { addHabitData } from "../hook/useHabitData";
 import { useUser } from "../context/AuthContext";
