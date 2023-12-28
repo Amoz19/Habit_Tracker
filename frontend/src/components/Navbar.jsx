@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import logo from "../assets/animatelogo.gif";
 import { useUser } from "../context/AuthContext";
 import { useLogoutFunction } from "../hook/useAuthForm";

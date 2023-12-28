@@ -11,11 +11,6 @@ const deleteHabit = async (id) => {
 
 export const useUpdateHabit = (id) => {
   const queryClient = useQueryClient();
-  // return useMutation(updateHabit, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries([["habits", id]]);
-  //   },
-  // });
   return useMutation(updateHabit, {
     onMutate: (variables) => {
       queryClient.cancelQueries([["habits", id]]);
