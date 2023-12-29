@@ -10,13 +10,15 @@ const BreadCrumb = ({ breadCrumb }) => {
           <Link
             to={data.path}
             className={`w-full px-2 hover:underline transition-all ${
-              breadCrumb.length - 1 == i ? "text-blue-700" : "text-black"
+              breadCrumb.length - 1 == i
+                ? "text-blue-700 dark:text-indigo-300"
+                : "text-black dark:text-slate-300"
             }`}
           >
             {data.name}
           </Link>
           {breadCrumb.length - 1 !== i ? (
-            <IcBaselineGreaterThan className="text-3xl" />
+            <IcBaselineGreaterThan className="text-3xl dark:text-slate-300" />
           ) : null}
         </div>
       ))}

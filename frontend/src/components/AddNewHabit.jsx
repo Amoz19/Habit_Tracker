@@ -55,15 +55,15 @@ const AddNewHabit = () => {
       <div
         className={`${
           isOpen
-            ? "fixed inset-0 bg-gradient-to-b from-[#e6e6e6] via-[#ffffff] to-[#d4e6f1] flex justify-center items-center"
+            ? "fixed inset-0 bg-gradient-to-b  dark:from-black from-[#e6e6e6] dark:via-[#000000] via-[#ffffff] dark:to-gray-800 to-[#d4e6f1] flex justify-center items-center"
             : "hidden"
         }`}
       >
         <form
-          className="  p-6 rounded-lg shadow-xl max-w-sm w-full"
+          className="  p-6 rounded-lg shadow-xl max-w-sm w-full bg-slate-100"
           onSubmit={handleSubmit(onHandleSubmit)}
         >
-          <h3 className="text-indigo-900 font-bold text-xl">Add new Habits</h3>
+          <h3 className="text-indigo-900  font-bold text-xl">Add new Habits</h3>
           <div className="my-4 text-sm ">
             <label className=" text-indigo-900" htmlFor="newhabit">
               Habit Name
