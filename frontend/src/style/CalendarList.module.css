@@ -33,3 +33,13 @@
   background: blue;
   transform: rotate(-2deg);
 }
+
+/* @media (prefers-color-scheme: dark) {
+  .title {
+    color: rgb(165 180 252);
+  }
+  /* .title::before,
+  .title::after {
+    background: rgb(165 180 252);
+  } */
+/* } */

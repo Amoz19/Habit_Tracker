@@ -74,9 +74,9 @@ const CalendarList = memo(({ apiFunctions }) => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col flex-1 justify-center items-center bg-gradient-to-b from-[#e6e6e6] via-[#ffffff] to-[#d4e6f1]">
-          <RocketIcon className="text-indigo-800 font-extrabold w-12 h-12 mb-3" />
-          <h1 className="  text-indigo-700 text-xl text-center">
+        <div className="flex flex-col flex-1 justify-center items-center bg-gradient-to-b  dark:from-black from-[#e6e6e6] dark:via-[#000000] via-[#ffffff] dark:to-gray-800 to-[#d4e6f1]">
+          <RocketIcon className="text-indigo-800 dark:text-white font-extrabold w-12 h-12 mb-3" />
+          <h1 className="  text-indigo-700 dark:text-gray-400 text-xl text-center">
             No habits? Build your habits.
           </h1>
         </div>
