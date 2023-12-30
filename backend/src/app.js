@@ -37,6 +37,7 @@ const allowCors = (fn) => async (req, res) => {
 const mongoDbStore = new MongoDbStore({
   uri: dbConnect,
   collection: "userSessions",
+  expires: 1000 * 60 * 60 * 720,
 });
 
 app.use(
@@ -50,7 +51,7 @@ app.use(
     cookie: {
       httpOnly: false,
       sameSite: "none",
-      maxAge: 1000 * 60 * 60 * 48,
+      maxAge: 1000 * 60 * 60 * 720,
       secure: true,
     },
   })
