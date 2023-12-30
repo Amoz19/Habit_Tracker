@@ -76,7 +76,7 @@ const Calendar = ({ apiFunctions }) => {
                     }}
                     className={`${
                       day.isComplete
-                        ? "bg-[#1f39a0]  rounded-[100%] text-white"
+                        ? " bg-[#1f39a0] rounded-[100%] text-white"
                         : "bg-none"
                     } w-8 text-center`}
                   >
