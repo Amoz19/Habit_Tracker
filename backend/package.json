@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js",
+    "dev": "nodemon src/dev.js",
     "lint": "eslint --fix src",
     "test": "jest",
     "vercel-build": "echo hello"

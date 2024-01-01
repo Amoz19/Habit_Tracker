@@ -1,5 +1,5 @@
 import AddNewHabit from "./AddNewHabit";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, Link } from "react-router-dom";
 import useCustomQuery from "../hook/useCustomQuery";
 import withApiFunctions from "../hoc/withApiFunctions";
 import Loading from "./Loading";
@@ -9,7 +9,7 @@ import { memo } from "react";
 import styles from "../style/CalendarList.module.css";
 
 const CalendarList = memo(({ apiFunctions }) => {
-  const navigator = useNavigate();
+  const navigate = useNavigate();
   const { user } = useUser();
 
   const { isError, isLoading, data } = useCustomQuery(
@@ -37,7 +37,7 @@ const CalendarList = memo(({ apiFunctions }) => {
   }
 
   const handleClick = (id) => {
-    navigator(`/habits/${id}`);
+    navigate(`/habits/${id}`, { state: { data } });
   };
 
   return (
@@ -62,6 +62,7 @@ const CalendarList = memo(({ apiFunctions }) => {
                   >
                     {data.habitName}
                   </h3>
+                  {/* <Link to={`/habits/${data.uniqueId}`} state={} /> */}
                   <p
                     onClick={() => handleDelete(data.uniqueId)}
                     className="text-xl text-red-700 cursor-pointer"
