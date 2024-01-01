@@ -1,20 +1,37 @@
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useUpdateHabit } from "../hook/useHabitDataById";
 import BreadCrumb from "./BreadCrumb";
+import useCustomQuery from "../hook/useCustomQuery";
 import withApiFunctions from "../hoc/withApiFunctions";
+import Loading from "./Loading";
+import NotFound from "./NotFound";
 
 const Calendar = ({ apiFunctions }) => {
   const { id } = useParams();
-  const location = useLocation();
 
-  const { data: calendaData } = location.state;
+  const {
+    isLoading,
+    data: calendaData,
+    error,
+  } = useCustomQuery(
+    apiFunctions.get.key(id),
+    () => apiFunctions.get.func(id),
+    { staleTime: 5 * 60 * 1000 }
+  );
+
   const { mutate: upateDay } = useUpdateHabit(id);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <NotFound />;
+  }
 
   const handleDone = (id, monthIndex, dayIndex, isComplete) => {
     upateDay({ id, monthIndex, dayIndex, isComplete });
   };
-
-  const matchedDataId = calendaData.filter((data) => data.uniqueId === id);
 
   const breadCrumb = [
     {
@@ -22,7 +39,7 @@ const Calendar = ({ apiFunctions }) => {
       path: "/habits",
     },
     {
-      name: matchedDataId[0].habitName,
+      name: calendaData[0].habitName,
       path: `/habits/${id}`,
     },
   ];
@@ -31,9 +48,9 @@ const Calendar = ({ apiFunctions }) => {
     <div className="px-4 md:px-16 lg:px-32 pb-6 bg-gradient-to-b  dark:from-black from-[#e6e6e6] dark:via-[#000000] via-[#ffffff] dark:to-gray-800 to-[#d4e6f1]">
       <BreadCrumb breadCrumb={breadCrumb} />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 ">
-        {matchedDataId[0].getFullYear.map((data) => (
+        {calendaData[0].getFullYear.map((data) => (
           <table
-            key={data.uniqueId}
+            key={data._id}
             className="bg-slate-100 dark:bg-slate-700 p-6 rounded-lg shadow"
           >
             <thead className="text-xl ">
