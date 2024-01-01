@@ -14,7 +14,7 @@ export default function LandingPage() {
       </div>
       <h1 className="text-6xl font-bold text-indigo-900 mb-3">Habit Tracker</h1>
       <p className="text-lg text-indigo-800 mb-6">
-        Persistence with your habits.
+        Stick with your habits to achive goals
       </p>
       <button
         className="bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50 shadow-lg transition duration-300 ease-in-out"
