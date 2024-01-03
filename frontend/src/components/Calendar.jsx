@@ -6,9 +6,7 @@ import withApiFunctions from "../hoc/withApiFunctions";
 import Loading from "./Loading";
 import NotFound from "./NotFound";
 
-const Calendar = ({ apiFunctions }) => {
-  const { id } = useParams();
-
+const Calendar = ({ apiFunctions, id }) => {
   const {
     isLoading,
     data: calendaData,

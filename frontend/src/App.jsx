@@ -8,6 +8,8 @@ import { AuthContextProvider } from "./context/AuthContext.jsx";
 import RequireAuth from "./components/RequireAuth.jsx";
 
 import LandingPage from "./components/LandingPage.jsx";
+import HabitsList from "./components/HabitsList.jsx";
+import HabitCalendar from "./components/HabitCalendar.jsx";
 
 function App() {
   return (
@@ -21,7 +23,7 @@ function App() {
               path="/habits"
               element={
                 <RequireAuth>
-                  <EnhancedCalendarList />
+                  <HabitsList />
                 </RequireAuth>
               }
             />
@@ -29,7 +31,7 @@ function App() {
               path="/habits/:id"
               element={
                 <RequireAuth>
-                  <EnhancedCalendar />
+                  <HabitCalendar />
                 </RequireAuth>
               }
             />
