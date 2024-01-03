@@ -1,18 +1,17 @@
 import AddNewHabit from "./AddNewHabit";
-import { Navigate, useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useCustomQuery from "../hook/useCustomQuery";
 import withApiFunctions from "../hoc/withApiFunctions";
-import Loading from "./Loading";
 import { useUser } from "../context/AuthContext";
 import { useDeleteHabit } from "../hook/useHabitDataById";
-import { memo } from "react";
+import Loading from "./Loading";
+
 import styles from "../style/CalendarList.module.css";
 
-const CalendarList = memo(({ apiFunctions }) => {
+const CalendarList = ({ apiFunctions, user }) => {
   const navigate = useNavigate();
-  const { user } = useUser();
 
-  const { isError, isLoading, data } = useCustomQuery(
+  const { isLoading, data } = useCustomQuery(
     apiFunctions.getAll.key,
     () => apiFunctions.getAll.func(user.id),
     { staleTime: 5 * 60 * 1000 }
@@ -26,14 +25,6 @@ const CalendarList = memo(({ apiFunctions }) => {
 
   if (isLoading) {
     return <Loading />;
-  }
-
-  if (isError) {
-    return <p>Something went Wrong {isError.message}</p>;
-  }
-
-  if (!user) {
-    return <Navigate to="/auth" />;
   }
 
   const handleClick = (id) => {
@@ -62,7 +53,6 @@ const CalendarList = memo(({ apiFunctions }) => {
                   >
                     {data.habitName}
                   </h3>
-                  {/* <Link to={`/habits/${data.uniqueId}`} state={} /> */}
                   <p
                     onClick={() => handleDelete(data.uniqueId)}
                     className="text-xl text-red-700 cursor-pointer"
@@ -85,7 +75,7 @@ const CalendarList = memo(({ apiFunctions }) => {
       <AddNewHabit />
     </>
   );
-});
+};
 
 function RocketIcon(props) {
   return (
