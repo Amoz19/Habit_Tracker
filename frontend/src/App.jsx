@@ -1,16 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import React, { Suspense } from "react";
 import Layout from "./pages/Layout";
 import NotFound from "./components/NotFound";
 import Auth from "./components/auth/Auth";
 import { AuthContextProvider } from "./context/AuthContext.jsx";
 import RequireAuth from "./components/RequireAuth.jsx";
 import LandingPage from "./components/LandingPage.jsx";
-import HabitCalendar from "./components/HabitCalendar.jsx";
-import CalendarListLoadingSkeleton from "./components/CalendarListLoadingSkeleton.jsx";
-const CalendarListWrapper = React.lazy(() =>
-  import("./components/CalendarListWrapper.jsx")
-);
+import CalendarListWrapper from "./components/CalendarListWrapper.jsx";
+import EnhancedCalendar from "./components/Calendar.jsx";
 
 function App() {
   return (
@@ -24,9 +20,7 @@ function App() {
               path="/habits"
               element={
                 <RequireAuth>
-                  <Suspense fallback={<CalendarListLoadingSkeleton />}>
-                    <CalendarListWrapper />
-                  </Suspense>
+                  <CalendarListWrapper />
                 </RequireAuth>
               }
             />
@@ -34,7 +28,7 @@ function App() {
               path="/habits/:id"
               element={
                 <RequireAuth>
-                  <HabitCalendar />
+                  <EnhancedCalendar />
                 </RequireAuth>
               }
             />
