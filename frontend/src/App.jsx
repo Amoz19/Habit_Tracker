@@ -10,6 +10,7 @@ import RequireAuth from "./components/RequireAuth.jsx";
 import LandingPage from "./components/LandingPage.jsx";
 import HabitsList from "./components/HabitsList.jsx";
 import HabitCalendar from "./components/HabitCalendar.jsx";
+import CalendarListLoadingSkeleton from "./components/CalendarListLoadingSkeleton.jsx";
 
 function App() {
   return (
