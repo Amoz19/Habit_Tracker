@@ -1,14 +1,13 @@
-import AddNewHabit from "./AddNewHabit";
 import { useNavigate } from "react-router-dom";
 import useCustomQuery from "../hook/useCustomQuery";
 import withApiFunctions from "../hoc/withApiFunctions";
 import { useUser } from "../context/AuthContext";
 import { useDeleteHabit } from "../hook/useHabitDataById";
 import Loading from "./Loading";
-
 import styles from "../style/CalendarList.module.css";
 
-const CalendarList = ({ apiFunctions, user }) => {
+const CalendarList = ({ apiFunctions }) => {
+  const { user } = useUser();
   const navigate = useNavigate();
 
   const { isLoading, data } = useCustomQuery(
@@ -34,7 +33,7 @@ const CalendarList = ({ apiFunctions, user }) => {
   return (
     <>
       {data.length > 0 ? (
-        <div className="px-8 md:px-32   bg-gradient-to-b  dark:from-black from-[#e6e6e6] dark:via-[#000000] via-[#ffffff] dark:to-gray-800 to-[#d4e6f1] flex flex-1 ">
+        <div className="px-8 md:px-32 bg-gradient-to-b  dark:from-black from-[#e6e6e6] dark:via-[#000000] via-[#ffffff] dark:to-gray-800 to-[#d4e6f1] flex flex-1 ">
           <div className=" w-full">
             <h2 className={`${styles.title} dark:text-indigo-300`}>
               Your habits
@@ -43,9 +42,7 @@ const CalendarList = ({ apiFunctions, user }) => {
               {data.map((data) => (
                 <div
                   key={data.uniqueId}
-                  className={`${
-                    isLoading && opacity - 60
-                  } w-full max-w-xs px-6 py-2 bg-white text-blue-800 dark:text-slate-900  flex justify-between items-center mt-6 rounded shadow text-l`}
+                  className="w-full max-w-xs px-6 py-2 bg-white text-blue-800 dark:text-slate-900  flex justify-between items-center mt-6 rounded shadow text-l"
                 >
                   <h3
                     onClick={() => handleClick(data.uniqueId)}
@@ -72,7 +69,6 @@ const CalendarList = ({ apiFunctions, user }) => {
           </h1>
         </div>
       )}
-      <AddNewHabit />
     </>
   );
 };
@@ -100,5 +96,4 @@ function RocketIcon(props) {
 }
 
 const EnhancedCalendarList = withApiFunctions(CalendarList);
-
 export default EnhancedCalendarList;
