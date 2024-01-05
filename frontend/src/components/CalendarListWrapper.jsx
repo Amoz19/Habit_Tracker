@@ -6,10 +6,7 @@ import EnhancedCalendarList from "./CalendarList";
 const CalendarListWrapper = () => {
   return (
     <>
-      <Suspense fallback={<CalendarListLoadingSkeleton />}>
-        <EnhancedCalendarList />
-      </Suspense>
-
+      <EnhancedCalendarList />
       <AddNewHabit />
     </>
   );
