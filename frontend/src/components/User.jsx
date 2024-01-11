@@ -26,6 +26,7 @@ const User = () => {
     <div className="flex relative">
       <MaterialSymbolsLightAccountCircleOutline
         onClick={() => setIsActive(!isActive)}
+        className="text-indigo-700 dark:text-white"
       />
       {isActive && (
         <div className=" bg-white p-2 rounded absolute top-10 right-2  shadow transition-all w-24 ">
