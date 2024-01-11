@@ -20,7 +20,9 @@ const addFullYear = async (req, res) => {
 const getFullYear = async (req, res) => {
   const { userId } = req.body;
   try {
-    const fullYear = await CalendarModel.find({ userId });
+    const fullYear = await CalendarModel.find({ userId }).select(
+      "habitName uniqueId"
+    );
     res.status(200).json(fullYear);
   } catch (error) {
     res.status(404).json(error.message);
