@@ -26,7 +26,7 @@ export const AuthContextProvider = ({ children }) => {
   if (isLoading) {
     return (
       <div className="flex h-[100dvh] justify-center items-center">
-        <Loading />
+        <h1>Loading...</h1>
       </div>
     );
   }
