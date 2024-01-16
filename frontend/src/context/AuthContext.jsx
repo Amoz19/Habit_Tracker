@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useGetUserFunction } from "../hook/useAuthForm";
 import Loading from "../components/Loading";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const AuthContext = createContext(null);
 
@@ -11,6 +12,7 @@ export const AuthContextProvider = ({ children }) => {
     if (data) {
       setUser(data.user);
     }
+    console.log(data);
   }, [data]);
 
   const [user, setUser] = useState(null);
@@ -26,7 +28,7 @@ export const AuthContextProvider = ({ children }) => {
   if (isLoading) {
     return (
       <div className="flex h-[100dvh] justify-center items-center">
-        <h1>Fetching data...</h1>
+        <LoadingSpinner />
       </div>
     );
   }
