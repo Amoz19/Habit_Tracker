@@ -18,6 +18,8 @@ const Calendar = ({ apiFunctions }) => {
     { staleTime: 5 * 60 * 1000 }
   );
 
+  console.log(calendaData);
+
   const { mutate: upateDay } = useUpdateHabit(id);
 
   if (isLoading) {
