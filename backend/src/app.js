@@ -22,11 +22,10 @@ const allowCors = (fn) => async (req, res) => {
   res.setHeader("Access-Control-Allow-Credentials", true);
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "http://localhost:5173"
-    // checkCurrentStatus(
-    //   "http://localhost:5173",
-    //   "https://habit-tracker-p4rf.vercel.app"
-    // )
+    checkCurrentStatus(
+      "http://localhost:5173",
+      "https://habit-tracker-p4rf.vercel.app"
+    )
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -34,37 +33,16 @@ const allowCors = (fn) => async (req, res) => {
   );
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version,Authorization,Accept,Origin"
   );
+
   if (req.method === "OPTIONS") {
     res.status(200).end();
     return;
   }
+
   return await fn(req, res);
 };
-
-const mongoDbStore = new MongoDbStore({
-  uri: dbConnect,
-  collection: "userSessions",
-  expires: 1000 * 60 * 60 * 720,
-});
-
-// app.use(
-//   session({
-//     name: "session-id",
-//     secret: secret,
-//     saveUninitialized: false,
-//     resave: false,
-//     proxy: true,
-//     store: mongoDbStore,
-//     cookie: {
-//       httpOnly: false,
-//       sameSite: "none",
-//       maxAge: 1000 * 60 * 60 * 720,
-//       secure: true,
-//     },
-//   })
-// );
 
 app.use(express.json());
 

@@ -10,7 +10,7 @@ const requireAuth = require("../middleware/requireAuth");
 
 const router = express.Router();
 
-// router.use(requireAuth);
+router.use(requireAuth);
 router.post("/", addFullYear);
 router.get("/habits", getFullYear);
 router.get("/:id", getFullYearById);
