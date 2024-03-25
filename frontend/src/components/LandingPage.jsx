@@ -1,12 +1,8 @@
 import { useNavigate, Navigate } from "react-router-dom";
-import { useUser } from "../context/AuthContext";
 
 export default function LandingPage() {
   const navigate = useNavigate();
-  const { user } = useUser();
-  if (user) {
-    return <Navigate to="/habits" />;
-  }
+
   return (
     <div className="min-h-[100dvh] bg-gradient-to-b from-indigo-200 to-indigo-300 flex flex-col items-center justify-center">
       <div className="bg-white bg-opacity-20 rounded-full p-1.5 inline-block mb-8">

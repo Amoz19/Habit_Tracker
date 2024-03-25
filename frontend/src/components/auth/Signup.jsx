@@ -15,7 +15,14 @@ const Signup = ({ handleClose }) => {
   const onHandleSubmit = (data, e) => {
     e.preventDefault();
 
-    mutate({ formData: data, query: "signup" });
+    mutate({ formData: data, query: "signup" }),
+      {
+        onSuccess: (data) => {
+          localStorage.setItem("user", JSON.stringify(data));
+          dispatch({ type: "LOGIN", payload: data });
+          navigate("/habits");
+        },
+      };
   };
 
   return (

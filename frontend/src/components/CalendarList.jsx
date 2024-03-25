@@ -1,22 +1,24 @@
 import { useNavigate } from "react-router-dom";
 import useCustomQuery from "../hook/useCustomQuery";
 import withApiFunctions from "../hoc/withApiFunctions";
-import { useUser } from "../context/AuthContext";
 import { useDeleteHabit } from "../hook/useHabitDataById";
 import Loading from "./Loading";
 import styles from "../style/CalendarList.module.css";
+import useAuthContext from "../hook/useAuthContext";
 
 const CalendarList = ({ apiFunctions }) => {
-  const { user } = useUser();
+  const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  const { isLoading, data } = useCustomQuery(
+  const { isLoading, data, error } = useCustomQuery(
     apiFunctions.getAll.key,
-    () => apiFunctions.getAll.func(user.id),
+    apiFunctions.getAll.func,
     { staleTime: 5 * 60 * 1000 }
   );
 
   const { mutate } = useDeleteHabit();
+
+  console.log(error);
 
   const handleDelete = (id) => {
     mutate(id);
@@ -32,7 +34,7 @@ const CalendarList = ({ apiFunctions }) => {
 
   return (
     <>
-      {data.length > 0 ? (
+      {data ? (
         <div className="px-8 md:px-32 bg-gradient-to-b  dark:from-black from-[#e6e6e6] dark:via-[#000000] via-[#ffffff] dark:to-gray-800 to-[#d4e6f1] flex flex-1 ">
           <div className=" w-full">
             <h2 className={`${styles.title} dark:text-indigo-300`}>

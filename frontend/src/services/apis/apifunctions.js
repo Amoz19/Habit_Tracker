@@ -1,10 +1,8 @@
 import axios from "axios";
+import useAuthContext from "../../hook/useAuthContext";
 
-const getAllHabits = async (userId) => {
-  const { data } = await axios.post(
-    `${import.meta.env.VITE_API_URL}/getUserData`,
-    { userId }
-  );
+const getAllHabits = async () => {
+  const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/habits`);
   return data;
 };
 

@@ -4,14 +4,18 @@ import Layout from "./pages/Layout";
 import NotFound from "./components/NotFound";
 import Auth from "./components/auth/Auth";
 import { AuthContextProvider } from "./context/AuthContext.jsx";
-import RequireAuth from "./components/RequireAuth.jsx";
+// import RequireAuth from "./components/RequireAuth.jsx";
 import LandingPage from "./components/LandingPage.jsx";
 import Loading from "./components/Loading.jsx";
+import CalendarListWrapper from "./components/CalendarListWrapper.jsx";
+import EnhancedCalendar from "./components/Calendar.jsx";
 
-const LazyCalendarListWrapper = lazy(() =>
-  import("./components/CalendarListWrapper.jsx")
-);
-const LazyEnhancedCalendar = lazy(() => import("./components/Calendar.jsx"));
+// const LazyCalendarListWrapper = lazy(() =>
+//   import("./components/CalendarListWrapper.jsx")
+// );
+// EnhancedCalendar
+
+// const LazyEnhancedCalendar = lazy(() => import("./components/Calendar.jsx"));
 
 function App() {
   return (
@@ -21,26 +25,8 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/auth" element={<Auth />} />
           <Route element={<Layout />}>
-            <Route
-              path="/habits"
-              element={
-                <RequireAuth>
-                  <Suspense fallback={<Loading />}>
-                    <LazyCalendarListWrapper />
-                  </Suspense>
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/habits/:id"
-              element={
-                <RequireAuth>
-                  <Suspense fallback={<Loading />}>
-                    <LazyEnhancedCalendar />
-                  </Suspense>
-                </RequireAuth>
-              }
-            />
+            <Route path="/habits" element={<CalendarListWrapper />} />
+            <Route path="/habits/:id" element={<EnhancedCalendar />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

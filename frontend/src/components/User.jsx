@@ -3,23 +3,23 @@ import {
   MaterialSymbolsLightAccountCircleOutline,
   IonMdLogOut,
 } from "../../util/icon";
-import { useUser } from "../context/AuthContext";
 import { useLogoutFunction } from "../hook/useAuthForm";
 import { useNavigate } from "react-router-dom";
+import useAuthContext from "../hook/useAuthContext";
 
 const User = () => {
   const [isActive, setIsActive] = useState(false);
   const navigate = useNavigate();
-  const { mutate: userLogout } = useLogoutFunction();
-  const { user, logout } = useUser();
+  // const { mutate: userLogout } = useLogoutFunction();
+  const { user, dispatch } = useAuthContext();
 
   const handleLogout = () => {
-    userLogout("logout", {
-      onSuccess: () => {
-        logout();
-        navigate("/auth");
-      },
-    });
+    // userLogout("logout", {
+    //   onSuccess: () => {
+    dispatch({ type: "LOGOUT" });
+    navigate("/auth");
+    //   },
+    // });
   };
 
   return (

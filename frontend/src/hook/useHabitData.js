@@ -9,6 +9,7 @@ const addNewHabit = async ({ uniqueId, userId, habitName, getFullYear }) => {
       habitName,
       getFullYear,
     });
+    console.log(data);
     return data._id;
   } catch (error) {
     console.log(error.message);
@@ -24,9 +25,9 @@ export const addHabitData = () => {
       queryClient.setQueryData("habits", (oldQueryData) => {
         return [...oldQueryData, { ...newHabit }];
       });
+
       return { previousHabitsData };
     },
-
     onError: (_error, __habit, context) => {
       queryClient.setQueriesData("habits", context.previousHabitsData);
     },
