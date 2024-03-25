@@ -34,7 +34,11 @@ const createNewUser = async (req, res) => {
       password: hashedPassword,
     });
     const token = createToken(createdUser._id);
-    res.json({ user: createdUser.username, token });
+    res.json({
+      username: createdUser.username,
+      token,
+      userId: createdUser._id,
+    });
   } catch (error) {
     console.log(error.message);
   }
@@ -70,7 +74,11 @@ const userLogin = async (req, res) => {
     });
 
     const token = createToken(createdUser._id);
-    res.json({ user: createdUser.username, token });
+    res.json({
+      username: createdUser.username,
+      token,
+      userId: createdUser._id,
+    });
   } catch (error) {
     console.log(error.message);
   }
@@ -88,14 +96,4 @@ const logout = async (req, res) => {
   }
 };
 
-const checkAuth = async (req, res) => {
-  try {
-    const sessuser = req.session.user;
-    if (!sessuser) return res.status(401).send("Did not login yet");
-    res.json({ user: sessuser });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-module.exports = { createNewUser, userLogin, logout, checkAuth };
+module.exports = { createNewUser, userLogin, logout };

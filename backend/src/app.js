@@ -2,13 +2,13 @@ const express = require("express");
 const calendarRoute = require("../routes/calendarRoute");
 const userRoute = require("../routes/userRoute");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const session = require("express-session");
 const MongoDbStore = require("connect-mongodb-session")(session);
 require("dotenv").config();
 const middlewares = require("./middlewares");
 
 const dbConnect = process.env.DB_URL;
-const secret = process.env.SECRET_KEY;
 const currentStatus = process.env.VERCEL_ENV;
 const port = process.env.PORT;
 
@@ -22,10 +22,11 @@ const allowCors = (fn) => async (req, res) => {
   res.setHeader("Access-Control-Allow-Credentials", true);
   res.setHeader(
     "Access-Control-Allow-Origin",
-    checkCurrentStatus(
-      "http://localhost:5173",
-      "https://habit-tracker-p4rf.vercel.app"
-    )
+    "http://localhost:5173"
+    // checkCurrentStatus(
+    //   "http://localhost:5173",
+    //   "https://habit-tracker-p4rf.vercel.app"
+    // )
   );
   res.setHeader(
     "Access-Control-Allow-Methods",

@@ -6,11 +6,13 @@ const {
   updateComplete,
   deleteHabit,
 } = require("../controller/calendarController");
+const requireAuth = require("../middleware/requireAuth");
 
 const router = express.Router();
 
+// router.use(requireAuth);
 router.post("/", addFullYear);
-router.post("/getUserData", getFullYear);
+router.get("/habits", getFullYear);
 router.get("/:id", getFullYearById);
 router.patch("/", updateComplete);
 router.delete("/:id", deleteHabit);

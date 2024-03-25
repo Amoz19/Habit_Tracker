@@ -11,6 +11,6 @@ const router = express.Router();
 router.post("/signup", createNewUser);
 router.post("/login", userLogin);
 router.delete("/logout", logout);
-router.get("/authChecker", checkAuth);
+// router.get("/authChecker", checkAuth);
 
 module.exports = router;
