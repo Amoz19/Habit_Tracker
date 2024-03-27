@@ -1,10 +1,9 @@
 import { useState } from "react";
 import generateCalendar from "../services/data";
-import { addHabitData } from "../hook/useHabitData";
-
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import useAuthContext from "../hook/useAuthContext";
+import { useAddNewHabit } from "../hook/useAddNewHabit";
 
 const AddNewHabit = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +13,7 @@ const AddNewHabit = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const { mutate: addNewHabit } = addHabitData();
+  const { mutate: addNewHabit } = useAddNewHabit();
   const { user } = useAuthContext();
 
   const getFullYear = generateCalendar();
@@ -32,7 +31,7 @@ const AddNewHabit = () => {
 
     addNewHabit({
       uniqueId: uuidv4(),
-      userId: user.userId,
+      userId: user?.userId,
       habitName: data.habitName,
       getFullYear,
     });

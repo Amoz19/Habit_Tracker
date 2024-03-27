@@ -17,6 +17,7 @@ const User = () => {
     // userLogout("logout", {
     //   onSuccess: () => {
     dispatch({ type: "LOGOUT" });
+    localStorage.removeItem("user");
     navigate("/auth");
     //   },
     // });
