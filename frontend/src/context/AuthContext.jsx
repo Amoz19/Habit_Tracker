@@ -17,7 +17,7 @@ const reducerFn = (state, action) => {
 
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducerFn, initialState);
-  console.log(state.user);
+  console.log("Globalstate :", state);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));

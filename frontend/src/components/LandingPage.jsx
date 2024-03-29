@@ -14,7 +14,7 @@ export default function LandingPage() {
       </p>
       <button
         className="bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50 shadow-lg transition duration-300 ease-in-out"
-        onClick={() => navigate("/auth")}
+        onClick={() => navigate("/login")}
       >
         Get Started
       </button>

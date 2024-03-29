@@ -5,16 +5,20 @@ import {
 } from "../../util/icon";
 import useAuthContext from "../hook/useAuthContext";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "react-query";
 
 const User = () => {
+  const queryClient = useQueryClient();
   const [isActive, setIsActive] = useState(false);
   const { user, dispatch } = useAuthContext();
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("user");
     dispatch({ type: "LOGOUT" });
     navigate("/login");
+    queryClient.clear();
   };
 
   return (

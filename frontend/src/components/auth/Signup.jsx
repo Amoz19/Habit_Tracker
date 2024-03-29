@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
-import { useAuthFunction } from "../../hook/useAuthForm.js";
 import styles from "../../style/Auth.module.css";
+import { useAuth } from "../../hook/useAuth";
 
-const Signup = ({ handleClose }) => {
+const Signup = () => {
   const {
     register,
     handleSubmit,
@@ -10,7 +10,7 @@ const Signup = ({ handleClose }) => {
     formState: { errors },
   } = useForm();
 
-  const { isError, isLoading, error, mutate } = useAuthFunction();
+  const { isError, isLoading, error, mutate } = useAuth();
 
   const onHandleSubmit = (data, e) => {
     e.preventDefault();

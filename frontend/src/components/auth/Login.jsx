@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAuthFunction } from "../../hook/useAuthForm.js";
 import styles from "../../style/Auth.module.css";
 import useAuthContext from "../../hook/useAuthContext.js";
+import { useAuth } from "../../hook/useAuth.js";
 
-const Login = ({ handleOpen }) => {
-  const { isError, error, isLoading, mutate } = useAuthFunction();
+const Login = () => {
+  const { isError, error, isLoading, mutate } = useAuth();
   const navigate = useNavigate();
   const { dispatch } = useAuthContext();
 
@@ -23,7 +23,6 @@ const Login = ({ handleOpen }) => {
       { formData: data, query: "login" },
       {
         onSuccess: (data) => {
-          console.log(data);
           localStorage.setItem("user", JSON.stringify(data));
           dispatch({ type: "LOGIN", payload: data });
           navigate("/habits");
