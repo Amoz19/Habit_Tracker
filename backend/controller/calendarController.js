@@ -20,11 +20,19 @@ const addFullYear = async (req, res) => {
 
 const getFullYear = async (req, res) => {
   const { _id } = req.user;
-  console.log(_id);
   try {
     const fullYear = await CalendarModel.find({ userId: _id }).select(
       "habitName uniqueId"
     );
+    res.status(200).json(fullYear);
+  } catch (error) {
+    res.status(404).json(error.message);
+  }
+};
+
+const getFullYearById = async (req, res) => {
+  try {
+    const fullYear = await CalendarModel.find({ uniqueId: req.params.id });
     res.status(200).json(fullYear);
   } catch (error) {
     res.status(404).json(error.message);
@@ -76,6 +84,7 @@ const deleteHabit = async (req, res) => {
 module.exports = {
   addFullYear,
   getFullYear,
+  getFullYearById,
   updateComplete,
   deleteHabit,
 };
