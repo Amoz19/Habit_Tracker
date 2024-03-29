@@ -1,13 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
-import { useGetUserFunction } from "../hook/useAuthForm";
-import Loading from "../components/Loading";
-import LoadingSpinner from "../components/LoadingSpinner";
+import { createContext, useEffect, useReducer, useState } from "react";
 
 export const AuthContext = createContext(null);
 
@@ -26,11 +17,10 @@ const reducerFn = (state, action) => {
 
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducerFn, initialState);
-  console.log(state);
+  console.log(state.user);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-
     if (user) {
       dispatch({ type: "LOGIN", payload: user });
     }

@@ -17,7 +17,6 @@ const addNewHabit = async ({ uniqueId, userId, habitName, getFullYear }) => {
         },
       }
     );
-    console.log(data);
     return data._id;
   } catch (error) {
     console.log(error.message);

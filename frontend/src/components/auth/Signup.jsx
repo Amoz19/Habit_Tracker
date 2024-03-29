@@ -10,7 +10,7 @@ const Signup = ({ handleClose }) => {
     formState: { errors },
   } = useForm();
 
-  const { isSuccess, isError, isLoading, error, mutate } = useAuthFunction();
+  const { isError, isLoading, error, mutate } = useAuthFunction();
 
   const onHandleSubmit = (data, e) => {
     e.preventDefault();
@@ -36,27 +36,6 @@ const Signup = ({ handleClose }) => {
             {error.message}
           </p>
         )}
-        <div
-          onClick={handleClose}
-          className=" flex justify-between items-center mb-3"
-        >
-          {isSuccess && <p className="text-blue-600">Success✓</p>}
-          <div className="w-fit py-1  text-white">
-            {
-              <div onClick={handleClose}>
-                {isSuccess ? (
-                  <p className="text-blue-600 px-3 py-1 rounded border border-gray-300">
-                    Login
-                  </p>
-                ) : (
-                  <p className="px-3 py-1 rounded text-red-600 border border-gray-300">
-                    X
-                  </p>
-                )}
-              </div>
-            }
-          </div>
-        </div>
         <h1 className="text-2xl font-black text-blue-900 mb-4 ">
           Create New Account
         </h1>

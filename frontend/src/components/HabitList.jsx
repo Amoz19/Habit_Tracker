@@ -4,8 +4,6 @@ import Loading from "./Loading";
 import styles from "../style/CalendarList.module.css";
 import useAuthContext from "../hook/useAuthContext";
 import NotFound from "./NotFound";
-import { useQuery } from "react-query";
-import { getAllHabits } from "../services/apis/apifunctions";
 import { useAllHabits } from "../hook/useAllHabits";
 import { useDeleteHabit } from "../hook/useDeleteHabit";
 
@@ -14,12 +12,11 @@ const HabitList = () => {
   const navigate = useNavigate();
 
   const { data, isLoading } = useAllHabits(user?.token);
-  console.log(data);
 
   const { mutate } = useDeleteHabit();
 
-  const handleDelete = (id) => {
-    mutate(id);
+  const handleDelete = (id, token) => {
+    mutate({ id, token });
   };
 
   if (isLoading) {
@@ -55,7 +52,7 @@ const HabitList = () => {
                     {data.habitName}
                   </h3>
                   <p
-                    onClick={() => handleDelete(data.uniqueId)}
+                    onClick={() => handleDelete(data.uniqueId, user.token)}
                     className="text-xl text-red-700 cursor-pointer"
                   >
                     x

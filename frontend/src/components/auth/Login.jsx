@@ -23,6 +23,7 @@ const Login = ({ handleOpen }) => {
       { formData: data, query: "login" },
       {
         onSuccess: (data) => {
+          console.log(data);
           localStorage.setItem("user", JSON.stringify(data));
           dispatch({ type: "LOGIN", payload: data });
           navigate("/habits");
@@ -80,7 +81,7 @@ const Login = ({ handleOpen }) => {
         )}
         <button
           className="px-3 py-1 border border-gray-300 rounded text-sm text-blue-800"
-          onClick={handleOpen}
+          onClick={() => navigate("/signup")}
         >
           Create new accout
         </button>

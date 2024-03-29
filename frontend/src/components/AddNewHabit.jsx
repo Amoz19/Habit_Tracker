@@ -1,9 +1,9 @@
 import { useState } from "react";
-import generateCalendar from "../services/data";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import useAuthContext from "../hook/useAuthContext";
 import { useAddNewHabit } from "../hook/useAddNewHabit";
+import generateCalendar from "../services/createCalendar";
 
 const AddNewHabit = () => {
   const [isOpen, setIsOpen] = useState(false);

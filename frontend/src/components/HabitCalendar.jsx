@@ -25,8 +25,8 @@ const HabitCalendar = () => {
     return <NotFound />;
   }
 
-  const handleDone = (id, monthIndex, dayIndex, isComplete) => {
-    upateDay({ id, monthIndex, dayIndex, isComplete });
+  const handleDone = (id, monthIndex, dayIndex, isComplete, token) => {
+    upateDay({ id, monthIndex, dayIndex, isComplete, token });
   };
 
   const breadCrumb = [
@@ -67,7 +67,8 @@ const HabitCalendar = () => {
                         calendaData[0]._id,
                         data._id,
                         day._id,
-                        day.isComplete
+                        day.isComplete,
+                        user?.token
                       );
                     }}
                     className={`${

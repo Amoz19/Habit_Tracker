@@ -47,8 +47,3 @@ function generateMonthDays(year, month) {
 }
 
 export default generateCalendar;
-// Example usage:
-// Generate a unique groupId
-// const generatedCalendar = generateCalendar(groupId);
-
-// console.log(generatedCalendar);
