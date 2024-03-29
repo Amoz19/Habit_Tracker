@@ -53,6 +53,7 @@ const userLogin = async (req, res) => {
 
   try {
     const userCredential = await Usermodel.findOne({ username });
+
     if (!userCredential) {
       res.status(400).send("User not found");
     }
@@ -65,19 +66,12 @@ const userLogin = async (req, res) => {
     if (!isCorrectPassword) {
       return res.status(400).send("Wrong password");
     }
+    const token = createToken(userCredential._id);
 
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-    const createdUser = await Usermodel.create({
-      username,
-      password: hashedPassword,
-    });
-
-    const token = createToken(createdUser._id);
     res.json({
-      username: createdUser.username,
+      username: userCredential.username,
       token,
-      userId: createdUser._id,
+      userId: userCredential._id,
     });
   } catch (error) {
     console.log(error.message);
