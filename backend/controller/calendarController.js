@@ -12,8 +12,8 @@ const addFullYear = async (req, res) => {
 
   try {
     const savedCalendar = await CalendarModel.create(postFullYear);
+    console.log(savedCalendar.userId);
     res.status(201).json(savedCalendar);
-    console.log(savedCalendar);
   } catch (error) {
     res.status(404).json(error.message);
   }
@@ -21,25 +21,16 @@ const addFullYear = async (req, res) => {
 
 const getFullYear = async (req, res) => {
   const { _id } = req.user;
+  console.log(_id);
   try {
     const fullYear = await CalendarModel.find({ userId: _id }).select(
       "habitName uniqueId"
     );
-    console.log(fullYear);
     res.status(200).json(fullYear);
   } catch (error) {
     res.status(404).json(error.message);
   }
 };
-
-// const getFullYearById = async (req, res) => {
-//   try {
-//     const fullYear = await CalendarModel.find({ uniqueId: req.params.id });
-//     res.status(200).json(fullYear);
-//   } catch (error) {
-//     res.status(404).json(error.message);
-//   }
-// };
 
 const updateComplete = async (req, res) => {
   const { id, monthIndex, dayIndex, isComplete } = req.body;
@@ -47,8 +38,6 @@ const updateComplete = async (req, res) => {
   const toggleComplete = !isComplete;
 
   try {
-    // const calendarData = await CalendarModel.findOne({ _id: id });
-
     const updateData = await CalendarModel.updateOne(
       {
         _id: id,
@@ -84,6 +73,7 @@ const deleteHabit = async (req, res) => {
     res.status(404).json(error.message);
   }
 };
+
 module.exports = {
   addFullYear,
   getFullYear,
