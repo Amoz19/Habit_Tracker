@@ -15,5 +15,6 @@ export const useHabitCalendar = (id, token) => {
     queryKey: ["habits", id],
     queryFn: () => getHabitCalendarById(id, token),
     enabled: !!token,
+    staleTime: 1000 * 60 * 5,
   });
 };
