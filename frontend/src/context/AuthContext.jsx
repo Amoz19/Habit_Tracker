@@ -1,44 +1,34 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { useGetUserFunction } from "../hook/useAuthForm";
-import Loading from "../components/Loading";
-import LoadingSpinner from "../components/LoadingSpinner";
+import { createContext, useEffect, useReducer, useState } from "react";
 
-const AuthContext = createContext(null);
+export const AuthContext = createContext(null);
+
+const initialState = { user: null };
+
+const reducerFn = (state, action) => {
+  switch (action.type) {
+    case "LOGIN":
+      return { user: action.payload };
+    case "LOGOUT":
+      return { user: null };
+    default:
+      return state;
+  }
+};
 
 export const AuthContextProvider = ({ children }) => {
-  const { data, isLoading } = useGetUserFunction();
+  const [state, dispatch] = useReducer(reducerFn, initialState);
+  console.log("Globalstate :", state);
 
   useEffect(() => {
-    if (data) {
-      setUser(data.user);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      dispatch({ type: "LOGIN", payload: user });
     }
-    console.log(data);
-  }, [data]);
+  }, []);
 
-  const [user, setUser] = useState(null);
-
-  const login = (user) => {
-    setUser(user);
-  };
-
-  const logout = () => {
-    setUser(null);
-  };
-
-  if (isLoading) {
-    return (
-      <div className="flex h-[100dvh] justify-center items-center">
-        <LoadingSpinner />
-      </div>
-    );
-  }
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ ...state, dispatch }}>
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useUser = () => {
-  return useContext(AuthContext);
 };

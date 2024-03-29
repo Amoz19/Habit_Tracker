@@ -1,25 +1,22 @@
 import { useNavigate } from "react-router-dom";
-import useCustomQuery from "../hook/useCustomQuery";
-import withApiFunctions from "../hoc/withApiFunctions";
-import { useUser } from "../context/AuthContext";
-import { useDeleteHabit } from "../hook/useHabitDataById";
+
 import Loading from "./Loading";
 import styles from "../style/CalendarList.module.css";
+import useAuthContext from "../hook/useAuthContext";
+import NotFound from "./NotFound";
+import { useAllHabits } from "../hook/useAllHabits";
+import { useDeleteHabit } from "../hook/useDeleteHabit";
 
-const CalendarList = ({ apiFunctions }) => {
-  const { user } = useUser();
+const HabitList = () => {
+  const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  const { isLoading, data } = useCustomQuery(
-    apiFunctions.getAll.key,
-    () => apiFunctions.getAll.func(user.id),
-    { staleTime: 5 * 60 * 1000 }
-  );
+  const { data, isLoading } = useAllHabits(user?.token);
 
   const { mutate } = useDeleteHabit();
 
-  const handleDelete = (id) => {
-    mutate(id);
+  const handleDelete = (id, token) => {
+    mutate({ id, token });
   };
 
   if (isLoading) {
@@ -29,6 +26,10 @@ const CalendarList = ({ apiFunctions }) => {
   const handleClick = (id) => {
     navigate(`/habits/${id}`, { state: { data } });
   };
+
+  if (!user) {
+    return <NotFound message="UnAnthorized" />;
+  }
 
   return (
     <>
@@ -51,7 +52,7 @@ const CalendarList = ({ apiFunctions }) => {
                     {data.habitName}
                   </h3>
                   <p
-                    onClick={() => handleDelete(data.uniqueId)}
+                    onClick={() => handleDelete(data.uniqueId, user.token)}
                     className="text-xl text-red-700 cursor-pointer"
                   >
                     x
@@ -95,5 +96,5 @@ function RocketIcon(props) {
   );
 }
 
-const EnhancedCalendarList = withApiFunctions(CalendarList);
-export default EnhancedCalendarList;
+// const EnhancedCalendarList = withApiFunctions(CalendarList);
+export default HabitList;

@@ -1,12 +1,8 @@
 import { useNavigate, Navigate } from "react-router-dom";
-import { useUser } from "../context/AuthContext";
 
 export default function LandingPage() {
   const navigate = useNavigate();
-  const { user } = useUser();
-  if (user) {
-    return <Navigate to="/habits" />;
-  }
+
   return (
     <div className="min-h-[100dvh] bg-gradient-to-b from-indigo-200 to-indigo-300 flex flex-col items-center justify-center">
       <div className="bg-white bg-opacity-20 rounded-full p-1.5 inline-block mb-8">
@@ -18,7 +14,7 @@ export default function LandingPage() {
       </p>
       <button
         className="bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50 shadow-lg transition duration-300 ease-in-out"
-        onClick={() => navigate("/auth")}
+        onClick={() => navigate("/login")}
       >
         Get Started
       </button>

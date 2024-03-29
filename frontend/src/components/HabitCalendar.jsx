@@ -1,24 +1,19 @@
 import { useParams } from "react-router-dom";
-import { useUpdateHabit } from "../hook/useHabitDataById";
 import BreadCrumb from "./BreadCrumb";
-import useCustomQuery from "../hook/useCustomQuery";
-import withApiFunctions from "../hoc/withApiFunctions";
 import Loading from "./Loading";
 import NotFound from "./NotFound";
+import { useHabitCalendar } from "../hook/useHabitCalendar";
+import useAuthContext from "../hook/useAuthContext";
+import { useUpdateHabit } from "../hook/useUpdateHabit";
 
-const Calendar = ({ apiFunctions }) => {
+const HabitCalendar = () => {
   const { id } = useParams();
+  const { user } = useAuthContext();
   const {
     isLoading,
     data: calendaData,
     error,
-  } = useCustomQuery(
-    apiFunctions.get.key(id),
-    () => apiFunctions.get.func(id),
-    { staleTime: 5 * 60 * 1000 }
-  );
-
-  console.log(calendaData);
+  } = useHabitCalendar(id, user?.token);
 
   const { mutate: upateDay } = useUpdateHabit(id);
 
@@ -30,8 +25,8 @@ const Calendar = ({ apiFunctions }) => {
     return <NotFound />;
   }
 
-  const handleDone = (id, monthIndex, dayIndex, isComplete) => {
-    upateDay({ id, monthIndex, dayIndex, isComplete });
+  const handleDone = (id, monthIndex, dayIndex, isComplete, token) => {
+    upateDay({ id, monthIndex, dayIndex, isComplete, token });
   };
 
   const breadCrumb = [
@@ -72,7 +67,8 @@ const Calendar = ({ apiFunctions }) => {
                         calendaData[0]._id,
                         data._id,
                         day._id,
-                        day.isComplete
+                        day.isComplete,
+                        user?.token
                       );
                     }}
                     className={`${
@@ -93,6 +89,4 @@ const Calendar = ({ apiFunctions }) => {
   );
 };
 
-const EnhancedCalendar = withApiFunctions(Calendar);
-
-export default EnhancedCalendar;
+export default HabitCalendar;

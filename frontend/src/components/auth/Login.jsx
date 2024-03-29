@@ -1,14 +1,13 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAuthFunction } from "../../hook/useAuthForm.js";
-import { useUser } from "../../context/AuthContext.jsx";
 import styles from "../../style/Auth.module.css";
+import useAuthContext from "../../hook/useAuthContext.js";
+import { useAuth } from "../../hook/useAuth.js";
 
-const Login = ({ handleOpen }) => {
-  // const queryClient = QueryClient();
-  const { login } = useUser();
-  const { isError, error, isLoading, mutate } = useAuthFunction();
+const Login = () => {
+  const { isError, error, isLoading, mutate } = useAuth();
   const navigate = useNavigate();
+  const { dispatch } = useAuthContext();
 
   const {
     register,
@@ -24,7 +23,8 @@ const Login = ({ handleOpen }) => {
       { formData: data, query: "login" },
       {
         onSuccess: (data) => {
-          login(data.user);
+          localStorage.setItem("user", JSON.stringify(data));
+          dispatch({ type: "LOGIN", payload: data });
           navigate("/habits");
         },
       }
@@ -80,7 +80,7 @@ const Login = ({ handleOpen }) => {
         )}
         <button
           className="px-3 py-1 border border-gray-300 rounded text-sm text-blue-800"
-          onClick={handleOpen}
+          onClick={() => navigate("/signup")}
         >
           Create new accout
         </button>

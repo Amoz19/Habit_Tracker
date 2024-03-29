@@ -2,16 +2,16 @@ const express = require("express");
 const {
   addFullYear,
   getFullYear,
-  getFullYearById,
   updateComplete,
   deleteHabit,
 } = require("../controller/calendarController");
+const requireAuth = require("../middleware/requireAuth");
 
 const router = express.Router();
 
+router.use(requireAuth);
 router.post("/", addFullYear);
-router.post("/getUserData", getFullYear);
-router.get("/:id", getFullYearById);
+router.get("/habits", getFullYear);
 router.patch("/", updateComplete);
 router.delete("/:id", deleteHabit);
 

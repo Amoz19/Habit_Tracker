@@ -1,10 +1,16 @@
 const Usermodel = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
+const jwt = require("jsonwebtoken");
+
+const saltRounds = 10;
+
+const createToken = (_id) => {
+  return jwt.sign({ _id }, process.env.SECRET_KEY, { expiresIn: "5d" });
+};
 
 const createNewUser = async (req, res) => {
   const { username, password } = req.body;
-  const saltRounds = 10;
 
   if (!username || !password) {
     return res.status(400).send("Please fill all the fields");
@@ -23,11 +29,16 @@ const createNewUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    await Usermodel.create({
+    const createdUser = await Usermodel.create({
       username,
       password: hashedPassword,
     });
-    res.send("Register Successfully");
+    const token = createToken(createdUser._id);
+    res.json({
+      username: createdUser.username,
+      token,
+      userId: createdUser._id,
+    });
   } catch (error) {
     console.log(error.message);
   }
@@ -42,6 +53,7 @@ const userLogin = async (req, res) => {
 
   try {
     const userCredential = await Usermodel.findOne({ username });
+
     if (!userCredential) {
       res.status(400).send("User not found");
     }
@@ -54,14 +66,13 @@ const userLogin = async (req, res) => {
     if (!isCorrectPassword) {
       return res.status(400).send("Wrong password");
     }
+    const token = createToken(userCredential._id);
 
-    const sessUser = {
-      id: userCredential._id,
+    res.json({
       username: userCredential.username,
-    };
-
-    req.session.user = sessUser;
-    res.json({ msg: "Logged In Successfully", user: sessUser });
+      token,
+      userId: userCredential._id,
+    });
   } catch (error) {
     console.log(error.message);
   }
@@ -79,14 +90,4 @@ const logout = async (req, res) => {
   }
 };
 
-const checkAuth = async (req, res) => {
-  try {
-    const sessuser = req.session.user;
-    if (!sessuser) return res.status(401).send("Did not login yet");
-    res.json({ user: sessuser });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-module.exports = { createNewUser, userLogin, logout, checkAuth };
+module.exports = { createNewUser, userLogin, logout };
