@@ -15,33 +15,37 @@ function App() {
   const { user } = useAuthContext();
   return (
     <BrowserRouter>
-      <AuthContextProvider>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route element={<Layout />}>
-            <Route
-              path="/habits"
-              element={
-                <RequireAuth>
-                  <HabitListWrapper />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/habits/:id"
-              element={
-                <RequireAuth>
-                  <HabitCalendar />
-                </RequireAuth>
-              }
-            />
-          </Route>
-          <Route path="/loading" element={<Loading />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </AuthContextProvider>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route
+          element={
+            <RequireAuth>
+              <Layout />
+            </RequireAuth>
+          }
+        >
+          <Route
+            path="/habits"
+            element={
+              <RequireAuth>
+                <HabitListWrapper />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/habits/:id"
+            element={
+              <RequireAuth>
+                <HabitCalendar />
+              </RequireAuth>
+            }
+          />
+        </Route>
+        <Route path="/loading" element={<Loading />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </BrowserRouter>
   );
 }

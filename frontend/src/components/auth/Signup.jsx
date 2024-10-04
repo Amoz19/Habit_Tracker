@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import styles from "../../style/Auth.module.css";
 import { useAuth } from "../../hook/useAuth";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Signup = () => {
   const {
@@ -10,20 +12,21 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
-  const { isError, isLoading, error, mutate } = useAuth();
+  const { isError, isLoading, error, mutate, isSuccess } = useAuth();
+  console.log(isSuccess);
+  const navigate = useNavigate();
 
   const onHandleSubmit = (data, e) => {
     e.preventDefault();
 
-    mutate({ formData: data, query: "signup" }),
-      {
-        onSuccess: (data) => {
-          localStorage.setItem("user", JSON.stringify(data));
-          dispatch({ type: "LOGIN", payload: data });
-          navigate("/habits");
-        },
-      };
+    mutate({ formData: data, query: "signup" });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      window.location.href = "/login";
+    }
+  }, [isSuccess]);
 
   return (
     <div className="bg-gradient-to-b from-indigo-200 to-indigo-300 flex flex-col justify-center h-[100dvh] items-center">
@@ -73,7 +76,7 @@ const Signup = () => {
         <input
           type="submit"
           className="bg-blue-900 text-white px-4 py-1 rounded disabled:opacity-40"
-          value="signup"
+          value={isLoading ? "signing" : "signup"}
           disabled={isLoading}
         />
       </form>
