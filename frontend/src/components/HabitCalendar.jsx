@@ -3,17 +3,17 @@ import BreadCrumb from "./BreadCrumb";
 import Loading from "./Loading";
 import NotFound from "./NotFound";
 import { useHabitCalendar } from "../hook/useHabitCalendar";
-import useAuthContext from "../hook/useAuthContext";
+// import useAuthContext from "../hook/useAuthContext";
 import { useUpdateHabit } from "../hook/useUpdateHabit";
 
 const HabitCalendar = () => {
   const { id } = useParams();
-  const { user } = useAuthContext();
-  const {
-    isLoading,
-    data: calendaData,
-    error,
-  } = useHabitCalendar(id, user?.token);
+  // const { user } = useAuthContext();
+  // const {
+  //   isLoading,
+  //   data: calendaData,
+  //   error,
+  // } = useHabitCalendar(id, user?.token);
 
   const { mutate: upateDay } = useUpdateHabit(id);
 

@@ -2,16 +2,21 @@ import { useNavigate } from "react-router-dom";
 
 import Loading from "./Loading";
 import styles from "../style/CalendarList.module.css";
-import useAuthContext from "../hook/useAuthContext";
+// import useAuthContext from "../hook/useAuthContext";
 import NotFound from "./NotFound";
 import { useAllHabits } from "../hook/useAllHabits";
 import { useDeleteHabit } from "../hook/useDeleteHabit";
+import { useAppSelector } from "../app/hook";
+import { useGetHabitsQuery } from "../features/habits/habit.api";
 
 const HabitList = () => {
-  const { user } = useAuthContext();
+  const token = useAppSelector((state) => state.auth.token);
+  console.log("Token", token);
   const navigate = useNavigate();
 
-  const { data, isLoading } = useAllHabits(user?.token);
+  // const { data, isLoading } = useAllHabits(token);
+  const { data, isLoading } = useGetHabitsQuery();
+  console.log("Data", data);
 
   const { mutate } = useDeleteHabit();
 
@@ -27,9 +32,9 @@ const HabitList = () => {
     navigate(`/habits/${id}`, { state: { data } });
   };
 
-  if (!user) {
-    return <NotFound message="UnAnthorized" />;
-  }
+  // if (!user) {
+  //   return <NotFound message="UnAnthorized" />;
+  // }
 
   return (
     <>

@@ -1,13 +1,21 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styles from "../../style/Auth.module.css";
-import useAuthContext from "../../hook/useAuthContext.js";
+// import useAuthContext from "../../hook/useAuthContext.js";
 import { useAuth } from "../../hook/useAuth.js";
+import { useLoginMutation } from "../../features/auth/authApi.js";
+import { useAppDispatch, useAppSelector } from "../../app/hook.js";
+import { tokenReceived } from "../../features/auth/authSlice.js";
 
 const Login = () => {
-  const { isError, error, isLoading, mutate } = useAuth();
+  // const { isError, error, isLoading, mutate } = useAuth();
+  const token = useAppSelector((state) => state.auth.token);
+  const [login] = useLoginMutation();
   const navigate = useNavigate();
-  const { dispatch } = useAuthContext();
+  const dispatch = useAppDispatch();
+
+  console.log(token);
+  // const { dispatch } = useAuthContext();
 
   const {
     register,
@@ -16,19 +24,30 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const onHandleSubmit = (data, e) => {
+  const onHandleSubmit = async (data, e) => {
+    console.log(data);
     e.preventDefault();
+    try {
+      const { username, userId, token } = await login(data).unwrap();
 
-    mutate(
-      { formData: data, query: "login" },
-      {
-        onSuccess: (data) => {
-          localStorage.setItem("user", JSON.stringify(data));
-          dispatch({ type: "LOGIN", payload: data });
-          navigate("/habits");
-        },
-      }
-    );
+      localStorage.setItem("user", JSON.stringify(token));
+      dispatch(tokenReceived({ username, userId, token }));
+      navigate("/habits");
+      // window.location.href = "/habits";
+    } catch (error) {
+      console.log(error.message);
+    }
+
+    // mutate(
+    //   { formData: data, query: "login" },
+    //   {
+    //     onSuccess: (data) => {
+    //       localStorage.setItem("user", JSON.stringify(data));
+    //       dispatch({ type: "LOGIN", payload: data });
+    //       navigate("/habits");
+    //     },
+    //   }
+    // );
   };
 
   return (
@@ -73,11 +92,11 @@ const Login = () => {
           type="submit"
           className="bg-blue-900 text-white px-4 py-1 rounded mb-6 disabled:opacity-40 text-sm mr-2"
           value="Login"
-          disabled={isLoading}
+          // disabled={isLoading}
         />
-        {isError && (
+        {/* {isError && (
           <p className="mb-3 text-center text-red-600">{error.message}</p>
-        )}
+        )} */}
         <button
           className="px-3 py-1 border border-gray-300 rounded text-sm text-blue-800"
           onClick={() => navigate("/signup")}
