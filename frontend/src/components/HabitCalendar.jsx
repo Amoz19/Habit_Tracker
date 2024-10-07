@@ -1,13 +1,23 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import BreadCrumb from "./BreadCrumb";
 import Loading from "./Loading";
 import NotFound from "./NotFound";
 import { useHabitCalendar } from "../hook/useHabitCalendar";
 // import useAuthContext from "../hook/useAuthContext";
 import { useUpdateHabit } from "../hook/useUpdateHabit";
+import {
+  useGetHabitQuery,
+  useGetHabitsQuery,
+  useUpdateHabitMutation,
+} from "../features/habits/habit.api";
 
 const HabitCalendar = () => {
   const { id } = useParams();
+
+  const { data: habitData, isLoading } = useGetHabitQuery(id);
+
+  // const { state } = useLocation();
+  // console.log(state);
   // const { user } = useAuthContext();
   // const {
   //   isLoading,
@@ -15,18 +25,23 @@ const HabitCalendar = () => {
   //   error,
   // } = useHabitCalendar(id, user?.token);
 
-  const { mutate: upateDay } = useUpdateHabit(id);
+  // const { mutate: upateDay } = useUpdateHabit(id);
+  const [updateHabit] = useUpdateHabitMutation();
 
   if (isLoading) {
     return <Loading />;
   }
 
-  if (error) {
-    return <NotFound />;
-  }
+  // if (error) {
+  //   return <NotFound />;
+  // }
 
-  const handleDone = (id, monthIndex, dayIndex, isComplete, token) => {
-    upateDay({ id, monthIndex, dayIndex, isComplete, token });
+  const handleDone = async (id, monthIndex, dayIndex, isComplete) => {
+    try {
+      await updateHabit({ id, monthIndex, dayIndex, isComplete }).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const breadCrumb = [
@@ -35,7 +50,7 @@ const HabitCalendar = () => {
       path: "/habits",
     },
     {
-      name: calendaData[0].habitName,
+      name: habitData[0].habitName,
       path: `/habits/${id}`,
     },
   ];
@@ -44,7 +59,7 @@ const HabitCalendar = () => {
     <div className="px-4 md:px-16 lg:px-32 pb-6 bg-gradient-to-b  dark:from-black from-[#e6e6e6] dark:via-[#000000] via-[#ffffff] dark:to-gray-800 to-[#d4e6f1]">
       <BreadCrumb breadCrumb={breadCrumb} />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 ">
-        {calendaData[0].getFullYear.map((data) => (
+        {habitData[0].getFullYear.map((data) => (
           <table
             key={data._id}
             className="bg-slate-100 dark:bg-slate-700 p-6 rounded-lg shadow"
@@ -64,11 +79,10 @@ const HabitCalendar = () => {
                   <td
                     onClick={() => {
                       handleDone(
-                        calendaData[0]._id,
+                        habitData[0]._id,
                         data._id,
                         day._id,
-                        day.isComplete,
-                        user?.token
+                        day.isComplete
                       );
                     }}
                     className={`${

@@ -4,10 +4,8 @@ const staggeredBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token;
-      console.log("Token", token);
-      headers.set("Authorization", `Bearer ${token}`);
-
+      const { token } = getState().auth.token;
+      headers.set("authorization", `Bearer ${token}`);
       return headers;
     },
   }),
@@ -19,6 +17,6 @@ const staggeredBaseQuery = retry(
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: staggeredBaseQuery,
-  tagTypes: ["AUTH", "Habits"],
+  tagTypes: ["Habits", "AUTH"],
   endpoints: (builder) => ({}),
 });

@@ -8,14 +8,9 @@ import { useAppDispatch, useAppSelector } from "../../app/hook.js";
 import { tokenReceived } from "../../features/auth/authSlice.js";
 
 const Login = () => {
-  // const { isError, error, isLoading, mutate } = useAuth();
-  const token = useAppSelector((state) => state.auth.token);
-  const [login] = useLoginMutation();
+  const [login, { isLoading, isSuccess }] = useLoginMutation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  console.log(token);
-  // const { dispatch } = useAuthContext();
 
   const {
     register,
@@ -25,15 +20,13 @@ const Login = () => {
   } = useForm();
 
   const onHandleSubmit = async (data, e) => {
-    console.log(data);
     e.preventDefault();
     try {
       const { username, userId, token } = await login(data).unwrap();
-
-      localStorage.setItem("user", JSON.stringify(token));
+      console.log("Login success");
+      localStorage.setItem("user", JSON.stringify({ username, userId, token }));
       dispatch(tokenReceived({ username, userId, token }));
       navigate("/habits");
-      // window.location.href = "/habits";
     } catch (error) {
       console.log(error.message);
     }
@@ -92,7 +85,7 @@ const Login = () => {
           type="submit"
           className="bg-blue-900 text-white px-4 py-1 rounded mb-6 disabled:opacity-40 text-sm mr-2"
           value="Login"
-          // disabled={isLoading}
+          disabled={isLoading}
         />
         {/* {isError && (
           <p className="mb-3 text-center text-red-600">{error.message}</p>

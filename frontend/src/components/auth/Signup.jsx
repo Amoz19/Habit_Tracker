@@ -3,6 +3,7 @@ import styles from "../../style/Auth.module.css";
 import { useAuth } from "../../hook/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useSignupMutation } from "../../features/auth/authApi";
 
 const Signup = () => {
   const {
@@ -12,21 +13,18 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
-  const { isError, isLoading, error, mutate, isSuccess } = useAuth();
-  console.log(isSuccess);
+  const [signup, { isError, error, isLoading }] = useSignupMutation();
   const navigate = useNavigate();
 
-  const onHandleSubmit = (data, e) => {
+  const onHandleSubmit = async (data, e) => {
     e.preventDefault();
-
-    mutate({ formData: data, query: "signup" });
-  };
-
-  useEffect(() => {
-    if (isSuccess) {
-      window.location.href = "/login";
+    try {
+      await signup(data).unwrap();
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
     }
-  }, [isSuccess]);
+  };
 
   return (
     <div className="bg-gradient-to-b from-indigo-200 to-indigo-300 flex flex-col justify-center h-[100dvh] items-center">
@@ -36,7 +34,7 @@ const Signup = () => {
       >
         {isError && (
           <p className="mt-3 text-center text-red-600 bg-white rounded py-1 shadow">
-            {error.message}
+            {error}
           </p>
         )}
         <h1 className="text-2xl font-black text-blue-900 mb-4 ">

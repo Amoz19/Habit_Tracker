@@ -8,8 +8,17 @@ const extendedApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: credentials,
       }),
+      extraOptions: { maxRetries: 0 },
+    }),
+    signup: builder.mutation({
+      query: (credentials) => ({
+        url: "user/signup",
+        method: "POST",
+        body: credentials,
+      }),
+      extraOptions: { maxRetries: 0 },
     }),
   }),
 });
 
-export const { useLoginMutation } = extendedApiSlice;
+export const { useLoginMutation, useSignupMutation } = extendedApiSlice;

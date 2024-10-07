@@ -50,8 +50,8 @@ app.get("/", (req, res) => {
   return res.json({ greeting: process.env.VERCEL_ENV });
 });
 
-app.use("/api/v1", allowCors(calendarRoute));
-app.use("/api/user", allowCors(userRoute));
+app.use("/api/v1/habits", allowCors(calendarRoute));
+app.use("/api/v1/user", allowCors(userRoute));
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 

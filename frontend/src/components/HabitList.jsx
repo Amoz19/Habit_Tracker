@@ -7,21 +7,28 @@ import NotFound from "./NotFound";
 import { useAllHabits } from "../hook/useAllHabits";
 import { useDeleteHabit } from "../hook/useDeleteHabit";
 import { useAppSelector } from "../app/hook";
-import { useGetHabitsQuery } from "../features/habits/habit.api";
+import {
+  useDeleteHabitMutation,
+  useGetHabitsQuery,
+} from "../features/habits/habit.api";
 
 const HabitList = () => {
   const token = useAppSelector((state) => state.auth.token);
-  console.log("Token", token);
   const navigate = useNavigate();
 
-  // const { data, isLoading } = useAllHabits(token);
   const { data, isLoading } = useGetHabitsQuery();
+  const [deleteHabit] = useDeleteHabitMutation();
+
   console.log("Data", data);
 
   const { mutate } = useDeleteHabit();
 
-  const handleDelete = (id, token) => {
-    mutate({ id, token });
+  const handleDelete = async (id) => {
+    try {
+      await deleteHabit(id).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (isLoading) {
@@ -29,7 +36,7 @@ const HabitList = () => {
   }
 
   const handleClick = (id) => {
-    navigate(`/habits/${id}`, { state: { data } });
+    navigate(`/habits/${id}`);
   };
 
   // if (!user) {
@@ -51,13 +58,13 @@ const HabitList = () => {
                   className="w-full max-w-xs px-6 py-2 bg-white text-blue-800 dark:text-slate-900  flex justify-between items-center mt-6 rounded shadow text-l"
                 >
                   <h3
-                    onClick={() => handleClick(data.uniqueId)}
+                    onClick={() => handleClick(data._id)}
                     className="cursor-pointer"
                   >
                     {data.habitName}
                   </h3>
                   <p
-                    onClick={() => handleDelete(data.uniqueId, user.token)}
+                    onClick={() => handleDelete(data.uniqueId)}
                     className="text-xl text-red-700 cursor-pointer"
                   >
                     x
