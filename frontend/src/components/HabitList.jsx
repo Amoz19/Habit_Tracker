@@ -1,27 +1,16 @@
 import { useNavigate } from "react-router-dom";
-
 import Loading from "./Loading";
 import styles from "../style/CalendarList.module.css";
-// import useAuthContext from "../hook/useAuthContext";
-import NotFound from "./NotFound";
-import { useAllHabits } from "../hook/useAllHabits";
-import { useDeleteHabit } from "../hook/useDeleteHabit";
-import { useAppSelector } from "../app/hook";
 import {
   useDeleteHabitMutation,
   useGetHabitsQuery,
 } from "../features/habits/habit.api";
 
 const HabitList = () => {
-  const token = useAppSelector((state) => state.auth.token);
   const navigate = useNavigate();
 
   const { data, isLoading } = useGetHabitsQuery();
   const [deleteHabit] = useDeleteHabitMutation();
-
-  console.log("Data", data);
-
-  const { mutate } = useDeleteHabit();
 
   const handleDelete = async (id) => {
     try {

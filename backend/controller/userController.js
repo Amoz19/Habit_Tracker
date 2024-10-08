@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const saltRounds = 10;
 
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.SECRET_KEY, { expiresIn: "5d" });
+  return jwt.sign({ _id }, process.env.SECRET_KEY, { expiresIn: "30days" });
 };
 
 const createNewUser = async (req, res) => {
@@ -40,7 +40,7 @@ const createNewUser = async (req, res) => {
       userId: createdUser._id,
     });
   } catch (error) {
-    console.log(error.message);
+    res.status(401).message("error.message");
   }
 };
 

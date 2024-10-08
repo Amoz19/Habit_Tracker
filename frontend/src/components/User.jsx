@@ -3,15 +3,14 @@ import {
   MaterialSymbolsLightAccountCircleOutline,
   IonMdLogOut,
 } from "../../util/icon";
-// import useAuthContext from "../hook/useAuthContext";
 import { useNavigate } from "react-router-dom";
-import { useQueryClient } from "react-query";
 import { useAppDispatch, useAppSelector } from "../app/hook";
 import { removeToken } from "../features/auth/authSlice";
 
 const User = () => {
   const [isActive, setIsActive] = useState(false);
   const { token } = useAppSelector((state) => state.auth);
+  console.log(token);
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();

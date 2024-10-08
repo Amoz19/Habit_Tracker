@@ -1,10 +1,6 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import BreadCrumb from "./BreadCrumb";
 import Loading from "./Loading";
-import NotFound from "./NotFound";
-import { useHabitCalendar } from "../hook/useHabitCalendar";
-// import useAuthContext from "../hook/useAuthContext";
-import { useUpdateHabit } from "../hook/useUpdateHabit";
 import {
   useGetHabitQuery,
   useUpdateHabitMutation,
@@ -14,17 +10,6 @@ const HabitCalendar = () => {
   const { id } = useParams();
 
   const { data: habitData, isLoading } = useGetHabitQuery(id, "getHabits");
-  console.log(habitData);
-  // const { state } = useLocation();
-  // console.log(state);
-  // const { user } = useAuthContext();
-  // const {
-  //   isLoading,
-  //   data: calendaData,
-  //   error,
-  // } = useHabitCalendar(id, user?.token);
-
-  // const { mutate: upateDay } = useUpdateHabit(id);
   const [updateHabit] = useUpdateHabitMutation();
 
   if (isLoading) {

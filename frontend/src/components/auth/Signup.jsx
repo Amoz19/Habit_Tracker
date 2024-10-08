@@ -1,8 +1,5 @@
 import { useForm } from "react-hook-form";
 import styles from "../../style/Auth.module.css";
-import { useAuth } from "../../hook/useAuth";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useSignupMutation } from "../../features/auth/authApi";
 
 const Signup = () => {
@@ -22,7 +19,7 @@ const Signup = () => {
       await signup(data).unwrap();
       navigate("/login");
     } catch (error) {
-      alert(error.data);
+      console.log(error);
     }
   };
 
@@ -32,11 +29,11 @@ const Signup = () => {
         onSubmit={handleSubmit(onHandleSubmit)}
         className="bg-slate-100 w-[90%] md:w-3/6 p-6 rounded mx-8"
       >
-        {/* {isError && (
+        {isError && (
           <p className="mt-3 text-center text-red-600 bg-white rounded py-1 shadow">
-            {error}
+            {error.data}
           </p>
-        )} */}
+        )}
         <h1 className="text-2xl font-black text-blue-900 mb-4 ">
           Create New Account
         </h1>

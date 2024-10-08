@@ -1,4 +1,4 @@
-import { apiSlice } from "./baseQuery";
+import { apiSlice } from "../../app/baseQuery";
 
 const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
