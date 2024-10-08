@@ -22,7 +22,7 @@ const Signup = () => {
       await signup(data).unwrap();
       navigate("/login");
     } catch (error) {
-      console.log(error);
+      alert(error.data);
     }
   };
 
@@ -32,11 +32,11 @@ const Signup = () => {
         onSubmit={handleSubmit(onHandleSubmit)}
         className="bg-slate-100 w-[90%] md:w-3/6 p-6 rounded mx-8"
       >
-        {isError && (
+        {/* {isError && (
           <p className="mt-3 text-center text-red-600 bg-white rounded py-1 shadow">
             {error}
           </p>
-        )}
+        )} */}
         <h1 className="text-2xl font-black text-blue-900 mb-4 ">
           Create New Account
         </h1>

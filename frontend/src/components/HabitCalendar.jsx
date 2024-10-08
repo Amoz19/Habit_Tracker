@@ -7,15 +7,14 @@ import { useHabitCalendar } from "../hook/useHabitCalendar";
 import { useUpdateHabit } from "../hook/useUpdateHabit";
 import {
   useGetHabitQuery,
-  useGetHabitsQuery,
   useUpdateHabitMutation,
 } from "../features/habits/habit.api";
 
 const HabitCalendar = () => {
   const { id } = useParams();
 
-  const { data: habitData, isLoading } = useGetHabitQuery(id);
-
+  const { data: habitData, isLoading } = useGetHabitQuery(id, "getHabits");
+  console.log(habitData);
   // const { state } = useLocation();
   // console.log(state);
   // const { user } = useAuthContext();

@@ -1,6 +1,8 @@
-import { apiSlice } from "../habits/baseQuery";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const extendedApiSlice = apiSlice.injectEndpoints({
+export const authApi = createApi({
+  reducerPath: "authApi",
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_API_URL }),
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (credentials) => ({
@@ -8,7 +10,7 @@ const extendedApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: credentials,
       }),
-      extraOptions: { maxRetries: 0 },
+      providesTags: [{ type: "AUTH", id: "LIST" }],
     }),
     signup: builder.mutation({
       query: (credentials) => ({
@@ -16,9 +18,9 @@ const extendedApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: credentials,
       }),
-      extraOptions: { maxRetries: 0 },
+      providesTags: [{ type: "AUTH", id: "LIST" }],
     }),
   }),
 });
 
-export const { useLoginMutation, useSignupMutation } = extendedApiSlice;
+export const { useLoginMutation, useSignupMutation } = authApi;

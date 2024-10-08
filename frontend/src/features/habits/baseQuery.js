@@ -5,7 +5,9 @@ const staggeredBaseQuery = retry(
     baseUrl: import.meta.env.VITE_API_URL,
     prepareHeaders: (headers, { getState }) => {
       const { token } = getState().auth.token;
+
       headers.set("authorization", `Bearer ${token}`);
+
       return headers;
     },
   }),

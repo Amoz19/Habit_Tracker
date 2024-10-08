@@ -20,7 +20,9 @@ const Login = () => {
   } = useForm();
 
   const onHandleSubmit = async (data, e) => {
+    console.log("called");
     e.preventDefault();
+    console.log("Form data:", data);
     try {
       const { username, userId, token } = await login(data).unwrap();
       console.log("Login success");
@@ -81,12 +83,14 @@ const Login = () => {
           )}
         </div>
 
-        <input
+        <button
           type="submit"
           className="bg-blue-900 text-white px-4 py-1 rounded mb-6 disabled:opacity-40 text-sm mr-2"
-          value="Login"
           disabled={isLoading}
-        />
+        >
+          Login
+        </button>
+
         {/* {isError && (
           <p className="mb-3 text-center text-red-600">{error.message}</p>
         )} */}

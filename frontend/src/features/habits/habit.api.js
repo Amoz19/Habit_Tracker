@@ -31,36 +31,14 @@ const extendedApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
         body: { ...sepcificIndex },
       }),
-      async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          extendedApiSlice.util.updateQueryData("getHabits", id, (draft) => {
-            Object.assign(draft, patch);
-          })
-        );
-        try {
-          await queryFulfilled;
-        } catch {
-          patchResult.undo();
-        }
-      },
+      invalidatesTags: (result, error, arg) => [{ type: "Habits", id: arg.id }],
     }),
     deleteHabit: builder.mutation({
       query: (id) => ({
         url: `habits/${id}`,
         method: "DELETE",
       }),
-      async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          extendedApiSlice.util.updateQueryData("getHabits", id, (draft) => {
-            Object.assign(draft, patch);
-          })
-        );
-        try {
-          await queryFulfilled;
-        } catch {
-          patchResult.undo();
-        }
-      },
+      invalidatesTags: (result, error, id) => [{ type: "Habits", id: "LIST" }],
     }),
   }),
 });
