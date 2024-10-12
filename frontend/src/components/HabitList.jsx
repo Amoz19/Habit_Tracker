@@ -5,11 +5,17 @@ import {
   useDeleteHabitMutation,
   useGetHabitsQuery,
 } from "../features/habits/habit.api";
+import { useEffect, useState } from "react";
+import Progress from "./habits/Progress";
 
 const HabitList = () => {
   const navigate = useNavigate();
 
   const { data, isLoading } = useGetHabitsQuery();
+  // console.log(data);
+  // const { ids, entities } = data && data;
+  // console.log(data.entities);
+
   const [deleteHabit] = useDeleteHabitMutation();
 
   const handleDelete = async (id) => {
@@ -62,6 +68,7 @@ const HabitList = () => {
               ))}
             </div>
           </div>
+          <Progress habitLength={data.length} />
         </div>
       ) : (
         <div className="flex flex-col flex-1 justify-center items-center bg-gradient-to-b  dark:from-black from-[#e6e6e6] dark:via-[#000000] via-[#ffffff] dark:to-gray-800 to-[#d4e6f1]">

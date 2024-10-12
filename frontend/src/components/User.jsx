@@ -6,6 +6,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hook";
 import { removeToken } from "../features/auth/authSlice";
+import { apiSlice } from "../app/baseQuery";
 
 const User = () => {
   const [isActive, setIsActive] = useState(false);
@@ -18,6 +19,7 @@ const User = () => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     dispatch(removeToken());
+    dispatch(apiSlice.util.resetApiState());
     navigate("/login");
   };
 

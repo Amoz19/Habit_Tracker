@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import styles from "../../style/Auth.module.css";
 import { useSignupMutation } from "../../features/auth/authApi";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const {
