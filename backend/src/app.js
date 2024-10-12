@@ -2,29 +2,28 @@ const express = require("express");
 const calendarRoute = require("../routes/calendarRoute");
 const userRoute = require("../routes/userRoute");
 const mongoose = require("mongoose");
-const cors = require("cors");
-const session = require("express-session");
-const MongoDbStore = require("connect-mongodb-session")(session);
 require("dotenv").config();
 const middlewares = require("./middlewares");
 
 const dbConnect = process.env.DB_URL;
 const currentStatus = process.env.VERCEL_ENV;
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
+// Utility function to switch between environments
 const checkCurrentStatus = (dev, deploy) => {
   return currentStatus === "production" ? deploy : dev;
 };
 
 const app = express();
 
+// CORS setup
 const allowCors = (fn) => async (req, res) => {
   res.setHeader("Access-Control-Allow-Credentials", true);
   res.setHeader(
     "Access-Control-Allow-Origin",
     checkCurrentStatus(
-      "http://localhost:5173",
-      "https://habit-tracker-p4rf.vercel.app"
+      "http://localhost:5173", // Dev origin
+      "https://habit-tracker-p4rf.vercel.app" // Prod origin
     )
   );
   res.setHeader(
@@ -33,7 +32,7 @@ const allowCors = (fn) => async (req, res) => {
   );
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version,Authorization,Accept,Origin"
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization, Accept, Origin"
   );
 
   if (req.method === "OPTIONS") {
@@ -44,24 +43,30 @@ const allowCors = (fn) => async (req, res) => {
   return await fn(req, res);
 };
 
+// Middleware to parse JSON
 app.use(express.json());
 
+// Health check route
 app.get("/", (req, res) => {
   return res.json({ greeting: process.env.VERCEL_ENV });
 });
 
-app.use("/api/v1", allowCors(calendarRoute));
-app.use("/api/user", allowCors(userRoute));
+// Routes
+app.use("/api/v1/habits", allowCors(calendarRoute));
+app.use("/api/v1/user", allowCors(userRoute));
+
+// Middleware for handling 404 and errors
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 
+// MongoDB connection and server start
 mongoose
   .connect(dbConnect)
   .then(() => {
     app.listen(port, () => {
       console.log(`Listening: http://localhost:${port}`);
     });
-    console.log("db-connected");
+    console.log("DB connected successfully");
   })
   .catch((err) => console.log(err.message));
 

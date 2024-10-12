@@ -1,13 +1,10 @@
 import { Navigate } from "react-router-dom";
-import useAuthContext from "../../hook/useAuthContext";
-import { useEffect, useState } from "react";
+import { useAppSelector } from "../../app/hook";
 
 const RequireAuth = ({ children }) => {
-  const [user, setUser] = useState(() =>
-    JSON.parse(localStorage.getItem("user"))
-  );
+  const token = useAppSelector((state) => state.auth.token);
 
-  if (!user) {
+  if (!token) {
     return <Navigate to="/login" />;
   }
 

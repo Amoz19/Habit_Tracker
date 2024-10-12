@@ -3,22 +3,24 @@ import {
   MaterialSymbolsLightAccountCircleOutline,
   IonMdLogOut,
 } from "../../util/icon";
-import useAuthContext from "../hook/useAuthContext";
 import { useNavigate } from "react-router-dom";
-import { useQueryClient } from "react-query";
+import { useAppDispatch, useAppSelector } from "../app/hook";
+import { removeToken } from "../features/auth/authSlice";
+import { apiSlice } from "../app/baseQuery";
 
 const User = () => {
-  const queryClient = useQueryClient();
   const [isActive, setIsActive] = useState(false);
-  const { user, dispatch } = useAuthContext();
+  const { token } = useAppSelector((state) => state.auth);
+  console.log(token);
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("user");
-    dispatch({ type: "LOGOUT" });
+    dispatch(removeToken());
+    dispatch(apiSlice.util.resetApiState());
     navigate("/login");
-    queryClient.clear();
   };
 
   return (
@@ -29,11 +31,11 @@ const User = () => {
       />
       {isActive && (
         <div className=" bg-white p-2 rounded absolute top-10 right-2  shadow transition-all w-24 ">
-          {user && (
+          {token && (
             <div className="flex flex-col items-center">
-              {user && (
+              {token && (
                 <p className="text-sm text-indigo-700  dark:font-bold">
-                  Hi, {user.username}
+                  Hi, {token.username}
                 </p>
               )}
               <button

@@ -1,22 +1,29 @@
 import { useNavigate } from "react-router-dom";
-
 import Loading from "./Loading";
 import styles from "../style/CalendarList.module.css";
-import useAuthContext from "../hook/useAuthContext";
-import NotFound from "./NotFound";
-import { useAllHabits } from "../hook/useAllHabits";
-import { useDeleteHabit } from "../hook/useDeleteHabit";
+import {
+  useDeleteHabitMutation,
+  useGetHabitsQuery,
+} from "../features/habits/habit.api";
+import { useEffect, useState } from "react";
+import Progress from "./habits/Progress";
 
 const HabitList = () => {
-  const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  const { data, isLoading } = useAllHabits(user?.token);
+  const { data, isLoading } = useGetHabitsQuery();
+  // console.log(data);
+  // const { ids, entities } = data && data;
+  // console.log(data.entities);
 
-  const { mutate } = useDeleteHabit();
+  const [deleteHabit] = useDeleteHabitMutation();
 
-  const handleDelete = (id, token) => {
-    mutate({ id, token });
+  const handleDelete = async (id) => {
+    try {
+      await deleteHabit(id).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (isLoading) {
@@ -24,12 +31,12 @@ const HabitList = () => {
   }
 
   const handleClick = (id) => {
-    navigate(`/habits/${id}`, { state: { data } });
+    navigate(`/habits/${id}`);
   };
 
-  if (!user) {
-    return <NotFound message="UnAnthorized" />;
-  }
+  // if (!user) {
+  //   return <NotFound message="UnAnthorized" />;
+  // }
 
   return (
     <>
@@ -46,13 +53,13 @@ const HabitList = () => {
                   className="w-full max-w-xs px-6 py-2 bg-white text-blue-800 dark:text-slate-900  flex justify-between items-center mt-6 rounded shadow text-l"
                 >
                   <h3
-                    onClick={() => handleClick(data.uniqueId)}
+                    onClick={() => handleClick(data._id)}
                     className="cursor-pointer"
                   >
                     {data.habitName}
                   </h3>
                   <p
-                    onClick={() => handleDelete(data.uniqueId, user.token)}
+                    onClick={() => handleDelete(data.uniqueId)}
                     className="text-xl text-red-700 cursor-pointer"
                   >
                     x
@@ -61,6 +68,7 @@ const HabitList = () => {
               ))}
             </div>
           </div>
+          <Progress habitLength={data.length} />
         </div>
       ) : (
         <div className="flex flex-col flex-1 justify-center items-center bg-gradient-to-b  dark:from-black from-[#e6e6e6] dark:via-[#000000] via-[#ffffff] dark:to-gray-800 to-[#d4e6f1]">

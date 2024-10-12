@@ -1,13 +1,14 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styles from "../../style/Auth.module.css";
-import useAuthContext from "../../hook/useAuthContext.js";
-import { useAuth } from "../../hook/useAuth.js";
+import { useLoginMutation } from "../../features/auth/authApi.js";
+import { useAppDispatch, useAppSelector } from "../../app/hook.js";
+import { tokenReceived } from "../../features/auth/authSlice.js";
 
 const Login = () => {
-  const { isError, error, isLoading, mutate } = useAuth();
+  const [login, { isLoading, isError, error }] = useLoginMutation();
   const navigate = useNavigate();
-  const { dispatch } = useAuthContext();
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -16,19 +17,16 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const onHandleSubmit = (data, e) => {
+  const onHandleSubmit = async (data, e) => {
     e.preventDefault();
-
-    mutate(
-      { formData: data, query: "login" },
-      {
-        onSuccess: (data) => {
-          localStorage.setItem("user", JSON.stringify(data));
-          dispatch({ type: "LOGIN", payload: data });
-          navigate("/habits");
-        },
-      }
-    );
+    try {
+      const { username, userId, token } = await login(data).unwrap();
+      localStorage.setItem("user", JSON.stringify({ username, userId, token }));
+      dispatch(tokenReceived({ username, userId, token }));
+      navigate("/habits");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -69,14 +67,16 @@ const Login = () => {
           )}
         </div>
 
-        <input
+        <button
           type="submit"
           className="bg-blue-900 text-white px-4 py-1 rounded mb-6 disabled:opacity-40 text-sm mr-2"
-          value="Login"
           disabled={isLoading}
-        />
+        >
+          Login
+        </button>
+
         {isError && (
-          <p className="mb-3 text-center text-red-600">{error.message}</p>
+          <p className="mb-3 text-center text-red-600">{error.data}</p>
         )}
         <button
           className="px-3 py-1 border border-gray-300 rounded text-sm text-blue-800"
