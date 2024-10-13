@@ -1,12 +1,10 @@
-const calculateProgress = (filteredData, startDay = null, endDay = null) => {
-  if (startDay !== null || endDay !== null) {
-    filteredData.forEach(
-      (data) =>
-        (data.getFullYear[0].days = data.getFullYear[0].days.filter(
-          (day) => day.day >= startDay && day.day <= endDay
-        ))
-    );
-  }
+const calculateWeeklyProgress = (filteredData, startDay, endDay) => {
+  filteredData.forEach(
+    (data) =>
+      (data.getFullYear[0].days = data.getFullYear[0].days.filter(
+        (day) => day.day >= startDay && day.day <= endDay
+      ))
+  );
 
   const getProgressRate = filteredData.map((data) =>
     data.getFullYear[0].days.map((day) => (day.isComplete ? 1 : 0))
@@ -26,10 +24,6 @@ const calculateProgress = (filteredData, startDay = null, endDay = null) => {
     return ((totalComplete / totalEntries) * 100).toFixed(); // Calculate percentage
   });
 
-  if (startDay == null || endDay == null) {
-    return progressPercent;
-  }
-
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const data = [];
 
@@ -42,4 +36,20 @@ const calculateProgress = (filteredData, startDay = null, endDay = null) => {
   return data;
 };
 
-module.exports = calculateProgress;
+const calculateMonthlyProgress = (data) => {
+  const getProgressRate = data.map((eachData) => {
+    const result = eachData.getFullYear[0].days
+      .map((day) => (day.isComplete ? 1 : 0))
+      .reduce(
+        (acc, cur, _, array) => acc + (cur / Number(array.length)) * 100,
+        0
+      );
+    return {
+      habitName: eachData.habitName,
+      totalPercent: result.toFixed(),
+    };
+  });
+  return getProgressRate;
+};
+
+module.exports = { calculateWeeklyProgress, calculateMonthlyProgress };

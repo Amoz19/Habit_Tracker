@@ -7,7 +7,10 @@ const {
   getDate,
 } = require("date-fns");
 const CalendarModel = require("../models/CalendarModel");
-const calculateProgress = require("../services/calculateProgress");
+const {
+  calculateWeeklyProgress,
+  calculateMonthlyProgress,
+} = require("../services/calculateProgress");
 
 const currentDate = new Date();
 const monthName = format(currentDate, "MMMM");
@@ -46,7 +49,7 @@ const weeklyProgress = async (req, res) => {
       { "getFullYear.$": 1 }
     );
     const filteredData = [...result];
-    const progress = calculateProgress(filteredData, start, end);
+    const progress = calculateWeeklyProgress(filteredData, start, end);
 
     // console.log(reduceValue);
     res.json(progress); // Send the result back in the response
@@ -64,13 +67,15 @@ const monthlyProgress = async (req, res) => {
         userId: _id,
         "getFullYear.month": monthName,
       },
-      { "getFullYear.$": 1 }
+      {
+        habitName: 1,
+        "getFullYear.$": 1,
+      }
     );
 
-    // console.log(result);
     const filteredData = [...result];
-    const progress = calculateProgress(filteredData);
-    res.json(progress);
+    const monthlyProgress = calculateMonthlyProgress(filteredData);
+    res.json(monthlyProgress);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
