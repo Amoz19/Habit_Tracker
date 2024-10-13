@@ -7,7 +7,7 @@ const middlewares = require("./middlewares");
 
 const dbConnect = process.env.DB_URL;
 const currentStatus = process.env.VERCEL_ENV;
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5001;
 
 // Utility function to switch between environments
 const checkCurrentStatus = (dev, deploy) => {

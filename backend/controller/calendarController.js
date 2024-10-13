@@ -1,12 +1,5 @@
 const CalendarModel = require("../models/CalendarModel");
-const {
-  startOfWeek,
-  endOfWeek,
-  format,
-  getYear,
-  getMonth,
-  getDate,
-} = require("date-fns");
+
 const addFullYear = async (req, res) => {
   const { userId, habitName, getFullYear, uniqueId } = req.body;
 
@@ -86,81 +79,10 @@ const deleteHabit = async (req, res) => {
   }
 };
 
-const weeklyProgress = async (req, res) => {
-  const { _id } = req.user;
-  // const userData = await getFullYear(_id);
-  const currentDate = new Date();
-
-  const monthName = format(currentDate, "MMMM");
-
-  // Get the start and end of the week
-  const start = getDate(startOfWeek(currentDate, { weekStartsOn: 1 })); // Monday as the first day of the week
-  const end = getDate(endOfWeek(currentDate, { weekStartsOn: 1 }));
-
-  console.log(start, end, monthName);
-
-  try {
-    // Query for documents matching the current month and week
-    const result = await CalendarModel.find(
-      {
-        userId: _id,
-        "getFullYear.month": monthName,
-      },
-      { "getFullYear.$": 1 }
-    );
-
-    const filteredData = [...result];
-
-    if (result) {
-      filteredData.forEach(
-        (data) =>
-          (data.getFullYear[0].days = data.getFullYear[0].days.filter(
-            (day) => day.day >= start && day.day <= end
-          ))
-      );
-    }
-
-    const getProgressRate = filteredData.map((data) =>
-      data.getFullYear[0].days.map((day) => (day.isComplete ? 1 : 0))
-    );
-
-    if (getProgressRate.length === 0) {
-      console.error("No progress data found");
-      return res.status(400).json({ error: "No progress data found" });
-    }
-    // console.log(getProgressRate);
-
-    const progressPercent = getProgressRate[0].map((_, colIndex) => {
-      const totalComplete = filteredData.reduce((sum, row) => {
-        return sum + (row.getFullYear[0].days[colIndex]?.isComplete ? 1 : 0);
-      }, 0);
-
-      const totalEntries = getProgressRate.length; // Prevent division by zero
-      return ((totalComplete / totalEntries) * 100).toFixed(); // Calculate percentage
-    });
-
-    const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    const data = [];
-
-    const reduceValue = daysOfWeek.reduce((accumulator, currentDay, index) => {
-      accumulator[currentDay] = progressPercent[index]; // Assigning a custom value for each day
-      data.push({ key: currentDay, value: progressPercent[index] });
-      return accumulator;
-    }, {});
-
-    // console.log(reduceValue);
-    res.json(data); // Send the result back in the response
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
-};
-
 module.exports = {
   addFullYear,
   getFullYear,
   getFullYearById,
   updateComplete,
   deleteHabit,
-  weeklyProgress,
 };

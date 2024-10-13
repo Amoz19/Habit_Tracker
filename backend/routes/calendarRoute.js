@@ -5,8 +5,11 @@ const {
   getFullYearById,
   updateComplete,
   deleteHabit,
-  weeklyProgress,
 } = require("../controller/calendarController");
+const {
+  weeklyProgress,
+  monthlyProgress,
+} = require("../controller/progressController");
 const requireAuth = require("../middleware/requireAuth");
 
 const router = express.Router();
@@ -14,6 +17,7 @@ const router = express.Router();
 router.use(requireAuth);
 
 router.get("/progress", weeklyProgress);
+router.get("/monthProgress", monthlyProgress);
 router.post("/", addFullYear);
 router.get("/", getFullYear);
 router.get("/:id", getFullYearById);
