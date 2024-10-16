@@ -6,7 +6,8 @@ import {
   useGetHabitsQuery,
 } from "../features/habits/habit.api";
 import { useEffect, useState } from "react";
-import Progress from "./habits/Progress";
+import Progress from "./habits/WeeklyProgress";
+import WeeklyProgress from "./habits/WeeklyProgress";
 
 const HabitList = () => {
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ const HabitList = () => {
               ))}
             </div>
           </div>
-          <Progress habitLength={data.length} />
+          <WeeklyProgress />
         </div>
       ) : (
         <div className="flex flex-col flex-1 justify-center items-center bg-gradient-to-b  dark:from-black from-[#e6e6e6] dark:via-[#000000] via-[#ffffff] dark:to-gray-800 to-[#d4e6f1]">

@@ -9,6 +9,8 @@ import Login from "./components/auth/Login.jsx";
 // import useAuthContext from "./hook/useAuthContext.js";
 import Signup from "./components/auth/Signup.jsx";
 import RequireAuth from "./components/auth/RequireAuth.jsx";
+import { MonthlyProgress } from "./components/habits/MonthlyProgress";
+import WeeklyProgress from "./components/habits/WeeklyProgress";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
             </RequireAuth>
           }
         >
+          <Route path="/weeklyProgress" element={<WeeklyProgress />} />
+          <Route path="/monthlyProgress" element={<MonthlyProgress />} />
           <Route path="/habits" element={<HabitListWrapper />} />
           <Route path="/habits/:id" element={<HabitCalendar />} />
         </Route>

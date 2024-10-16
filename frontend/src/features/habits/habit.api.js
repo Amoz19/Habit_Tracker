@@ -46,6 +46,11 @@ const extendedApiSlice = apiSlice.injectEndpoints({
         url: "habits/progress",
       }),
     }),
+    getMonthlyProgess: builder.query({
+      query: () => ({
+        url: "habits/monthlyProgress",
+      }),
+    }),
   }),
 });
 
@@ -56,4 +61,5 @@ export const {
   useUpdateHabitMutation,
   useDeleteHabitMutation,
   useGetProgressQuery,
+  useGetMonthlyProgessQuery,
 } = extendedApiSlice;

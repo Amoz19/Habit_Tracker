@@ -46,7 +46,7 @@ const calculateMonthlyProgress = (data) => {
       );
     return {
       habitName: eachData.habitName,
-      totalPercent: result.toFixed(),
+      totalPercent: Number(result.toFixed()),
     };
   });
   return getProgressRate;

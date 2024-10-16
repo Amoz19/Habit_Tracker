@@ -17,7 +17,7 @@ const router = express.Router();
 router.use(requireAuth);
 
 router.get("/progress", weeklyProgress);
-router.get("/monthProgress", monthlyProgress);
+router.get("/monthlyProgress", monthlyProgress);
 router.post("/", addFullYear);
 router.get("/", getFullYear);
 router.get("/:id", getFullYearById);

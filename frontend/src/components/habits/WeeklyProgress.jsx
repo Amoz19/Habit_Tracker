@@ -19,17 +19,18 @@ import { useEffect, useState } from "react";
 
 export const description = "A radial chart with text";
 
-const Progress = ({ habitLength }) => {
+const WeeklyProgress = ({ habitLength }) => {
   const { data } = useGetProgressQuery();
-  console.log(habitLength);
 
   return (
     <div className="fixed bottom-5 p-6 rounded bg-slate-100">
-      <h1 className="mb-3 font-semibold text-l">Weekly Progress</h1>
+      <h1 className="mb-3 font-semibold text-[14px] dark:text-black">
+        Weekly Progress
+      </h1>
       <div className=" flex justify-around items-center ">
         {data?.map(({ key, value }) => (
           <div key={key} className="chart-container flex flex-col items-center">
-            <h5 className="text-xs">{key}</h5>
+            <h5 className="text-xs dark:text-black">{key}</h5>
             <RadialBarChart
               width={40}
               height={40}
@@ -59,7 +60,7 @@ const Progress = ({ habitLength }) => {
                           <tspan
                             x={viewBox.cx}
                             y={viewBox.cy}
-                            className="fill-foreground text-[10px]"
+                            className="fill-foreground dark:fill-slate-800 text-[10px] font-bold  "
                           >
                             {value.toLocaleString()}%
                           </tspan>
@@ -77,4 +78,4 @@ const Progress = ({ habitLength }) => {
   );
 };
 
-export default Progress;
+export default WeeklyProgress;

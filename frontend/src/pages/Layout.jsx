@@ -6,7 +6,9 @@ const Layout = () => {
   return (
     <div className="h-[100dvh] flex flex-col ">
       <Navbar />
+
       <Outlet />
+
       {/* <Footer /> */}
     </div>
   );
