@@ -9,17 +9,20 @@ import {
 } from "../features/habits/habit.api";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import Timer from "./Timmer";
+import useDate from "@/hook/useDate";
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 const HabitCalendar = () => {
-  const date = new Date();
-  const currentMonth = getMonth(date);
-  const currentDay = getDate(date);
-  const startDayOfMonth = startOfMonth(date);
-  const startingDayIndex = getDay(startDayOfMonth);
+  const {
+    currentMonthIndex,
+    currentDay,
+    startingDayIndex,
+    getCurrentMonthName,
+  } = useDate();
+  const [sessionStart, setSesstionStart] = useState();
 
-  const [currentMonthIndex, setCurrentMonthIndex] = useState(currentMonth);
   const { id } = useParams();
 
   const { data: habitData, isLoading } = useGetHabitQuery(id, "getHabits");
@@ -58,6 +61,11 @@ const HabitCalendar = () => {
   return (
     <div className="h-full px-4 md:px-32 lg:px-32 pb-6 bg-gradient-to-b  dark:from-black from-[#e6e6e6] dark:via-[#000000] via-[#ffffff] dark:to-gray-800 to-[#d4e6f1]">
       <BreadCrumb breadCrumb={breadCrumb} />
+      <div>
+        <h1>Study Session</h1>
+        <button onClick={() => setSesstionStart(!sessionStart)}>Start</button>
+        {/* {sessionStart && <Timer id= monthIndex= dayIndex= isComplete= />} */}
+      </div>
       {/* <div className="w-full grid grid-cols-1 md:grid-cols-3 -gap-12"> */}
       {/* {habitData[0].getFullYear.map((data) => ( */}
       <table
