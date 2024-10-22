@@ -54,7 +54,7 @@ const weeklyProgress = async (req, res) => {
     // console.log(reduceValue);
     res.json(progress); // Send the result back in the response
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).send("Internal Server Error");
   }
 };
@@ -77,7 +77,7 @@ const monthlyProgress = async (req, res) => {
     const monthlyProgress = calculateMonthlyProgress(filteredData);
     res.json(monthlyProgress);
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).send("Internal Server Error");
   }
 };

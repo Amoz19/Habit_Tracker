@@ -1,10 +1,14 @@
 const CalendarModel = require("../models/CalendarModel");
+const { format, getDate } = require("date-fns");
+const generateCalendar = require("../src/data");
+const { v4: uuidv4 } = require("uuid");
 
 const addFullYear = async (req, res) => {
-  const { userId, habitName, getFullYear, uniqueId } = req.body;
+  const { userId, habitName } = req.body;
+  const getFullYear = generateCalendar();
 
   const postFullYear = {
-    uniqueId,
+    uniqueId: uuidv4(),
     userId,
     habitName,
     getFullYear,
@@ -19,10 +23,48 @@ const addFullYear = async (req, res) => {
 };
 
 const getFullYear = async (req, res) => {
+  const date = new Date();
+  const currentDay = getDate(date);
+  const getCurrentMonthName = format(date, "MMMM");
   const { _id } = req.user;
   try {
-    const fullYear = await CalendarModel.find({ userId: _id });
-    res.status(200).json(fullYear);
+    const result = await CalendarModel.find({ userId: _id });
+
+    // if (!result) {
+    //   return res.status(404).json({ message: "No habit found for the user" });
+    // }
+
+    // // Filter the current month and day in JavaScript
+    // // const currentMonthData = result.getFullYear.find(
+    // //   (month) => month.month === getCurrentMonthName
+    // // );
+
+    // const currentMonthData = result.map((data) =>
+    //   data.getFullYear.find((month) => month.month === getCurrentMonthName)
+    // );
+
+    // if (!currentMonthData) {
+    //   return res
+    //     .status(404)
+    //     .json({ message: "No data found for the current month" });
+    // }
+
+    // const currentDayData = currentMonthData.map((data) =>
+    //   data.days.find((day) => day.day == currentDay)
+    // );
+
+    // if (!currentDayData) {
+    //   return res
+    //     .status(404)
+    //     .json({ message: "No data found for the current day" });
+    // }
+
+    // res.status(200).json({
+    //   habitName,
+    //   uniqueId,
+    //   isComplete,
+    // });
+    res.status(200).json(result);
   } catch (error) {
     res.status(404).json(error.message);
   }
@@ -38,9 +80,18 @@ const getFullYearById = async (req, res) => {
 };
 
 const updateComplete = async (req, res) => {
-  const { id, monthIndex, dayIndex, isComplete } = req.body;
+  const { id, monthIndex, dayIndex, currentMonth, currentDay, isComplete } =
+    req.body;
 
   const toggleComplete = !isComplete;
+
+  if (currentMonth || currentDay) {
+    if (isComplete) {
+      return res.status(400).json({
+        message: "You cannot mark the habit as incomplete once it is complete.",
+      });
+    }
+  }
 
   try {
     const updateData = await CalendarModel.updateOne(
@@ -53,17 +104,29 @@ const updateComplete = async (req, res) => {
         },
       },
       {
-        arrayFilters: [
-          {
-            "month._id": monthIndex,
-          },
-          {
-            "day._id": dayIndex,
-          },
-        ],
+        arrayFilters:
+          !currentMonth || !currentDay
+            ? [
+                {
+                  "month._id": monthIndex,
+                },
+                {
+                  "day._id": dayIndex,
+                },
+              ]
+            : [
+                {
+                  "month.month": currentMonth,
+                },
+                {
+                  "day.day": currentDay,
+                },
+              ],
       }
     );
-    res.status(200).json({ _id: updateData._id });
+    res
+      .status(200)
+      .json({ message: "Successfully updated", _id: updateData._id });
   } catch (error) {
     res.status(404).json(error.message);
   }

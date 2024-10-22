@@ -39,7 +39,6 @@ function generateMonthDays(year, month) {
 
   for (let day = 1; day <= daysInMonth; day++) {
     const dayObj = {
-      objId: uuidv4(),
       day: day,
       isComplete: false,
       // Adding the isComplete property
