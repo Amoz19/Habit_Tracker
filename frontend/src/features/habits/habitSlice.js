@@ -1,21 +1,20 @@
-import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-export const habitsAdapter = createEntityAdapter({
-  selectId: (e) => e._id,
-});
-const initialState = habitsAdapter.getInitialState();
+const initialState = {
+  selectedHabitId: null,
+  isComplete: null,
+};
 
 export const habitsSlice = createSlice({
   name: "habits",
   initialState,
   reducers: {
-    // getAllHabits: habitsAdapter.getSelectors,
+    addSelectHabitId: (state, action) => {
+      state.selectedHabitId = action.payload.habitId;
+      state.isComplete = action.payload.isComplete;
+    },
   },
 });
 
-export const { selectAll } = habitsAdapter.getSelectors(
-  (state) => state.products
-);
-
-// export const { getAllHabits } = habitsSlice.actions;
+export const { addSelectHabitId } = habitsSlice.actions;
 export default habitsSlice.reducer;

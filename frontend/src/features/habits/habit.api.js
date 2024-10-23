@@ -1,6 +1,6 @@
 import { createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../../app/baseQuery";
-import { habitsAdapter } from "./habitSlice";
+// import { habitsAdapter } from "./habitSlice";
 
 const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

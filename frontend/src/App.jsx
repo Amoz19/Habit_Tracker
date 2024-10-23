@@ -11,7 +11,7 @@ import Signup from "./components/auth/Signup.jsx";
 import RequireAuth from "./components/auth/RequireAuth.jsx";
 import { MonthlyProgress } from "./components/habits/MonthlyProgress";
 import WeeklyProgress from "./components/habits/WeeklyProgress";
-import Timmer from "./components/Timmer";
+import Timmer from "./components/pomodoroTimer/Timer";
 
 function App() {
   return (

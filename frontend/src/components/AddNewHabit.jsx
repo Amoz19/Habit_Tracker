@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
-import generateCalendar from "../services/createCalendar";
+
 import { useAddNewHabitMutation } from "../features/habits/habit.api";
 import { useAppSelector } from "../app/hook";
 
 const AddNewHabit = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { token } = useAppSelector((state) => state.auth);
-  console.log("Id", token.userId);
 
   const {
     register,
@@ -18,8 +17,6 @@ const AddNewHabit = () => {
   } = useForm();
 
   const [addNewHabit] = useAddNewHabitMutation();
-
-  const getFullYear = generateCalendar();
 
   function handleOpen() {
     setIsOpen(true);
@@ -33,10 +30,8 @@ const AddNewHabit = () => {
     e.preventDefault();
 
     addNewHabit({
-      uniqueId: uuidv4(),
       userId: token.userId,
       habitName: data.habitName,
-      getFullYear,
     });
 
     reset({

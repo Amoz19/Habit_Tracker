@@ -9,7 +9,7 @@ import {
 } from "../features/habits/habit.api";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import Timer from "./Timmer";
+import Timer from "./pomodoroTimer/Timer";
 import useDate from "@/hook/useDate";
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];

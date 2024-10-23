@@ -13,7 +13,7 @@ const HabitList = () => {
   const navigate = useNavigate();
 
   const { data, isLoading } = useGetHabitsQuery();
-  // console.log(data);
+  console.log(data);
   // const { ids, entities } = data && data;
   // console.log(data.entities);
 
