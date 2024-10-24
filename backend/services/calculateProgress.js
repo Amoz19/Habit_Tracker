@@ -12,7 +12,6 @@ const calculateWeeklyProgress = (filteredData, startDay, endDay) => {
 
   if (getProgressRate.length === 0) {
     console.log("No progress data found");
-    return res.status(400).json({ error: "No progress data found" });
   }
 
   const progressPercent = getProgressRate[0].map((_, colIndex) => {
