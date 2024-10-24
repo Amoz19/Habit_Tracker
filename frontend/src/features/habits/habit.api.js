@@ -16,7 +16,7 @@ const extendedApiSlice = apiSlice.injectEndpoints({
     }),
     getHabit: builder.query({
       query: (id) => `habits/${id}`,
-      providesTags: (result, error, id) => [{ type: "Habit", id }],
+      providesTags: (result, error, id) => [{ type: "Habit" }],
     }),
     addNewHabit: builder.mutation({
       query: (newHabitData) => ({
@@ -56,23 +56,20 @@ const extendedApiSlice = apiSlice.injectEndpoints({
         // Update getHabit cache for the specific habit
         const patchResult = dispatch(
           extendedApiSlice.util.updateQueryData("getHabit", id, (draft) => {
-            const habit = draft.find((year) => year._id === id);
-
-            // Assuming draft represents the habit object
-            const month = habit.getFullYear.find(
+            const month = draft.getFullYear.find(
               (month) => month._id === monthIndex
             );
 
             const day = month.days.find((day) => day._id === dayIndex);
+
             if (day) {
               day.isComplete = !isComplete; // Optimistically update the day status
             }
           })
         );
         try {
-          await queryFulfilled; // Wait for the actual query to complete
+          await queryFulfilled;
         } catch (error) {
-          console.log(error);
           patchResult.undo(); // Revert the optimistic update if the request fails
         }
       },
@@ -83,7 +80,26 @@ const extendedApiSlice = apiSlice.injectEndpoints({
         url: `habits/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, id) => [{ type: "Habits", id: "LIST" }],
+      onQueryStarted: async (id, { dispatch, queryFulfilled }) => {
+        const addingNewHabit = dispatch(
+          extendedApiSlice.util.updateQueryData(
+            "getHabits",
+            undefined,
+            (draft) => {
+              const index = draft.findIndex((habit) => habit.uniqueId === id);
+              if (index !== -1) {
+                draft.splice(index, 1); // Remove the deleted habit from the cache
+              }
+            }
+          )
+        );
+
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          addingNewHabit.undo();
+        }
+      },
     }),
     getProgress: builder.query({
       query: () => ({

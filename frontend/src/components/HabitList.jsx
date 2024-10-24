@@ -53,7 +53,7 @@ const HabitList = () => {
                   className="w-full max-w-xs px-6 py-2 bg-white text-blue-800 dark:text-slate-900  flex justify-between items-center mt-6 rounded shadow text-l"
                 >
                   <h3
-                    onClick={() => handleClick(data._id)}
+                    onClick={() => handleClick(data.uniqueId)}
                     className="cursor-pointer"
                   >
                     {data.habitName}

@@ -16,7 +16,7 @@ import {
 const User = () => {
   // const [isActive, setIsActive] = useState(false);
   const { token } = useAppSelector((state) => state.auth);
-  console.log(token);
+
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
