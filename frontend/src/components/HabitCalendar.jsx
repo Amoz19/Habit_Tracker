@@ -15,13 +15,7 @@ import useDate from "@/hook/useDate";
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 const HabitCalendar = () => {
-  const {
-    currentMonthIndex,
-    currentDay,
-    startingDayIndex,
-    getCurrentMonthName,
-  } = useDate();
-  const [sessionStart, setSesstionStart] = useState();
+  const { currentMonthIndex, currentDay, startingDayIndex } = useDate();
 
   const { id } = useParams();
 
@@ -32,12 +26,6 @@ const HabitCalendar = () => {
   if (isLoading) {
     return <Loading />;
   }
-
-  // console.log(currentMonth);
-
-  // if (error) {
-  //   return <NotFound />;
-  // }
 
   const handleDone = async (id, monthIndex, dayIndex, isComplete) => {
     try {
@@ -61,13 +49,6 @@ const HabitCalendar = () => {
   return (
     <div className="h-full px-4 md:px-32 lg:px-32 pb-6 bg-gradient-to-b  dark:from-black from-[#e6e6e6] dark:via-[#000000] via-[#ffffff] dark:to-gray-800 to-[#d4e6f1]">
       <BreadCrumb breadCrumb={breadCrumb} />
-      <div>
-        <h1>Study Session</h1>
-        <button onClick={() => setSesstionStart(!sessionStart)}>Start</button>
-        {/* {sessionStart && <Timer id= monthIndex= dayIndex= isComplete= />} */}
-      </div>
-      {/* <div className="w-full grid grid-cols-1 md:grid-cols-3 -gap-12"> */}
-      {/* {habitData[0].getFullYear.map((data) => ( */}
       <table
         key={habitData[0].getFullYear[currentMonthIndex]._id}
         className="w-full bg-slate-100 px-32 md:w-[50%] dark:bg-slate-700 rounded-lg shadow"

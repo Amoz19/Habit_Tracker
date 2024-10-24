@@ -31,6 +31,6 @@ const staggeredBaseQueryWithErrorHandling = async (args, api, extraOptions) => {
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: staggeredBaseQueryWithErrorHandling,
-  tagTypes: ["Habits", "AUTH"], // Define tag types for caching
+  tagTypes: ["Habits", "Habit", "AUTH"], // Define tag types for caching
   endpoints: (builder) => ({}), // Initialize with no endpoints
 });

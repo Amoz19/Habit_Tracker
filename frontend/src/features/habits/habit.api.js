@@ -10,13 +10,13 @@ const extendedApiSlice = apiSlice.injectEndpoints({
       //   return habitsAdapter.setAll(habitsAdapter.getInitialState(), response);
       // },
       providesTags: (result, error, arg) => [
-        { type: "Habits", id: "LIST" },
+        { type: "Habits" },
         // ...result.ids.map(({ id }) => ({ type: "Habits", id })),
       ],
     }),
     getHabit: builder.query({
       query: (id) => `habits/${id}`,
-      providesTags: (result, error, id) => [{ type: "Habits", id }],
+      providesTags: (result, error, id) => [{ type: "Habit", id }],
     }),
     addNewHabit: builder.mutation({
       query: (newHabitData) => ({
@@ -24,16 +24,60 @@ const extendedApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: { ...newHabitData },
       }),
-      invalidatesTags: [{ type: "Habits", id: "LIST" }],
+      onQueryStarted: async (newHabitData, { dispatch, queryFulfilled }) => {
+        const addingNewHabit = dispatch(
+          extendedApiSlice.util.updateQueryData(
+            "getHabits",
+            undefined,
+            (draft) => {
+              draft.push(newHabitData);
+            }
+          )
+        );
+
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          addingNewHabit.undo();
+        }
+      },
+      // invalidatesTags: [{ type: "Habits", id: "LIST" }],
     }),
     updateHabit: builder.mutation({
-      query: (sepcificIndex) => ({
-        url: "habits",
+      query: ({ id, monthIndex, dayIndex, isComplete }) => ({
+        url: "habits", // Assuming an API endpoint like this
         method: "PATCH",
-        body: { ...sepcificIndex },
+        body: { id, monthIndex, dayIndex, isComplete }, // Send the correct update payload
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Habits", id: arg.id }],
+      onQueryStarted: async (
+        { id, monthIndex, dayIndex, isComplete },
+        { dispatch, queryFulfilled }
+      ) => {
+        // Update getHabit cache for the specific habit
+        const patchResult = dispatch(
+          extendedApiSlice.util.updateQueryData("getHabit", id, (draft) => {
+            const habit = draft.find((year) => year._id === id);
+
+            // Assuming draft represents the habit object
+            const month = habit.getFullYear.find(
+              (month) => month._id === monthIndex
+            );
+
+            const day = month.days.find((day) => day._id === dayIndex);
+            if (day) {
+              day.isComplete = !isComplete; // Optimistically update the day status
+            }
+          })
+        );
+        try {
+          await queryFulfilled; // Wait for the actual query to complete
+        } catch (error) {
+          console.log(error);
+          patchResult.undo(); // Revert the optimistic update if the request fails
+        }
+      },
     }),
+
     deleteHabit: builder.mutation({
       query: (id) => ({
         url: `habits/${id}`,

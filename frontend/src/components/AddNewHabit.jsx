@@ -30,6 +30,7 @@ const AddNewHabit = () => {
     e.preventDefault();
 
     addNewHabit({
+      uniqueId: uuidv4(),
       userId: token.userId,
       habitName: data.habitName,
     });
