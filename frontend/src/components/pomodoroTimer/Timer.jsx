@@ -1,5 +1,5 @@
 import { useUpdateHabitMutation } from "@/features/habits/habit.api";
-
+import { CircleCheckBig } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import SelectHabitForm from "./SelectHabitForm";
 import { useAppSelector } from "@/app/hook";
@@ -74,31 +74,21 @@ const Timer = () => {
   }, []);
 
   return (
-    <div className="text-center font-sans">
-      <h1 className="text-3xl font-bold mb-4">Pomodoro Timer</h1>
+    <div className="flex flex-col items-center md:w-1/2 md:m-auto md:py-12 m-4 py-4 text-center font-sans border border-1 rounded-lg shadow-sm">
+      <h1 className="text-xl font-bold mb-4">Pomodoro Timer</h1>
       <h2 className="text-4xl font-semibold mb-2">{formatTime(time)}</h2>
-      <h3 className="text-xl mb-4 capitalize">Mode: {mode}</h3>
-      {/* <div className="flex justify-center space-x-4 mb-4">
-        <button
-          onClick={toggleTimer}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-        >
-          {isActive ? "Pause" : "Start"}
-        </button>
-        <button
-          onClick={resetTimer}
-          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
-        >
-          Reset
-        </button>
-      </div> */}
-
+      <h3 className="text-l mb-4 capitalize text-muted-foreground">
+        Mode: {mode}
+      </h3>
       <SelectHabitForm
         toggleTimer={toggleTimer}
         isActive={isActive}
         resetTimer={resetTimer}
       />
-      <p className="text-lg mt-3">Completed cycles: {cycles}</p>
+      <div className="flex items-center space-x-1 mt-2">
+        <CircleCheckBig className="h-4 w-4 text-xs text-slate-700" />
+        <p className="text-slate-700">Completed cycles: {cycles}</p>
+      </div>
     </div>
   );
 };

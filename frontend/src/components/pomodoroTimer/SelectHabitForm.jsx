@@ -1,12 +1,4 @@
-import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
+import { RotateCcw, Play, Pause } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -38,7 +30,7 @@ const SelectHabitForm = ({ toggleTimer, resetTimer, isActive }) => {
 
   const handleValueChange = (value) => {
     const selectedHabit = data?.find((habitData) => habitData._id === value);
-    // console.log(selectedHabit);
+
     dispatch(
       addSelectHabitId({
         habitId: selectedHabit._id,
@@ -49,33 +41,37 @@ const SelectHabitForm = ({ toggleTimer, resetTimer, isActive }) => {
 
   return (
     <div className="w-2/3 space-y-6 m-auto">
-      <div className="flex justify-center space-x-4 mb-4">
-        <Button
-          onClick={toggleTimer}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-        >
+      <div className="flex justify-center space-x-2">
+        <Button onClick={toggleTimer} className="w-24">
+          {isActive ? (
+            <Pause className="mr-2 h-4 w-4" />
+          ) : (
+            <Play className="mr-2 h-4 w-4" />
+          )}
           {isActive ? "Pause" : "Start"}
         </Button>
-        <button
-          onClick={resetTimer}
-          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
-        >
+        <Button onClick={resetTimer} variant="outline" className="w-24">
+          <RotateCcw className="mr-2 h-4 w-4" />
           Reset
-        </button>
+        </Button>
       </div>
-      <Select onValueChange={handleValueChange}>
-        <SelectTrigger>
-          <SelectValue placeholder="Select your habit to study" />
-        </SelectTrigger>
-
-        <SelectContent>
-          {data?.map((habit) => (
-            <SelectItem value={habit._id} key={habit.habitName}>
-              {habit.habitName}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div>
+        <Select onValueChange={handleValueChange}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select your habit to study" />
+          </SelectTrigger>
+          <SelectContent>
+            {data?.map((habit) => (
+              <SelectItem value={habit._id} key={habit.habitName}>
+                {habit.habitName}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <p className="text-muted-foreground text-xs mt-2">
+          After 5 minutes will mark as completed
+        </p>
+      </div>
     </div>
   );
 };
