@@ -8,6 +8,7 @@ export const authApi = apiSlice.injectEndpoints({
         method: "POST",
         body: credentials,
       }),
+      extraOptions: { maxRetries: 0 },
       providesTags: [{ type: "AUTH", id: "LIST" }],
     }),
     signup: builder.mutation({
