@@ -6,6 +6,7 @@ const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getHabits: builder.query({
       query: () => "habits",
+      extraOptions: { maxRetries: 0 },
       // transformResponse: (response) => {
       //   return habitsAdapter.setAll(habitsAdapter.getInitialState(), response);
       // },

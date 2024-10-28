@@ -52,14 +52,14 @@ const User = () => {
               <Link to="monthlyProgress">Monthly Progress</Link>
             </div>
 
-            {/* <button
-                  onClick={handleLogout}
-                  className="bg-indigo-500  text-white px-4 py-2 rounded ml-4 text-sm mt-2"
-                >
-                  <span>
-                    <IonMdLogOut />
-                  </span>
-                </button> */}
+            <button
+              onClick={handleLogout}
+              className="bg-indigo-500  text-white px-4 py-2 rounded ml-4 text-sm mt-2"
+            >
+              <span>
+                <IonMdLogOut />
+              </span>
+            </button>
           </div>
         )}
       </PopoverContent>
