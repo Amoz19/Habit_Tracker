@@ -48,8 +48,8 @@ const weeklyProgress = async (req, res) => {
       },
       { "getFullYear.$": 1 }
     );
-    const filteredData = [...result];
-    const progress = calculateWeeklyProgress(filteredData, start, end);
+    // const filteredData = [...result];
+    const progress = calculateWeeklyProgress(result, start, end);
 
     // console.log(reduceValue);
     res.json(progress); // Send the result back in the response
