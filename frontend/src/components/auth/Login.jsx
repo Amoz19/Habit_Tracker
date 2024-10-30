@@ -7,6 +7,8 @@ import { tokenReceived } from "../../features/auth/authSlice.js";
 
 const Login = () => {
   const [login, { isLoading, isError, error }] = useLoginMutation();
+  const authState = useAppSelector((state) => state.auth.token);
+  console.log(authState);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -20,7 +22,8 @@ const Login = () => {
   const onHandleSubmit = async (data, e) => {
     e.preventDefault();
     try {
-      const { username, userId, token } = await login(data).unwrap();
+      const result = await login(data);
+      const { username, userId, token } = result.data;
       localStorage.setItem("user", JSON.stringify({ username, userId, token }));
       dispatch(tokenReceived({ username, userId, token }));
       navigate("/habits");
@@ -67,13 +70,12 @@ const Login = () => {
           )}
         </div>
 
-        <button
+        <input
           type="submit"
           className="bg-blue-900 text-white px-4 py-1 rounded mb-6 disabled:opacity-40 text-sm mr-2"
           disabled={isLoading}
-        >
-          Login
-        </button>
+          value={isLoading ? "Loging in" : "Login"}
+        />
 
         {isError && (
           <p className="mb-3 text-center text-red-600">{error.data}</p>

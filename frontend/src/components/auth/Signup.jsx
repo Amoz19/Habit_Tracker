@@ -7,17 +7,16 @@ const Signup = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
 
   const [signup, { isError, error, isLoading }] = useSignupMutation();
   const navigate = useNavigate();
 
-  const onHandleSubmit = async (data, e) => {
+  const onHandleSubmit = (data, e) => {
     e.preventDefault();
     try {
-      await signup(data).unwrap();
+      signup(data).unwrap();
       navigate("/login");
     } catch (error) {
       console.log(error);
@@ -72,7 +71,7 @@ const Signup = () => {
         <input
           type="submit"
           className="bg-blue-900 text-white px-4 py-1 rounded disabled:opacity-40"
-          value={isLoading ? "signing" : "signup"}
+          value={isLoading ? "Signing up" : "signup"}
           disabled={isLoading}
         />
       </form>
