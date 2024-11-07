@@ -12,9 +12,6 @@ const {
   calculateMonthlyProgress,
 } = require("../services/calculateProgress");
 
-const currentDate = new Date();
-const monthName = format(currentDate, "MMMM");
-
 // const getCurrentMonth = async (req, res, id) => {
 //   const { _id } = req.user;
 //   console.log(_id);
@@ -36,6 +33,8 @@ const monthName = format(currentDate, "MMMM");
 
 const weeklyProgress = async (req, res) => {
   const { _id } = req.user;
+  const currentDate = new Date();
+  const monthName = format(currentDate, "MMMM");
   const start = getDate(startOfWeek(currentDate, { weekStartsOn: 1 })); // Monday as the first day of the week
   const end = getDate(endOfWeek(currentDate, { weekStartsOn: 1 }));
 
@@ -48,6 +47,7 @@ const weeklyProgress = async (req, res) => {
       },
       { "getFullYear.$": 1 }
     );
+
     // const filteredData = [...result];
     const progress = calculateWeeklyProgress(result, start, end);
 
@@ -61,6 +61,8 @@ const weeklyProgress = async (req, res) => {
 
 const monthlyProgress = async (req, res) => {
   const { _id } = req.user;
+  const currentDate = new Date();
+  const monthName = format(currentDate, "MMMM");
   try {
     const result = await CalendarModel.find(
       {

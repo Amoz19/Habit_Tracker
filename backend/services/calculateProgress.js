@@ -1,5 +1,11 @@
+const { getDate } = require("date-fns");
+
+function getCurrentWeekIndex(date) {
+  const dayOfMonth = getDate(date); // Get day of the month, e.g., 7 for the 7th
+  return Math.floor((dayOfMonth - 1) / 7); // Calculate week index (0-based)
+}
+
 const calculateWeeklyProgress = (filteredData, startDay, endDay) => {
-  console.log(startDay);
   filteredData[0].getFullYear[0].days.find(
     (day) => day.day >= startDay && day.day <= endDay
   );
@@ -23,24 +29,21 @@ const calculateWeeklyProgress = (filteredData, startDay, endDay) => {
     return ((totalComplete / totalEntries) * 100).toFixed(); // Calculate percentage
   });
 
-  // console.log(progressPercent);
-
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const data = [];
+  const startweek = getCurrentWeekIndex(new Date());
 
   daysOfWeek.reduce((accumulator, currentDay, index) => {
-    // console.log("what", accumulator, currentDay, index);
     if (progressPercent[startDay + index - 1] === undefined) {
       return accumulator;
     }
-    accumulator[currentDay] = progressPercent[startDay + index - 1];
+    accumulator[currentDay] = progressPercent[startweek + index];
     data.push({
       key: currentDay,
-      value: progressPercent[startDay + index - 1],
+      value: progressPercent[startweek + index],
     });
     return accumulator;
   }, {});
-  // console.log("Result", result);
 
   return data;
 };
