@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   MaterialSymbolsLightAccountCircleOutline,
   IonMdLogOut,
@@ -12,6 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Power, UserRound, Minus, Loader } from "lucide-react";
 
 const User = () => {
   // const [isActive, setIsActive] = useState(false);
@@ -39,25 +39,27 @@ const User = () => {
       <PopoverTrigger>
         <MaterialSymbolsLightAccountCircleOutline className="text-indigo-700 dark:text-white" />
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent className=" w-fit px-8">
         {token && (
-          <div className="text-sm">
+          <div className="text-sm  ">
             {token && (
-              <p className=" text-indigo-700 dark:font-bold border-b-2 py-2 mb-2">
-                {token.username}
-              </p>
+              <div className="flex items-center  border-b-2 py-2 mb-2 text-indigo-700">
+                <UserRound size={22} />
+                <Minus size={22} />
+                <p className="  dark:font-bold">- {token.username}</p>
+              </div>
             )}
+
             <div className="flex flex-col items-start gap-2">
-              <Link to="weeklyProgress">Weekly Progress</Link>
-              <Link to="monthlyProgress">Monthly Progress</Link>
+              <Link to="monthlyProgress">Monthly progress</Link>
             </div>
 
             <button
               onClick={handleLogout}
-              className="bg-indigo-500  text-white px-4 py-2 rounded ml-4 text-sm mt-2"
+              className="bg-red-500  text-white rounded text-sm mt-4 p-1"
             >
               <span>
-                <IonMdLogOut />
+                <Power size={18} />
               </span>
             </button>
           </div>

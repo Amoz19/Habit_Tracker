@@ -14,12 +14,13 @@ import { Button } from "../ui/button";
 import LoadingSpinner from "../LoadingSpinner";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/hook";
 import { addSelectHabitId } from "@/features/habits/habitSlice";
 
 const SelectHabitForm = ({ toggleTimer, resetTimer, isActive }) => {
   const { data, isLoading, isError } = useGetHabitsQuery();
+
   const dispatch = useAppDispatch();
 
   if (isLoading) {
@@ -29,7 +30,9 @@ const SelectHabitForm = ({ toggleTimer, resetTimer, isActive }) => {
   }
 
   const handleValueChange = (value) => {
-    const selectedHabit = data?.find((habitData) => habitData._id === value);
+    const selectedHabit = data?.find(
+      (habitData) => habitData.uniqueId === value
+    );
 
     dispatch(
       addSelectHabitId({
@@ -62,9 +65,11 @@ const SelectHabitForm = ({ toggleTimer, resetTimer, isActive }) => {
           </SelectTrigger>
           <SelectContent>
             {data?.map((habit) => (
-              <SelectItem value={habit._id} key={habit.habitName}>
-                {habit.habitName}
-              </SelectItem>
+              <div key={habit.habitName}>
+                <SelectItem value={habit.uniqueId}>
+                  {habit.habitName}
+                </SelectItem>
+              </div>
             ))}
           </SelectContent>
         </Select>

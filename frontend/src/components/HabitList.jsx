@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import Progress from "./habits/WeeklyProgress";
 import WeeklyProgress from "./habits/WeeklyProgress";
+import { Link } from "react-router-dom";
 
 const HabitList = () => {
   const navigate = useNavigate();
@@ -43,9 +44,18 @@ const HabitList = () => {
       {data.length > 0 ? (
         <div className="px-8 md:px-32 bg-gradient-to-b  dark:from-black from-[#e6e6e6] dark:via-[#000000] via-[#ffffff] dark:to-gray-800 to-[#d4e6f1] flex flex-1 ">
           <div className=" w-full">
-            <h2 className={`${styles.title} dark:text-indigo-300`}>
-              Your habits
-            </h2>
+            <div className="flex justify-between items-center">
+              <h2 className={`${styles.title} dark:text-indigo-300`}>
+                Your habits
+              </h2>
+              <Link
+                className="bg-primary text-white dark:white dark:text-black rounded px-2 py-1"
+                to="/timmer"
+              >
+                Study Session
+              </Link>
+            </div>
+
             <div className="grid lg:grid-cols-2">
               {data.map((data) => (
                 <div
